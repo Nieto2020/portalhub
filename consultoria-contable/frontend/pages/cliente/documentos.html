@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Documentos</title>
+
+
+     <!--CSS-->
+     <link rel="stylesheet" href="/consultoria-contable/frontend/css/documentos_cliente.css">
+
+    <!--ICONS-->
+    <!-- Basic Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<!-- Filled Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+<!-- Brand Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+</head>
+<body>
+    
+ <header class="navbar">
+        <div class="logo"><img src="/consultoria-contable/frontend/css/img/logo.png" alt=""></div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
+                <li><a href="">Mis Declaraciones</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html"  class="active">Documentos</a></li>
+                <li><a href="">Pagos</a></li>
+                <li><a href="">Tareas</a></li>
+                <li><a href="">Reportes</a></li>
+                <li><a href="">Perfil</a></li>
+                <li><a href="">Ayuda</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <!--CONTENIDO-->
+<div class="container-documentos">
+
+        <div class="acciones-documentos">
+            <ul class="tabs-principales">
+                <li class="tab-item active" id="tab-subir">Subir Documentos</li>
+                <li class="tab-item" id="tab-repo">Repositorio</li>
+            </ul>
+        </div>
+
+        <section class="seccion-contenido active" id="seccion-carga">
+            <div class="card-blanca">
+                <div class="card-header-flex">
+                    <h4>Carga de Documentos <i class='bx bx-chevron-down'></i></h4>
+                </div>
+
+                <div class="sub-nav-container">
+                    <button class="sub-nav-btn active">
+                        <i class='bx bx-file-blank'></i> Facturas XML
+                    </button>
+                    <button class="sub-nav-btn">
+                        <i class='bx bx-stats'></i> Estados de Cuenta
+                    </button>
+                    <button class="sub-nav-btn">
+                        <i class='bx bx-id-card'></i> Recibos de Nómina
+                    </button>
+                </div>
+
+                <div class="upload-dropzone">
+    <i class='bx bx-cloud-upload' style="font-size: 48px; color: #5a73b3;"></i>
+    <p id="dropzone-text">Arrastra tus archivos aquí o 
+        <label for="factura-XML" class="btn-link">Seleccionar Archivos</label>
+    </p>
+    <input type="file" id="factura-XML" hidden>
+</div>
+
+<button type="button" id="btn-subir-archivo" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 30px;">
+    <i class='bx bx-upload'></i> Subir Documento a Revisión
+</button>
+
+                <div class="tips-box">
+                    <p><i class='bx bx-bulb'></i> <strong>Tips:</strong> Asegúrate de que el XML sea de la versión 4.0 vigente.</p>
+                    <p><i class='bx bx-info-circle'></i> <strong>Conceptos:</strong> Solo se aceptan archivos con extensión .xml y .pdf.</p>
+                    <p><i class='bx bx-check-shield'></i> <strong>Validación:</strong> Los archivos serán revisados por tu contador asignado.</p>
+                </div>
+
+                <div class="table-container">
+                    <table class="tabla-consultancy">
+                        <thead>
+                            <tr>
+                                <th>Archivo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-carga-cuerpo">
+                            <tr>
+                                <td>Factura_1234.xml</td>
+                                <td><span class="status aprobado">✅ Aprobado</span></td>
+                                <td><button class="btn-tabla secondary"><i class="bx bx-eye" /></i></button>
+                                 <button class="btn-tabla delete"><i class="bx bx-trash-x" /></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>EstadoCuenta_Dic.pdf</td>
+                                <td><span class="status observado">🔴 Observado</span></td>
+                                <td><button class="btn-tabla secondary"><i class="bx bx-eye" /></i></button>
+                                    <button class="btn-tabla delete"><i class="bx bx-trash-x" /></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion-contenido" id="seccion-repo" style="display: none;">
+            <div class="card-blanca">
+                <h4>Mis Documentos (Repositorio)</h4>
+                
+                <div class="filtros-archivos">
+                    <form class="repo-filtros">
+                        <div class="filter-group">
+                            <label>Mes:</label>
+                            <input type="month" id="mes-buscar">
+                        </div>
+                        <div class="filter-group">
+                            <label>Semana:</label>
+                            <input type="week">
+                        </div>
+                        <button type="button" class="btn-filter"><i class="bx bx-search-big" /></i></button>
+                        <button type="reset" class="btn-clean"><i class="bx bx-x" /></i></button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <table class="tabla-consultancy">
+                        <thead>
+                            <tr>
+                                <th>Archivo</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Factura_Noviembre.xml</td>
+                                <td>15/11/2025</td>
+                                <td><a href="#" class="link-accion">Descargar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+</body>
+<!--JS-->
+<script src="/consultoria-contable/frontend/js/views/documentosView.js"></script>
+</html>

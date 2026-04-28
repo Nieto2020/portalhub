@@ -7,6 +7,14 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="/consultoria-contable/frontend/css/style.css">
+
+    <!--ICONS-->
+    <!-- Basic Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<!-- Filled Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+<!-- Brand Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
 </head>
 <body>
     
@@ -15,9 +23,9 @@
 
         <nav>
             <ul class="nav-links">
-                <li><a href="#" class="active">Inicio</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html" class="active">Inicio</a></li>
                 <li><a href="">Mis Declaraciones</a></li>
-                <li><a href="">Documentos</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html">Documentos</a></li>
                 <li><a href="">Pagos</a></li>
                 <li><a href="">Tareas</a></li>
                 <li><a href="">Reportes</a></li>
@@ -29,31 +37,75 @@
     </header>
 
     <main class="dashboard-content">
-        <h1>Bievenida de nuevo, Victoria</h1>
+       <div class="welcome-header">
+        <h1 id="user-name">Bienvenida de nuevo, Victoria.</h1>
+    </div>
 
-        <section class="summary-grid">
-            <div class="card al-dia">
-                <h3>Declaracion Mensual</h3>
-                <p class="status-text">Al dia</p>
-                <span class="period">Abril 2026</span>
-            </div>
+    <h2 class="section-title">Resumen Fiscal</h2>
+<section class="summary-grid">
+    <div class="card al-dia">
+        <h3>Declaración Mensual</h3>
+        <div class="card-body">
+            <p class="status-text" id="estado-mensual"><span class="icon-red">🔴</span> Pendiente</p>
+            <span class="period" id="fecha-mensual">Entregar Antes: 20/04</span>
+        </div>
+    </div>
 
-            <div class="card pendiente">
-                <h3>Declaracion Anual</h3>
-                <p class="status-text">Pendiente de documentos</p>
-                <span class="period">Ejercicio 2025</span>
+    <div class="card pendiente">
+        <h3>Declaración Anual</h3>
+        <div class="card-body">
+            <p class="status-text" id="estado-manual"><span class="icon-green">✅</span> En Proceso</p>
+            <div class="progress-container">
+                <span class="progress-label">Avance</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="barra-progreso-anual" style="width: 60%;"></div>
+                </div>
             </div>
+        </div>
+    </div>
 
-            <div class="card proximo-pago">
-                <h3>Proximo Pago</h3>
-                <p class="amout">$1,250.00</p>
-                <p class="date">Limite: 17 de Mayo</p>
-            </div>
-        </section>
+    <div class="card proximo-pago">
+        <h3>Próximo Pago</h3>
+        <div class="card-body">
+            <p class="amout" id="pago-monto">$5,800</p>
+            <p class="date" id="pago-fecha">Vence: 20/04</p>
+        </div>
+    </div>
+</section>
+
+<main class="container-tareas-pendientes" id="lista-tareas">
+    <div class="titulo-tareas">
+        <h2 class="section-title">Tareas Pendientes</h2>
+    </div>
+    
+
+</main>
+
 
         <div class="actions">
             <button class="btn-primary">Subir Documentos</button>
         </div>
     </main>
+
+    <!--Modal para subir documento-->
+
+    <div id="modal-subir" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Subir nuevo Documento</h2>
+            <p>Selecciona el archivo a subir.</p>
+
+            <div class="upload-area">
+                <i class='bx bx-cloud-upload' style="font-size: 50px; color: var(--azul-accion);"></i>
+                <input type="file" name="" id="file-input" hidden>
+                <button class="btn-secondary" onclick="document.getElementById('file-input').click()">Seleccionar Archivo</button>
+            </div>
+
+            <button class="btn-primary" id="btn-enviar-doc" style="margin-top: 20px;">Enviar</button>
+        </div>
+    </div>
 </body>
+
+<script src="/consultoria-contable/frontend/js/api/servicios.js"></script>
+<script src="/consultoria-contable/frontend/js/views/dashboardView.js"></script>
 </html>
