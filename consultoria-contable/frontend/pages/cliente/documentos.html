@@ -68,7 +68,8 @@
                 <div id="cont-facturas">
                 <div class="upload-dropzone">
     <i class='bx bx-cloud-upload' style="font-size: 48px; color: #5a73b3;"></i>
-    <p id="dropzone-text">Arrastra tus archivos aquí o 
+    <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
+    <p id="dropzone-text">
         <label for="factura-XML" class="btn-link">Seleccionar Archivos</label>
     </p>
     <input type="file" id="factura-XML" hidden>
@@ -141,8 +142,11 @@
 
         <div class="upload-dropzone bank-zone" id="dropzone-bancos">
             <i class='bx bxs-file-pdf' style="font-size: 48px; color: #e53e3e;"></i>
-            <p id="text-upload-bancos">Arrastra el <strong>PDF de tu Banco</strong> aquí o 
+            <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
+            <p id="text-upload-bancos">
+                <p id="dropzone-textEC">
                 <label for="input-banco" class="btn-link">Explorar Archivos</label>
+                </p>
             </p>
             <input type="file" id="input-banco" accept=".pdf" hidden>
         </div>
@@ -210,8 +214,11 @@
 
     <div class="upload-dropzone" id="dropzone-nomina" style="border-color: var(--azul-accion);">
        <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
-       <p id="text-upload-nomina">Arrastra el <strong>ZIP o PDFs de Nomina</strong> aqui o <label for="input-nomina" class="btn-link">Explorar Archivos</label></p>
-       <input type="file" name="" id="input-nomina" accept=".pdf, .zip, .xml" multiple hidden>
+      <p id="text-upload-nomina"> 
+    <label for="input-nomina" class="btn-link">Explorar Archivos</label>
+</p>
+<input type="file" id="input-nomina" multiple hidden>
+       
     </div>
 
     <button type="button" id="btn-subir-nomina" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 40px; background: var(--azul-accion);"><i class='bx bx-check-shield'></i> Enviar Nómina a Validar</button>
@@ -227,7 +234,6 @@
                 <tr>
                     <th>Concepto</th>
                      <th>Periodo</th>
-                      <th>Colaboradores</th>
                        <th>Estado</th>
                        <th>Acciones</th>
                 </tr>
@@ -237,7 +243,7 @@
                 <tr>
                     <td><strong>Nomina ordinaria</strong></td>
                     <td>Abril 2026</td>
-                    <td>12 Empleados</td>
+                    
                     <td><span class="status aprobado">✅ Procesada</span></td>
                     <td class="acciones-cell">
                     <button class="btn-tabla secondary"><i class="bx bx-eye"></i></button>
@@ -273,7 +279,7 @@
                 </div>
 
                 <div class="table-container">
-                    <table class="tabla-consultancy">
+                    <table class="tabla-consultancy" id="tabla-repo-cuerpo">
                         <thead>
                             <tr>
                                 <th>Archivo</th>
@@ -281,7 +287,7 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tabla-repo-cuerpo" >
                             <tr>
                                 <td>Factura_Noviembre.xml</td>
                                 <td>15/11/2025</td>

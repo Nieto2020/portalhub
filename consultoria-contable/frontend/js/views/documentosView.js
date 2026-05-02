@@ -65,6 +65,9 @@ if (btnSubirFactura) {
     btnSubirFactura.onclick = () => {
         if (fileInput.files.length > 0) {
             const nombre = fileInput.files[0].name;
+            const hoy = new Date().toLocaleDateString();
+
+            agregarAlRepositorio(nombre,hoy);
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${nombre}</td>
@@ -75,7 +78,7 @@ if (btnSubirFactura) {
                 </td>`;
             tablaFacturas.prepend(fila);
             fileInput.value = "";
-            dropzoneText.innerHTML = `Arrastra tus archivos aquí o <label for="factura-XML" class="btn-link">Seleccionar Archivos</label>`;
+            dropzoneText.innerHTML = `label for="factura-XML" class="btn-link">Seleccionar Archivos</label>`;
             alert("¡Factura enviada con éxito!");
         } else {
             alert("Por favor, selecciona un archivo.");
@@ -89,12 +92,28 @@ const inputBancoFile = document.getElementById("input-banco");
 const selectBanco = document.getElementById("select-banco");
 const inputMes = document.getElementById("mes-estado");
 const tablaBancos = document.getElementById("tabla-bancos-cuerpo");
+const archivo_banco = document.getElementById("text-upload-bancos");
 
+if(inputBancoFile){
+    try{
+        inputBancoFile.onchange = () =>{
+
+            if(inputBancoFile.files.length > 0){
+                archivo_banco.innerHTML = `Archivo listo: <strong style="color: #5a73b3;">${inputBancoFile.files[0].name}</strong>`
+            }
+        }
+    }catch(e){
+        console.error(`Hubo un error: ${e}`);
+    };
+};
 
 if (btnSubirBanco) {
     btnSubirBanco.onclick = () => {
         const banco = selectBanco.options[selectBanco.selectedIndex].text;
         const mes = inputMes.value;
+        const fecha_creacion_banco = new Date().toLocaleDateString();
+
+        agregarAlRepositorio(`Edo. Cuenta - ${banco}`, fecha_creacion);
 
         if (inputBancoFile.files.length > 0 && selectBanco.value !== "" && mes !== "") {
             const fila = document.createElement("tr");
@@ -137,6 +156,7 @@ if(inputNominaFile){
     inputNominaFile.onchange = () =>{
         const cantidad = inputNominaFile.files.length;
 
+
         if(cantidad > 0){
             textUploadNomina.innerHTML = `<strong style="color: var(--azul-accion);">${cantidad} archivo(s) seleccionados</strong>. Listo para enviar.`;
         }
@@ -149,13 +169,16 @@ if(btnSubirNomina){
         const periodo = inputMesNomina.value;
         const numArchivos = inputNominaFile.files.length;
 
+        const fecha_creacion_nomina = new Date().toLocaleDateString();
+
+        agregarAlRepositorio( `Nómina: ${tipo}`, fecha_creacion_nomina);
+
         if(numArchivos > 0 && periodo !== ""){
             const fila = document.createElement("tr");
 
             fila.innerHTML = `
                 <td><strong>${tipo}</strong></td>
                 <td>${periodo}</td>
-                <td>${numArchivos} Documento(s)</td>
                 <td><span class="status aprobado" style="background-color: #ebf8ff; color: #3182ce;">✅ Procesando</span></td>
                 <td class="acciones-cell">
                     <button class="btn-tabla secondary"><i class="bx bx-eye"></i></button>
@@ -167,7 +190,10 @@ if(btnSubirNomina){
 
             inputNominaFile.value = "";
             inputMesNomina.value = "";
-            textUploadNomina.innerHTML = `Arrastra el <strong>ZIP o PDFs de Nómina</strong> aquí o <label for="input-nomina" class="btn-link">Explorar Archivos</label>`;
+            textUploadNomina.innerHTML = `   <p id="text-upload-nomina"> 
+    <label for="input-nomina" class="btn-link">Explorar Archivos</label>
+</p>
+<input type="file" id="input-nomina" multiple hidden>`;
 
             alert("¡Nomina enviada! El contador validara los sellos digitales.");
         } else {
@@ -177,3 +203,21 @@ if(btnSubirNomina){
     };
 }
 
+/*REPOSITORIO */
+
+function agregarAlRepositorio(nombre, fecha) {
+
+    const cuerpoRepo = document.getElementById("tabla-repo-cuerpo");
+
+    if(!cuerpoRepo) return;
+
+    const nuevaFila = document.createElement("tr");
+
+    nuevaFila.innerHTML = `
+    <td>${nombre}</td>
+        <td>${fecha}</td>
+        <td><a href="#" class="link-accion"><i class='bx bx-download'></i> Descargar</a></td>
+    `;
+
+    cuerpoRepo.prepend(nuevaFila);
+}
