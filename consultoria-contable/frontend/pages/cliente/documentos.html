@@ -75,7 +75,7 @@
     <input type="file" id="factura-XML" hidden>
 </div>
 
-<button type="button" id="btn-subir-archivo" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 30px;">
+<button type="button" id="btn-subir-archivo" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 30px; background: var(--morado);">
     <i class='bx bx-upload'></i> Subir Documento a Revisión
 </button>
 
@@ -140,16 +140,15 @@
             </div>
         </div>
 
-        <div class="upload-dropzone bank-zone" id="dropzone-bancos">
-            <i class='bx bxs-file-pdf' style="font-size: 48px; color: #e53e3e;"></i>
-            <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
-            <p id="text-upload-bancos">
-                <p id="dropzone-textEC">
-                <label for="input-banco" class="btn-link">Explorar Archivos</label>
-                </p>
-            </p>
-            <input type="file" id="input-banco" accept=".pdf" hidden>
-        </div>
+       
+       <div class="upload-dropzone bank-zone" id="dropzone-bancos">
+    <i class='bx bxs-file-pdf' style="font-size: 48px; color: #e53e3e;"></i>
+    <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
+    <p id="text-upload-bancos">
+        <label for="input-banco" class="btn-link">Explorar Archivos</label>
+    </p>
+    <input type="file" id="input-banco" accept=".pdf" hidden>
+</div>
 
         <button type="button" id="btn-subir-banco" class="btn-tabla" style="margin: 0 auto 20px; padding: 12px 40px; background: var(--morado);">
             <i class='bx bx-cloud-upload'></i> Enviar a Revisión Bancaria
@@ -221,7 +220,7 @@
        
     </div>
 
-    <button type="button" id="btn-subir-nomina" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 40px; background: var(--azul-accion);"><i class='bx bx-check-shield'></i> Enviar Nómina a Validar</button>
+    <button type="button" id="btn-subir-nomina" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 40px; background: var(--morado);"><i class='bx bx-check-shield'></i> Enviar Nómina a Validar</button>
 
     <div class="tips-box" style="border-left-color: var(--azul-accion);">
         <p><i class='bx bx-help-circle'></i> <strong>Tip:</strong> Puedes subir varios archivos a la vez seleccionándolos todos.</p>
@@ -263,23 +262,45 @@
             <div class="card-blanca">
                 <h4>Mis Documentos (Repositorio)</h4>
                 
+                <!--filtros-->
                 <div class="filtros-archivos">
                     <form class="repo-filtros">
                         <div class="filter-group">
                             <label>Mes:</label>
-                            <input type="month" id="mes-buscar">
+                            <select name="" id="mes-filtro" class="input-standard">
+                                <option value="Enero">Enero</option>
+                                 <option value="Febrero">Febrero</option>
+                                 <option value="Marzo">Marzo</option>
+                                 <option value="Abril">Abril</option>
+                                 <option value="Mayo">Mayo</option>
+                                 <option value="Junio">Junio</option>
+                                 <option value="Julio">Julio</option>
+                                 <option value="Agosto">Agosto</option>
+                                 <option value="Septiembre">Septiembre</option>
+                                 <option value="Octubre">Octubre</option>
+                                 <option value="Noviembre">Noviembre</option>
+                                 <option value="Diciembre">Diciembre</option>
+                            </select>
                         </div>
                         <div class="filter-group">
-                            <label>Semana:</label>
-                            <input type="week">
+                            <label>Tipo:</label>
+                            <select name="" id="tipo-documento" class="input-standard">
+                                <option value="Factura XML">Factura XML</option>
+                                <option value="Estado de Cuenta">Estado de Cuenta</option>
+                                <option value="Recibos de Nomina">Recibos de Nomina</option>
+                            </select>
                         </div>
+
+
                         <button type="button" class="btn-filter" id="btn-ejecutar-filtro" ><i class="bx bx-search-big" /></i></button>
                         <button type="reset" class="btn-clean" id="btn-limpiar-filtro"><i class="bx bx-x" /></i></button>
                     </form>
                 </div>
 
+
+                <!--Tabla del Repositorio-->
                 <div class="table-container">
-                    <table class="tabla-consultancy" id="tabla-repo-cuerpo">
+                    <table class="tabla-consultancy">
                         <thead>
                             <tr>
                                 <th>Archivo</th>

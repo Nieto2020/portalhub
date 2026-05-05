@@ -243,7 +243,7 @@ body {
  }
 
  .btn-tabla{
-    background: var(--azul-accion);
+    background:var(--morado);
     color: white;
     border: none;
     padding: 8px 20px;
