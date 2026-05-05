@@ -78,7 +78,7 @@ if (btnSubirFactura) {
                 </td>`;
             tablaFacturas.prepend(fila);
             fileInput.value = "";
-            dropzoneText.innerHTML = `label for="factura-XML" class="btn-link">Seleccionar Archivos</label>`;
+            dropzoneText.innerHTML = `<label for="factura-XML" class="btn-link">Seleccionar Archivos</label>`;
             alert("¡Factura enviada con éxito!");
         } else {
             alert("Por favor, selecciona un archivo.");
@@ -113,7 +113,7 @@ if (btnSubirBanco) {
         const mes = inputMes.value;
         const fecha_creacion_banco = new Date().toLocaleDateString();
 
-        agregarAlRepositorio(`Edo. Cuenta - ${banco}`, fecha_creacion);
+        agregarAlRepositorio(`Edo. Cuenta - ${banco}`, fecha_creacion_banco);
 
         if (inputBancoFile.files.length > 0 && selectBanco.value !== "" && mes !== "") {
             const fila = document.createElement("tr");
@@ -126,6 +126,12 @@ if (btnSubirBanco) {
                     <button class="btn-tabla delete"><i class='bx bx-trash'></i></button>
                 </td>`;
             tablaBancos.prepend(fila);
+
+            inputBancoFile.value = ""; 
+            inputMes.value = "";     
+            selectBanco.selectedIndex = 0; 
+            
+            archivo_banco.innerHTML = `<label for="input-banco" class="btn-link">Explorar Archivos</label>`;
             alert("Estado de cuenta enviado correctamente.");
         } else {
             alert("Por favor completa: Banco, Mes y el PDF.");
@@ -190,10 +196,7 @@ if(btnSubirNomina){
 
             inputNominaFile.value = "";
             inputMesNomina.value = "";
-            textUploadNomina.innerHTML = `   <p id="text-upload-nomina"> 
-    <label for="input-nomina" class="btn-link">Explorar Archivos</label>
-</p>
-<input type="file" id="input-nomina" multiple hidden>`;
+            textUploadNomina.innerHTML =`<label for="input-nomina" class="btn-link">Explorar Archivos</label>`;
 
             alert("¡Nomina enviada! El contador validara los sellos digitales.");
         } else {
@@ -220,4 +223,70 @@ function agregarAlRepositorio(nombre, fecha) {
     `;
 
     cuerpoRepo.prepend(nuevaFila);
+}
+
+/*LOGICA FILTROS */
+
+const mesesMap = {
+    "Enero": "1", "Febrero": "2", "Marzo" : "3", "Abril": "4",
+    "Mayo": "5", "Junio": "6", "Julio": "7", "Agosto":"8",
+    "Septiembre": "9", "Octubre": "10", "Noviembre": "11", "Diciembre": "12"
+}
+
+const btn_filtros = document.getElementById("btn-ejecutar-filtro");
+const btn_limpiar_filtros = document.getElementById("btn-limpiar-filtro");
+
+if(btn_filtros){
+    btn_filtros.onclick = () => {
+        const mesSeleccionado = document.getElementById("mes-filtro").value;
+        const tipoSeleccionado = document.getElementById("tipo-documento").value;
+        const numeroMesBuscado = mesesMap[mesSeleccionado];
+
+        const filas = document.querySelectorAll('#tabla-repo-cuerpo tr');
+
+        filas.forEach(fila => {
+          
+            const textoOriginal = fila.cells[0].innerText;
+            
+            
+            const nombreLimpio = textoOriginal
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+
+            const fechaFila = fila.cells[1].innerText;
+            const partesFecha = fechaFila.split("/");
+            const mesEnFila = partesFecha[1];
+
+            const coincideMes = (mesEnFila === numeroMesBuscado);
+            let coincideTipo = false;
+            
+           
+            if (tipoSeleccionado === "Factura XML") {
+                coincideTipo = nombreLimpio.includes(".xml") || nombreLimpio.includes("factura");
+            } 
+            else if (tipoSeleccionado === "Estado de Cuenta") {
+                coincideTipo = nombreLimpio.includes("estado") || nombreLimpio.includes("edo");
+            } 
+            else if (tipoSeleccionado === "Recibos de Nomina") {
+               
+                coincideTipo = nombreLimpio.includes("nomina");
+            }
+
+            if(coincideMes && coincideTipo){
+                fila.style.display = "";
+            } else {
+                fila.style.display = "none";
+            }
+        });
+    }
+}
+
+if(btn_limpiar_filtros){
+    btn_limpiar_filtros.onclick = () => {
+        document.querySelectorAll("#tabla-repo-cuerpo tr").forEach(f => f.style.display = "");
+       
+        document.getElementById("mes-filtro").selectedIndex = 0;
+        document.getElementById("tipo-documento").selectedIndex = 0;
+    }
 }
