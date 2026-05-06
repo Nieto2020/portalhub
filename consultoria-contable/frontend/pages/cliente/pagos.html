@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/consultoria-contable/frontend/css/Pagos_cliente.css">
+
+     <!--ICONS-->
+    <!-- Basic Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<!-- Filled Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+<!-- Brand Icons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    <title>Pagos</title>
+</head>
+<body>
+
+     <header class="navbar">
+        <div class="logo"><img src="/consultoria-contable/frontend/css/img/logo.png" alt=""></div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
+                <li><a href="">Mis Declaraciones</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html"  class="active">Documentos</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html">Pagos</a></li>
+                <li><a href="">Tareas</a></li>
+                <li><a href="">Reportes</a></li>
+                <li><a href="">Perfil</a></li>
+                <li><a href="">Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--CONTENIDO-->
+
+    <div class="container-pagos">
+
+        <div class="acciones-pagos">
+            <ul class="tabs-principales">
+                <li class="tab-item active" id="tab-pagos-faltantes">Pagos Faltantes</li>
+                <li class="tab-item" id="tab-historial">Historial de Pagos</li>
+            </ul>
+        </div>
+
+        <section class="pagos-faltantes" id="pagos-faltantes">
+            
+            <div class="titulo-pagos">
+                <h1 class="titulo-pagos-faltantes">Pagos Faltantes:</h1>
+            </div>
+
+            <div class="tabla-pagos">
+                <table id="mostrar-pagosFaltantes">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Pago</th>
+                             <th>Fecha Limite</th>
+                            <th>Estado</th>
+                             <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="pagosFaltantes-Consultancy">
+
+                        <tr>
+                            <td>ISR</td>
+                            <td>30/12/04</td>
+                            <td>Pendiente</td>
+                            <td><a href="#">Ver Detalles</a>
+                                <a href="#">Actualizar</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <section class="HistorialPagos" id="HistorialPagos">
+
+            <div class="titulo-HistorialPagos">
+                <h1 class="tituloHistorial-Pagos">Historial de Pagos</h1>
+            </div>
+
+            <div class="tabla-HistorialPagos">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Tipo de Pago</th>
+                            <th>Fecha de Creacion</th>
+                            <th>Cantidad</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="HistorialPagos-Consultancy">
+                        <tr>
+                            <td>ISR</td>
+                            <td>06/05/2026</td>
+                            <td>$3200</td>
+                            <td>Pagado</td>
+                            <td><a href="#">Ver Factura</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

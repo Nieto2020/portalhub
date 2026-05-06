@@ -330,3 +330,14 @@ body {
 .bank-zone {
     border-color: #e53e3e !important;
 }
+
+/*Repositorio */
+
+.link-accion{
+
+    cursor: pointer;
+    background-color: var(--azul-accion);
+    padding: 10px 15px 5px 15px;
+    border-radius: 12%;
+    color: white;
+}
