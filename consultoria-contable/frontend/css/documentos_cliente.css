@@ -87,7 +87,7 @@ body {
     background: #e0e6ed;
     border-radius: 8px 8px 0 0;
     cursor: pointer;
-    color: var(--texto-oscuro);
+    color: var(--texto);
     font-weight: 600;
     transition: 0.3s;
     border: 1px solid #d1d9e6;

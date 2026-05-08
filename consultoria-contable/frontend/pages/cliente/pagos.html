@@ -24,8 +24,8 @@
             <ul class="nav-links">
                 <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
                 <li><a href="">Mis Declaraciones</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html"  class="active">Documentos</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html">Pagos</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html">Documentos</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html" class="active">Pagos</a></li>
                 <li><a href="">Tareas</a></li>
                 <li><a href="">Reportes</a></li>
                 <li><a href="">Perfil</a></li>
@@ -45,6 +45,7 @@
             </ul>
         </div>
 
+        <div class="card-blanca">
         <section class="pagos-faltantes" id="pagos-faltantes">
             
             <div class="titulo-pagos">
@@ -67,27 +68,45 @@
                         <tr>
                             <td>ISR</td>
                             <td>30/12/04</td>
-                            <td>Pendiente</td>
-                            <td><a href="#">Ver Detalles</a>
-                                <a href="#">Actualizar</a>
+                            <td><span class="status pendiente">Pendiente</span></td>
+                            <td> <i class="bx bx-alert-circle" /></i> 
+                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
                             </td>
                         </tr>
 
+                        <tr>
+                            <td>IVA</td>
+                            <td>31/12/04</td>
+                            <td><span class="status aprobado">Aprobado</span></td>
+                            <td> <i class="bx bx-alert-circle" /></i> 
+                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>ISR</td>
+                            <td>01/12/04</td>
+                            <td><span class="status vencido">Vencido</span></td>
+                            <td> <i class="bx bx-alert-circle" /></i> 
+                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
         </section>
 
+        <!-- HISTORIA DE PAGOS-->
 
-        <section class="HistorialPagos" id="HistorialPagos">
+        <section class="HistorialPagos" id="HistorialPagos" style="display: none;">
 
             <div class="titulo-HistorialPagos">
                 <h1 class="tituloHistorial-Pagos">Historial de Pagos</h1>
             </div>
 
-            <div class="tabla-HistorialPagos">
-                <table>
+            <div id="tabla-HistorialPagos">
+                <table class="tabla-HistorialPago">
 
                     <thead>
                         <tr>
@@ -113,7 +132,12 @@
 
         </section>
 
+        </div>
+
     </div>
 
 </body>
+
+<!--JS-->
+<script src="/consultoria-contable/frontend/js/views/pagosView.js"></script>
 </html>
