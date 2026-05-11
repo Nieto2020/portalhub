@@ -196,3 +196,47 @@ i {
     border-radius: 5px;
     padding: 10px; 
 }
+
+/*HISTORIA DE PAGOS */
+
+#tabla-HistorialPagos{
+    overflow-x: auto;
+}
+
+.tabla-HistorialPago{
+    width: 100%;
+    border-collapse: collapse !important;
+    margin-top: 10px;
+    table-layout: fixed;
+}
+
+.tabla-HistorialPago th{
+       background: #edf2f7;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    color:#4a5568 ;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+}
+
+.tabla-HistorialPago td{
+   padding: 15px;
+    border-bottom: 1px solid #edf2f7 !important;
+    vertical-align: middle;
+    height: 55px;
+    border-left: none;
+    border-right: none;
+}
+
+.tabla-HistorialPago td:last-child{
+    display: flex;
+    align-items: center;
+}
+
+.bx-eye{
+    background-color: var(--azul-accion);
+    border-radius: 5px;
+    padding: 10px;
+}
