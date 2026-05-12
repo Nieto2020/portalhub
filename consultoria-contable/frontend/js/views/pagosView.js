@@ -48,7 +48,7 @@ function CargarTablasPagos(){
     {
         tipo: "ISR",
         fecha: "15/01/2026",
-         fecha_limite : "12/12/2026",
+         fecha_limite : "11/12/2026",
         cantidad: "$1500",
         estado: "Pendiente"
     }

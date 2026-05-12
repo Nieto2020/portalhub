@@ -1,0 +1,132 @@
+consultoria-contable/
+│
+├── backend/
+│   ├── config/
+│   │   ├── conexion.php
+│   │   └── config.php
+│   │
+│   ├── modules/
+│   │   ├── auth/
+│   │   │   ├── login.php
+│   │   │   ├── register.php
+│   │   │   └── logout.php
+│   │   │
+│   │   ├── usuarios/
+│   │   │   ├── crear.php
+│   │   │   ├── listar.php
+│   │   │   ├── actualizar.php
+│   │   │   └── eliminar.php
+│   │   │
+│   │   ├── documentos/
+│   │   │   ├── subir.php
+│   │   │   ├── listar.php
+│   │   │   ├── descargar.php
+│   │   │   └── eliminar.php
+│   │   │
+│   │   ├── citas/
+│   │   │   ├── crear.php
+│   │   │   ├── listar.php
+│   │   │   ├── cancelar.php
+│   │   │   └── modificar.php
+│   │   │
+│   │   ├── servicios/
+│   │   │   ├── crear.php
+│   │   │   ├── actualizar_estado.php
+│   │   │   └── listar.php
+│   │   │
+│   │   ├── notificaciones/
+│   │   │   ├── crear.php
+│   │   │   ├── listar.php
+│   │   │   └── marcar_leido.php
+│   │   │
+│   │   ├── mensajes/
+│   │   │   ├── enviar.php
+│   │   │   ├── listar.php
+│   │   │   └── conversacion.php
+│   │   │
+│   │   └── pagos/
+│   │       ├── registrar.php
+│   │       ├── listar.php
+│   │       └── detalle.php
+│   │
+│   ├── services/
+│   │   ├── FileService.php
+│   │   ├── EmailService.php
+│   │   └── NotificationService.php
+│   │
+│   ├── middleware/
+│   │   ├── auth.php
+│   │   └── roles.php
+│   │
+│   └── utils/
+│       ├── response.php
+│       └── validator.php
+│
+├── frontend/
+│   ├── pages/
+│   │   ├── auth/
+│   │   │   ├── login.html
+│   │   │   └── register.html
+│   │   │
+│   │   ├── cliente/
+│   │   │   ├── dashboard.html
+│   │   │   ├── documentos.html
+│   │   │   ├── citas.html
+│   │   │   └── servicios.html
+│   │   │
+│   │   ├── asesor/
+│   │   │   ├── dashboard.html
+│   │   │   ├── clientes.html
+│   │   │   ├── documentos.html
+│   │   │   └── citas.html
+│   │   │
+│   │   └── admin/
+│   │       ├── dashboard.html
+│   │       ├── usuarios.html
+│   │       └── reportes.html
+│   │
+│   ├── js/
+│   │   ├── api/
+│   │   │   ├── auth.js
+│   │   │   ├── documentos.js
+│   │   │   ├── citas.js
+│   │   │   └── servicios.js
+│   │   │
+│   │   ├── views/
+│   │   │   ├── documentosView.js
+│   │   │   ├── citasView.js
+│   │   │   └── dashboardView.js
+│   │   │
+│   │   └── utils/
+│   │       └── helpers.js
+│   │
+│   └── css/
+│       └── styles.css
+│
+├── storage/
+│   ├── documentos/
+│   ├── temporales/
+│   └── respaldos/
+│
+├── database/
+│   ├── schema.sql
+│   ├── seed.sql
+│   └── migrations/
+│
+├── docs/
+│   ├── arquitectura.md
+│   ├── modulos.md
+│   ├── endpoints.md
+│   ├── base_datos.md
+│   └── flujo_sistema.md
+│
+├── scripts/
+│   ├── enviar_correos.php
+│   ├── limpiar_logs.php
+│   └── backups.php
+│
+├── logs/
+│
+├── .gitignore
+│
+└── README.md
