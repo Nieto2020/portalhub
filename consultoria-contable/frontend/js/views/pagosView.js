@@ -31,14 +31,16 @@ Tab_PagosFaltantes.onclick = () =>{
 
 /*CARGA DE DATOS EN LAS TABLAS */
 
-const TablaHistoria = document.getElementById("HistorialPagos-Consultancy");
+const TablaHistorial = document.getElementById("HistorialPagos-Consultancy");
+const TablaFaltantes = document.getElementById("pagosFaltantes-Consultancy");
 function CargarTablasPagos(){
 
     const DatosSimulados = [
 
         {
-        tipo_de_pago: "IVA",
+        tipo: "IVA",
         fecha: "30/12/2025",
+        fecha_limite : "12/12/2026",
         cantidad :"$3200",
         estado : "Aprobado"
     },
@@ -46,14 +48,42 @@ function CargarTablasPagos(){
     {
         tipo: "ISR",
         fecha: "15/01/2026",
+         fecha_limite : "12/12/2026",
         cantidad: "$1500",
         estado: "Pendiente"
     }
-    
 ];
 
+DatosSimulados.forEach(pago =>{
+    const fila_pago = document.createElement("tr");
+    const fila_faltante = document.createElement("tr");
+    let claseExtra = "";
 
+    if (pago.estado === "Aprobado") {
+        claseExtra = "aprobado"; 
+    } else if (pago.estado === "Pendiente") {
+        claseExtra = "pendiente";
+    } else if (pago.estado === "Vencido") {
+        claseExtra = "vencido";
+    }
 
+    fila_pago.innerHTML = `<td>${pago.tipo}</td>
+                            <td>${pago.fecha}</td>
+                            <td>${pago.cantidad}</td>
+                            <td><span class="status ${claseExtra}">${pago.estado}</span></td>
+                            <td><i class="bx bx-eye" style="color: white;"></i></td>`
 
-
+                            fila_faltante.innerHTML = `
+                             <td>${pago.tipo}</td>
+                            <td>${pago.fecha_limite}</td>
+                            <td><span class="status ${claseExtra}">${pago.estado}</span></td>
+                            <td> <i class="bx bx-alert-circle" /></i> 
+                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
+                            </td>
+                            `;
+                            TablaHistorial.appendChild(fila_pago);
+                            TablaFaltantes.appendChild(fila_faltante);
+});
 }
+
+CargarTablasPagos();
