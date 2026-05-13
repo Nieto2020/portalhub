@@ -1,11 +1,8 @@
 <?php
-$host = "localhost";
-$db_name = "portalcliente";
-$username = "root";
-$password = "";
+require_once "config.php";
 
 try {
-    $conexion = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
+    $conexion = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conexion->exec("set names utf8");
 } catch(PDOException $exception) {
