@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Consultoría Contable</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --error-color: #e74c3c;
+            --bg-color: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .login-header p {
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #1a252f;
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .message.error {
+            background-color: #fdeaea;
+            color: var(--error-color);
+            display: block;
+        }
+
+        .message.success {
+            background-color: #eafaf1;
+            color: #27ae60;
+            display: block;
+        }
+
+        .footer-links {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-header">
+        <h1>Bienvenido</h1>
+        <p>Portal de Consultoría Contable</p>
+    </div>
+
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn-login">Iniciar Sesión</button>
+    </form>
+
+    <div id="responseMessage" class="message"></div>
+
+    <div class="footer-links">
+        <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const correo = document.getElementById('correo').value;
+        const password = document.getElementById('password').value;
+        const messageDiv = document.getElementById('responseMessage');
+
+        messageDiv.className = 'message';
+        messageDiv.textContent = 'Procesando...';
+        messageDiv.style.display = 'block';
+
+        try {
+            const response = await fetch('../../../backend/modules/auth/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ correo, password })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                messageDiv.className = 'message success';
+                messageDiv.textContent = '¡Éxito! Redirigiendo...';
+                
+                // Simulación de redirección según el rol
+                setTimeout(() => {
+                    const rol = result.data.id_rol;
+                    if (rol == 1) window.location.href = '../admin/dashboard.html';
+                    else if (rol == 2) window.location.href = '../asesor/dashboard.html';
+                    else window.location.href = '../cliente/dashboard.html';
+                }, 1500);
+            } else {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = result.message || 'Error al iniciar sesión';
+            }
+        } catch (error) {
+            messageDiv.className = 'message error';
+            messageDiv.textContent = 'Error de conexión con el servidor';
+            console.error('Error:', error);
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@
     <title>Dashboard - Consultancy</title>
 
     <!--CSS-->
-    <link rel="stylesheet" href="/consultoria-contable/frontend/css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <!--ICONS-->
     <!-- Basic Icons -->
@@ -19,14 +19,14 @@
 <body>
     
     <header class="navbar">
-        <div class="logo"><img src="/consultoria-contable/frontend/css/img/logo.png" alt=""></div>
+        <div class="logo"><img src="../../css/img/logo.png" alt=""></div>
 
         <nav>
             <ul class="nav-links">
-                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html" class="active">Inicio</a></li>
-                <li><a href="">Mis Declaraciones</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html">Documentos</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html">Pagos</a></li>
+                <li><a href="dashboard.html" class="active">Inicio</a></li>
+                <li><a href="mis_declaraciones.html">Mis Declaraciones</a></li>
+                <li><a href="documentos.html">Documentos</a></li>
+                <li><a href="pagos.html">Pagos</a></li>
                 <li><a href="">Tareas</a></li>
                 <li><a href="">Reportes</a></li>
                 <li><a href="">Perfil</a></li>
@@ -106,6 +106,7 @@
     </div>
 </body>
 
-<script src="/consultoria-contable/frontend/js/api/servicios.js"></script>
-<script src="/consultoria-contable/frontend/js/views/dashboardView.js"></script>
+<script src="../../js/utils/sessionCheck.js"></script>
+<script src="../../js/api/servicios.js"></script>
+<script src="../../js/views/dashboardView.js"></script>
 </html>

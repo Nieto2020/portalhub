@@ -3,43 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Documentos</title>
+    <title>Documentos - Consultancy</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/documentos_cliente.css">
 
-     <!--CSS-->
-     <link rel="stylesheet" href="/consultoria-contable/frontend/css/documentos_cliente.css">
-
-    <!--ICONS-->
-    <!-- Basic Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
-<!-- Filled Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
-<!-- Brand Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    <!-- ICONS -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
 </head>
 <body>
     
- <header class="navbar">
-        <div class="logo"><img src="/consultoria-contable/frontend/css/img/logo.png" alt=""></div>
-
+    <header class="navbar">
+        <div class="logo"><img src="../../css/img/logo.png" alt="Consultancy"></div>
         <nav>
             <ul class="nav-links">
-                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
-                <li><a href="">Mis Declaraciones</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html"  class="active">Documentos</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html">Pagos</a></li>
+                <li><a href="dashboard.html">Inicio</a></li>
+                <li><a href="mis_declaraciones.html">Mis Declaraciones</a></li>
+                <li><a href="documentos.html" class="active">Documentos</a></li>
+                <li><a href="pagos.html">Pagos</a></li>
                 <li><a href="">Tareas</a></li>
                 <li><a href="">Reportes</a></li>
                 <li><a href="">Perfil</a></li>
                 <li><a href="">Ayuda</a></li>
             </ul>
         </nav>
-
     </header>
 
-    <!--CONTENIDO-->
-<div class="container-documentos">
-
+    <div class="container-documentos">
         <div class="acciones-documentos">
             <ul class="tabs-principales">
                 <li class="tab-item active" id="tab-subir">Subir Documentos</li>
@@ -49,282 +41,16 @@
 
         <section class="seccion-contenido active" id="seccion-carga">
             <div class="card-blanca">
-                <div class="card-header-flex">
-                    <h4>Carga de Documentos <i class='bx bx-chevron-down'></i></h4>
-                </div>
-
-                <div class="sub-nav-container">
-                    <button class="sub-nav-btn active" id="btn-sub-facturas">
-                        <i class='bx bx-file-blank'></i> Facturas XML
-                    </button>
-                    <button class="sub-nav-btn" id="btn-sub-bancos">
-                        <i class='bx bx-stats'></i> Estados de Cuenta
-                    </button>
-                    <button class="sub-nav-btn" id="btn-sub-nomina">
-                        <i class='bx bx-id-card'></i> Recibos de Nómina
-                    </button>
-                </div>
-
-                <div id="cont-facturas">
+                <h4>Carga de Documentos</h4>
                 <div class="upload-dropzone">
-    <i class='bx bx-cloud-upload' style="font-size: 48px; color: #5a73b3;"></i>
-    <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
-    <p id="dropzone-text">
-        <label for="factura-XML" class="btn-link">Seleccionar Archivos</label>
-    </p>
-    <input type="file" id="factura-XML" hidden>
-</div>
-
-<button type="button" id="btn-subir-archivo" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 30px; background: var(--morado);">
-    <i class='bx bx-upload'></i> Subir Documento a Revisión
-</button>
-
-                <div class="tips-box">
-                    <p><i class='bx bx-bulb'></i> <strong>Tips:</strong> Asegúrate de que el XML sea de la versión 4.0 vigente.</p>
-                    <p><i class='bx bx-info-circle'></i> <strong>Conceptos:</strong> Solo se aceptan archivos con extensión .xml y .pdf.</p>
-                    <p><i class='bx bx-check-shield'></i> <strong>Validación:</strong> Los archivos serán revisados por tu contador asignado.</p>
-                </div>
-
-                <div class="table-container">
-                    <table class="tabla-consultancy">
-                        <thead>
-                            <tr>
-                                <th>Archivo</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-carga-cuerpo">
-                            <tr>
-                                <td>Factura_1234.xml</td>
-                                <td><span class="status aprobado">✅ Aprobado</span></td>
-                                <td><button class="btn-tabla secondary"><i class="bx bx-eye" /></i></button>
-                                 <button class="btn-tabla delete"><i class="bx bx-trash-x" /></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>EstadoCuenta_Dic.pdf</td>
-                                <td><span class="status observado">🔴 Observado</span></td>
-                                <td><button class="btn-tabla secondary"><i class="bx bx-eye" /></i></button>
-                                    <button class="btn-tabla delete"><i class="bx bx-trash-x" /></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-                <!--Estado de Cuenta-->
-
-    <section id="cont-bancos" class="sub-seccion-contenido" style="display: none;" >
-    <div class="card-blanca">
-        <div class="card-header-flex">
-            <h4>Conciliación Bancaria <i class='bx bxs-bank'></i></h4>
-            <p class="subtitle">Sube los estados de cuenta mensuales para validar tus saldos.</p>
-        </div>
-
-        <div class="form-bancario">
-            <div class="filter-group">
-                <label for="select-banco">Banco:</label>
-                <select id="select-banco" class="input-standard">
-                    <option value="">Selecciona tu banco...</option>
-                    <option value="bbva">BBVA</option>
-                    <option value="santander">Santander</option>
-                    <option value="banamex">Citibanamex</option>
-                    <option value="otro">Otro</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="mes-estado">Mes del Estado:</label>
-                <input type="month" id="mes-estado" class="input-standard">
-            </div>
-        </div>
-
-       
-       <div class="upload-dropzone bank-zone" id="dropzone-bancos">
-    <i class='bx bxs-file-pdf' style="font-size: 48px; color: #e53e3e;"></i>
-    <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
-    <p id="text-upload-bancos">
-        <label for="input-banco" class="btn-link">Explorar Archivos</label>
-    </p>
-    <input type="file" id="input-banco" accept=".pdf" hidden>
-</div>
-
-        <button type="button" id="btn-subir-banco" class="btn-tabla" style="margin: 0 auto 20px; padding: 12px 40px; background: var(--morado);">
-            <i class='bx bx-cloud-upload'></i> Enviar a Revisión Bancaria
-        </button>
-
-        <div class="tips-box" style="border-left-color: #e53e3e; background-color: #fff5f5;">
-            <p><i class='bx bx-info-circle'></i> <strong>Importante:</strong> El archivo debe ser el documento completo (incluyendo la carátula de movimientos).</p>
-            <p><i class='bx bx-lock-open-alt'></i> <strong>Seguridad:</strong> Si el PDF tiene contraseña, por favor quítala antes de subirlo.</p>
-        </div>
-
-        <div class="table-container">
-            <table class="tabla-consultancy">
-                <thead>
-                    <tr>
-                        <th>Institución</th>
-                        <th>Periodo</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-bancos-cuerpo">
-                    <tr>
-                        <td><strong>BBVA</strong> (Terminación 4522)</td>
-                        <td>Marzo 2026</td>
-                        <td><span class="status aprobado">✅ Conciliado</span></td>
-                        <td class="acciones-cell">
-                            <button class="btn-tabla secondary"><i class="bx bx-eye"></i></button>
-                            <button class="btn-tabla delete"><i class='bx bx-trash'></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-
-<!--Recibos de Nomina-->
-
-<div id="cont-nomina" style="display: none;">
-
-    <div class="card-header-flex">
-        <h4>Gestion de Nomina</h4>
-        <p class="suntitle">Sube los recibos de pago timbrados de tus colaboradores.</p>    
-    </div>
-
-    <div class="form-bancario">
-        <div class="filter-group">
-            <label for="tipo-nomina">Tipo de Nomina:</label>
-            <select name="" id="tipo-nomina" class="input-standard">
-                <option value="ordinaria">Sueldos Ordinarios</option>
-                <option value="extraordinaria">Bonos / Aguinaldo</option>
-                <option value="finiquito">Finiquitos / Liquidaciones</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label for="periodo-nomina">Mes de Nomina:</label>
-            <input type="month" id="periodo-nomina" class="input-standard">
-        </div>
-    </div>
-
-    <div class="upload-dropzone" id="dropzone-nomina" style="border-color: var(--azul-accion);">
-       <i class='bx bx-group' style="font-size: 48px; color: var(--azul-accion);"></i> 
-      <p id="text-upload-nomina"> 
-    <label for="input-nomina" class="btn-link">Explorar Archivos</label>
-</p>
-<input type="file" id="input-nomina" multiple hidden>
-       
-    </div>
-
-    <button type="button" id="btn-subir-nomina" class="btn-tabla" style="margin: 20px auto; display: block; padding: 12px 40px; background: var(--morado);"><i class='bx bx-check-shield'></i> Enviar Nómina a Validar</button>
-
-    <div class="tips-box" style="border-left-color: var(--azul-accion);">
-        <p><i class='bx bx-help-circle'></i> <strong>Tip:</strong> Puedes subir varios archivos a la vez seleccionándolos todos.</p>
-        <p><i class='bx bx-time-five'></i> <strong>Recordatorio:</strong> Tienes hasta el día 10 del mes para reportar las retenciones de nómina.</p>
-    </div>
-
-    <div class="table-container">
-        <table class="tabla-consultancy">
-            <thead>
-                <tr>
-                    <th>Concepto</th>
-                     <th>Periodo</th>
-                       <th>Estado</th>
-                       <th>Acciones</th>
-                </tr>
-            </thead>
-
-            <tbody id="tabla-nomina-cuerpo">
-                <tr>
-                    <td><strong>Nomina ordinaria</strong></td>
-                    <td>Abril 2026</td>
-                    
-                    <td><span class="status aprobado">✅ Procesada</span></td>
-                    <td class="acciones-cell">
-                    <button class="btn-tabla secondary"><i class="bx bx-eye"></i></button>
-                    <button class="btn-tabla delete"><i class='bx bx-trash'></i></button>
-                </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-</div>
-
-        </section>
-
-        <!--Repositorio-->
-        <section class="seccion-contenido" id="seccion-repo" style="display: none;">
-            <div class="card-blanca">
-                <h4>Mis Documentos (Repositorio)</h4>
-                
-                <!--filtros-->
-                <div class="filtros-archivos">
-                    <form class="repo-filtros">
-                        <div class="filter-group">
-                            <label>Mes:</label>
-                            <select name="" id="mes-filtro" class="input-standard">
-                                <option value="Enero">Enero</option>
-                                 <option value="Febrero">Febrero</option>
-                                 <option value="Marzo">Marzo</option>
-                                 <option value="Abril">Abril</option>
-                                 <option value="Mayo">Mayo</option>
-                                 <option value="Junio">Junio</option>
-                                 <option value="Julio">Julio</option>
-                                 <option value="Agosto">Agosto</option>
-                                 <option value="Septiembre">Septiembre</option>
-                                 <option value="Octubre">Octubre</option>
-                                 <option value="Noviembre">Noviembre</option>
-                                 <option value="Diciembre">Diciembre</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label>Tipo:</label>
-                            <select name="" id="tipo-documento" class="input-standard">
-                                <option value="Factura XML">Factura XML</option>
-                                <option value="Estado de Cuenta">Estado de Cuenta</option>
-                                <option value="Recibos de Nomina">Recibos de Nomina</option>
-                            </select>
-                        </div>
-
-
-                        <button type="button" class="btn-filter" id="btn-ejecutar-filtro" ><i class="bx bx-search-big" /></i></button>
-                        <button type="reset" class="btn-clean" id="btn-limpiar-filtro"><i class="bx bx-x" /></i></button>
-                    </form>
-                </div>
-
-
-                <!--Tabla del Repositorio-->
-                <div class="table-container">
-                    <table class="tabla-consultancy">
-                        <thead>
-                            <tr>
-                                <th>Archivo</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-repo-cuerpo" >
-                            <tr>
-                                <td>Factura_Noviembre.xml</td>
-                                <td>15/11/2025</td>
-                                <td><i href="#" class="link-accion"><i class="bx bx-arrow-to-bottom-stroke" /></i> </a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <p>Seleccionar Archivos</p>
                 </div>
             </div>
         </section>
-
     </div>
 
-
-
+    <!-- JS -->
+    <script src="../../js/utils/sessionCheck.js"></script>
+    <script src="../../js/views/documentosView.js"></script>
 </body>
-<!--JS-->
-<script src="/consultoria-contable/frontend/js/views/documentosView.js"></script>
 </html>

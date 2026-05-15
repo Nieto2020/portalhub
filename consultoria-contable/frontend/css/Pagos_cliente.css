@@ -126,7 +126,9 @@ body {
     overflow-x: auto;
 }
 
-#mostrar-pagosFaltantes{
+
+
+ #mostrar-pagosFaltantes{
     width: 100%;
     border-collapse: collapse !important;
     margin-top: 10px;
