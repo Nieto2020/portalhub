@@ -16,7 +16,7 @@ if (!validateRequired($data, ['correo', 'password'])) {
     sendResponse(400, "Faltan campos requeridos");
 }
 
-$correo = $data['correo'];
+$correo = trim($data['correo']);
 $password = $data['password'];
 
 try {
@@ -35,6 +35,7 @@ try {
     # Establecer sesión
     $_SESSION['id_usuario'] = $usuario['id_usuario'];
     $_SESSION['id_rol'] = $usuario['id_rol'];
+    $_SESSION['ultima_actividad'] = time();
 
     # Enviar respuesta exitosa con información del usuario
     sendResponse(200, "Inicio de sesión exitoso", [

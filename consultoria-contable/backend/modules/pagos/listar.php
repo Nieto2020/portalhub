@@ -1,7 +1,9 @@
 <<?php
-
 require_once "../../config/conexion.php";
+require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
+
+checkAuth();
 
 try {
 

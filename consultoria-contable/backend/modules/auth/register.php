@@ -1,7 +1,11 @@
 <?php
 require_once "../../config/conexion.php";
+require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 require_once "../../utils/validator.php";
+
+# Solo Administradores pueden registrar nuevos usuarios
+checkRole([1]);
 
 # Verificar que la solicitud sea POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
