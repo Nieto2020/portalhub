@@ -6,26 +6,25 @@
     <title>Mis Declaraciones - Consultancy</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/consultoria-contable/frontend/css/mis-declaraciones.css">
+    <link rel="stylesheet" href="../../css/mis-declaraciones.css">
 
-    <!-- Boxicons (igual que el resto del proyecto) -->
+    <!-- Boxicons -->
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
     <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
     <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <!-- ── NAVBAR ── -->
     <header class="navbar">
         <div class="logo">
-            <img src="/consultoria-contable/frontend/css/img/logo.png" alt="Consultancy Servicios Contables">
+            <img src="../../css/img/logo.png" alt="Consultancy">
         </div>
         <nav>
             <ul class="nav-links">
-                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/mis-declaraciones.html" class="active">Mis Declaraciones</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html">Documentos</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html">Pagos</a></li>
+                <li><a href="dashboard.html">Inicio</a></li>
+                <li><a href="mis_declaraciones.html" class="active">Mis Declaraciones</a></li>
+                <li><a href="documentos.html">Documentos</a></li>
+                <li><a href="pagos.html">Pagos</a></li>
                 <li><a href="">Tareas</a></li>
                 <li><a href="">Reportes</a></li>
                 <li><a href="">Perfil</a></li>
@@ -34,43 +33,21 @@
         </nav>
     </header>
 
-    <!-- ── CONTENIDO ── -->
     <div class="container-declaraciones">
-
-        <!-- Tabs principales -->
         <div class="acciones-declaraciones">
             <ul class="tabs-principales">
-                <li class="tab-item active"  id="tab-mensuales">Mensuales</li>
-                <li class="tab-item"         id="tab-anual">Anual</li>
-                <li class="tab-item"         id="tab-historial">Historial</li>
+                <li class="tab-item active" id="tab-mensuales">Mensuales</li>
+                <li class="tab-item" id="tab-anual">Anual</li>
+                <li class="tab-item" id="tab-historial">Historial</li>
             </ul>
         </div>
 
-
-        <!-- ══════════════════════════════════════
-             SECCIÓN: MENSUALES
-        ══════════════════════════════════════ -->
         <section class="seccion-declaracion active card-blanca" id="seccion-mensuales">
-
             <div class="declaraciones-toolbar">
-                <h4>
-                    Declaraciones Mensuales
-                    <i class='bx bx-chevron-down'></i>
-                </h4>
-                <div class="filter-inline">
-                    <label for="filtro-periodo">Filtrar:</label>
-                    <select id="filtro-periodo">
-                        <option>Enero 2024</option>
-                        <option>Diciembre 2023</option>
-                        <option>Noviembre 2023</option>
-                        <option>Octubre 2023</option>
-                        <option>Septiembre 2023</option>
-                    </select>
-                </div>
+                <h4>Declaraciones Mensuales <i class='bx bx-chevron-down'></i></h4>
             </div>
-
             <div class="table-container">
-                <table class="tabla-consultancy" aria-label="Declaraciones mensuales">
+                <table class="tabla-consultancy">
                     <thead>
                         <tr>
                             <th>Periodo</th>
@@ -79,394 +56,39 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        <!-- Pendiente -->
                         <tr>
-                            <td class="col-periodo" data-label="Periodo">Enero 2024</td>
-                            <td data-label="Estado">
-                                <span class="status pendiente">
-                                    <span class="status-ic pendiente">
-                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                                            <path d="M5.5 2v7M2 5.5h7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                    Pendiente
-                                </span>
-                            </td>
-                            <td data-label="Acciones">
-                                <div class="acciones-cell">
-                                    <button class="btn-tabla primary">
-                                        <i class='bx bx-upload'></i> Subir Documentos
-                                    </button>
-                                    <div class="btn-split azul">
-                                        <button class="split-main">
-                                            <i class='bx bx-file-blank'></i> Ver Borrador
-                                        </button>
-                                        <button class="split-arrow" aria-label="Más opciones">
-                                            <i class='bx bx-chevron-down'></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
+                            <td>Enero 2024</td>
+                            <td><span class="status pendiente">Pendiente</span></td>
+                            <td><button class="btn-tabla primary">Subir Documentos</button></td>
                         </tr>
-
-                        <!-- En Revisión -->
-                        <tr>
-                            <td class="col-periodo" data-label="Periodo">Diciembre 2023</td>
-                            <td data-label="Estado">
-                                <span class="status revision">
-                                    <span class="status-ic revision">
-                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </span>
-                                    En Revisión
-                                </span>
-                            </td>
-                            <td data-label="Acciones">
-                                <div class="acciones-cell">
-                                    <button class="btn-tabla secondary">
-                                        <i class='bx bx-list-check'></i> Ver Checklist
-                                    </button>
-                                    <div class="btn-split morado">
-                                        <button class="split-main">
-                                            <i class='bx bx-file-blank'></i> Ver Borrador
-                                        </button>
-                                        <button class="split-arrow" aria-label="Más opciones">
-                                            <i class='bx bx-chevron-down'></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Lista para firma -->
-                        <tr>
-                            <td class="col-periodo" data-label="Periodo">Noviembre 2023</td>
-                            <td data-label="Estado">
-                                <span class="status firma">
-                                    <span class="status-ic firma">
-                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                                            <path d="M2 9l1.5-1.5 4.5-4.5 1.5 1.5-4.5 4.5L2 9z" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M7 2.5l1.5 1.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                    Lista para firma
-                                </span>
-                            </td>
-                            <td data-label="Acciones">
-                                <div class="acciones-cell">
-                                    <button class="btn-tabla">
-                                        <i class='bx bx-check-circle'></i> Aprobar
-                                    </button>
-                                    <div class="btn-split azul">
-                                        <button class="split-main">
-                                            <i class='bx bx-file-blank'></i> Ver Borrador
-                                        </button>
-                                        <button class="split-arrow" aria-label="Más opciones">
-                                            <i class='bx bx-chevron-down'></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Presentada -->
-                        <tr>
-                            <td class="col-periodo" data-label="Periodo">Octubre 2023</td>
-                            <td data-label="Estado">
-                                <span class="status presentada">
-                                    <span class="status-ic presentada">
-                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </span>
-                                    Presentada
-                                </span>
-                            </td>
-                            <td data-label="Acciones">
-                                <div class="acciones-cell">
-                                    <div class="btn-split azul">
-                                        <button class="split-main">
-                                            <i class='bx bx-file-blank'></i> Ver Acuse
-                                        </button>
-                                        <button class="split-arrow" aria-label="Más opciones">
-                                            <i class='bx bx-chevron-down'></i>
-                                        </button>
-                                    </div>
-                                    <div class="btn-split morado">
-                                        <button class="split-main">
-                                            <i class='bx bx-download'></i> Descargar
-                                        </button>
-                                        <button class="split-arrow" aria-label="Más opciones">
-                                            <i class='bx bx-chevron-down'></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Pagada -->
-                        <tr>
-                            <td class="col-periodo" data-label="Periodo">Septiembre 2023</td>
-                            <td data-label="Estado">
-                                <span class="status pagada">
-                                    <span class="status-ic pagada">
-                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </span>
-                                    Pagada
-                                </span>
-                            </td>
-                            <td data-label="Acciones">
-                                <div class="acciones-cell">
-                                    <button class="btn-tabla secondary">
-                                        <i class='bx bx-eye'></i> Ver Acuse
-                                    </button>
-                                    <button class="btn-tabla secondary">
-                                        <i class='bx bx-receipt'></i> Ver Pago
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Cerrada -->
-                        <tr>
-                            <td class="col-periodo" data-label="Periodo">Agosto 2023</td>
-                            <td data-label="Estado">
-                                <span class="status cerrada">
-                                    <span class="status-ic cerrada">
-                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </span>
-                                    Cerrada
-                                </span>
-                            </td>
-                            <td data-label="Acciones">
-                                <div class="acciones-cell">
-                                    <button class="btn-tabla secondary">
-                                        <i class='bx bx-eye'></i> Ver Acuse
-                                    </button>
-                                    <button class="btn-tabla secondary">
-                                        <i class='bx bx-download'></i> Descargar
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>
-
         </section>
-
-
-        <!-- ══════════════════════════════════════
-             SECCIÓN: ANUAL
-        ══════════════════════════════════════ -->
-        <section class="seccion-declaracion card-blanca" id="seccion-anual">
-
-            <div class="declaraciones-toolbar">
-                <h4>
-                    Declaración Anual 2023
-                    <i class='bx bx-chevron-down'></i>
-                </h4>
-                <div class="filter-inline">
-                    <label for="filtro-anio">Año:</label>
-                    <select id="filtro-anio">
-                        <option>2023</option>
-                        <option>2022</option>
-                        <option>2021</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Línea de tiempo -->
-            <div class="timeline-anual" role="list" aria-label="Progreso declaración anual">
-
-                <div class="tl-step done" role="listitem">
-                    <div class="tl-dot">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="tl-label">Recolección<br>docs</div>
-                </div>
-
-                <div class="tl-step done" role="listitem">
-                    <div class="tl-dot">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="tl-label">Prellenado</div>
-                </div>
-
-                <div class="tl-step current" role="listitem">
-                    <div class="tl-dot">3</div>
-                    <div class="tl-label">Conciliación</div>
-                </div>
-
-                <div class="tl-step" role="listitem">
-                    <div class="tl-dot">4</div>
-                    <div class="tl-label">Declaración</div>
-                </div>
-
-                <div class="tl-step" role="listitem">
-                    <div class="tl-dot">5</div>
-                    <div class="tl-label">Pago</div>
-                </div>
-
-            </div>
-
-            <!-- Footer del panel anual -->
-            <div class="timeline-footer">
-                <span class="status revision">
-                    <span class="status-ic revision">
-                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    Conciliación en proceso
-                </span>
-                <div class="acciones-cell">
-                    <button class="btn-tabla">
-                        <i class='bx bx-list-check'></i> Ver Checklist Anual
-                    </button>
-                    <button class="btn-tabla secondary">
-                        <i class='bx bx-file-blank'></i> Ver Borrador
-                    </button>
-                    <button class="btn-tabla secondary">
-                        <i class='bx bx-check-shield'></i> Validar información
-                    </button>
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- ══════════════════════════════════════
-             SECCIÓN: HISTORIAL
-        ══════════════════════════════════════ -->
-        <section class="seccion-declaracion card-blanca" id="seccion-historial">
-
-            <div class="declaraciones-toolbar">
-                <h4>
-                    Historial
-                    <i class='bx bx-chevron-down'></i>
-                </h4>
-                <div class="filter-inline">
-                    <label for="filtro-his-anio">Año:</label>
-                    <select id="filtro-his-anio">
-                        <option>Todos los años</option>
-                        <option>2023</option>
-                        <option>2022</option>
-                        <option>2021</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="historial-row">
-                <div>
-                    <div class="historial-periodo">Diciembre 2023</div>
-                    <div class="historial-meta">Mensual · ISR + IVA</div>
-                </div>
-                <div class="acciones-cell">
-                    <span class="status pagada">
-                        <span class="status-ic pagada"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                        Pagada
-                    </span>
-                    <button class="btn-tabla secondary"><i class='bx bx-file-blank'></i> Acuse</button>
-                    <button class="btn-tabla secondary"><i class='bx bx-download'></i> PDF</button>
-                </div>
-            </div>
-
-            <div class="historial-row">
-                <div>
-                    <div class="historial-periodo">Noviembre 2023</div>
-                    <div class="historial-meta">Mensual · ISR + IVA</div>
-                </div>
-                <div class="acciones-cell">
-                    <span class="status pagada">
-                        <span class="status-ic pagada"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                        Pagada
-                    </span>
-                    <button class="btn-tabla secondary"><i class='bx bx-file-blank'></i> Acuse</button>
-                    <button class="btn-tabla secondary"><i class='bx bx-download'></i> PDF</button>
-                </div>
-            </div>
-
-            <div class="historial-row">
-                <div>
-                    <div class="historial-periodo">Anual 2022</div>
-                    <div class="historial-meta">Declaración anual · ISR</div>
-                </div>
-                <div class="acciones-cell">
-                    <span class="status cerrada">
-                        <span class="status-ic cerrada"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                        Cerrada
-                    </span>
-                    <button class="btn-tabla secondary"><i class='bx bx-file-blank'></i> Acuse</button>
-                    <button class="btn-tabla secondary"><i class='bx bx-download'></i> Papel de trabajo</button>
-                </div>
-            </div>
-
-            <div class="historial-row">
-                <div>
-                    <div class="historial-periodo">Octubre 2023</div>
-                    <div class="historial-meta">Mensual · ISR + IVA</div>
-                </div>
-                <div class="acciones-cell">
-                    <span class="status cerrada">
-                        <span class="status-ic cerrada"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                        Cerrada
-                    </span>
-                    <button class="btn-tabla secondary"><i class='bx bx-file-blank'></i> Acuse</button>
-                    <button class="btn-tabla secondary"><i class='bx bx-download'></i> PDF</button>
-                </div>
-            </div>
-
-            <!-- Estado vacío — descomentar si no hay resultados -->
-            <!--
-            <div class="empty-state">
-                <i class='bx bx-folder-open'></i>
-                <p>Sin declaraciones en este periodo</p>
-                <span>Selecciona otro año para ver resultados.</span>
-            </div>
-            -->
-
-        </section>
-
-    </div><!-- /container-declaraciones -->
-
+    </div>
 
     <!-- JS -->
-    <script src="/consultoria-contable/frontend/js/views/declaracionesView.js"></script>
+    <script src="../../js/utils/sessionCheck.js"></script>
+    <script src="../../js/views/declaracionesView.js"></script>
 
     <script>
-        // Tab switching — mismo patrón que documentosView.js y pagosView.js
         const tabs = document.querySelectorAll('.tab-item');
         const secciones = document.querySelectorAll('.seccion-declaracion');
-
         const mapa = {
             'tab-mensuales': 'seccion-mensuales',
             'tab-anual':     'seccion-anual',
             'tab-historial': 'seccion-historial'
         };
 
-        tabs.forEach(function(tab) {
-            tab.addEventListener('click', function() {
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('active'));
                 secciones.forEach(s => s.classList.remove('active'));
-
                 tab.classList.add('active');
                 const target = document.getElementById(mapa[tab.id]);
                 if (target) target.classList.add('active');
             });
         });
     </script>
-
 </body>
 </html>

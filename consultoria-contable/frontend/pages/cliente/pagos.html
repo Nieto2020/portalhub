@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagos - Consultancy</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/Pagos_cliente.css">
 
-    <link rel="stylesheet" href="/consultoria-contable/frontend/css/Pagos_cliente.css">
-
-     <!--ICONS-->
-    <!-- Basic Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
-<!-- Filled Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
-<!-- Brand Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
-    <title>Pagos</title>
+    <!-- ICONS -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
 </head>
 <body>
 
-     <header class="navbar">
-        <div class="logo"><img src="/consultoria-contable/frontend/css/img/logo.png" alt=""></div>
-
+    <header class="navbar">
+        <div class="logo"><img src="../../css/img/logo.png" alt="Consultancy"></div>
         <nav>
             <ul class="nav-links">
-                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
-                <li><a href="">Mis Declaraciones</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html">Documentos</a></li>
-                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html" class="active">Pagos</a></li>
+                <li><a href="dashboard.html">Inicio</a></li>
+                <li><a href="mis_declaraciones.html">Mis Declaraciones</a></li>
+                <li><a href="documentos.html">Documentos</a></li>
+                <li><a href="pagos.html" class="active">Pagos</a></li>
                 <li><a href="">Tareas</a></li>
                 <li><a href="">Reportes</a></li>
                 <li><a href="">Perfil</a></li>
@@ -34,10 +31,7 @@
         </nav>
     </header>
 
-    <!--CONTENIDO-->
-
     <div class="container-pagos">
-
         <div class="acciones-pagos">
             <ul class="tabs-principales">
                 <li class="tab-item active" id="tab-pagos-faltantes">Pagos Faltantes</li>
@@ -46,98 +40,28 @@
         </div>
 
         <div class="card-blanca">
-        <section class="pagos-faltantes" id="pagos-faltantes">
-            
-            <div class="titulo-pagos">
-                <h1 class="titulo-pagos-faltantes">Pagos Faltantes:</h1>
-            </div>
-
-            <div class="tabla-pagos">
-                <table id="mostrar-pagosFaltantes">
+            <section class="pagos-faltantes" id="pagos-faltantes">
+                <h1>Pagos Faltantes</h1>
+                <table class="tabla-consultancy">
                     <thead>
                         <tr>
                             <th>Tipo de Pago</th>
-                             <th>Fecha Limite</th>
                             <th>Estado</th>
-                             <th>Acciones</th>
                         </tr>
                     </thead>
-
-                    <tbody id="pagosFaltantes-Consultancy">
-
+                    <tbody>
                         <tr>
-                            <td>ISR</td>
-                            <td>30/12/04</td>
+                            <td>Honorarios</td>
                             <td><span class="status pendiente">Pendiente</span></td>
-                            <td> <i class="bx bx-alert-circle" /></i> 
-                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>IVA</td>
-                            <td>31/12/04</td>
-                            <td><span class="status aprobado">Aprobado</span></td>
-                            <td> <i class="bx bx-alert-circle" /></i> 
-                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>ISR</td>
-                            <td>01/12/04</td>
-                            <td><span class="status vencido">Vencido</span></td>
-                            <td> <i class="bx bx-alert-circle" /></i> 
-                                 <i class="bx bx-arrow-to-bottom-stroke" /></i> 
-                            </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-        </section>
-
-        <!-- HISTORIAL DE PAGOS-->
-
-        <section class="HistorialPagos" id="HistorialPagos" style="display: none;">
-
-            <div class="titulo-HistorialPagos">
-                <h1 class="tituloHistorial-Pagos">Historial de Pagos</h1>
-            </div>
-
-            <div id="tabla-HistorialPagos">
-                <table class="tabla-HistorialPago">
-
-                    <thead>
-                        <tr>
-                            <th>Tipo de Pago</th>
-                            <th>Fecha de Creacion</th>
-                            <th>Cantidad</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="HistorialPagos-Consultancy">
-                        <tr>
-                            <td>ISR</td>
-                            <td>06/05/2026</td>
-                            <td>$3200</td>
-                            <td><span class="status aprobado">Aprobado</span></td>
-                            <td><i class="bx bx-eye" style="color: white;"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </section>
-
+            </section>
         </div>
-
     </div>
 
+    <!-- JS -->
+    <script src="../../js/utils/sessionCheck.js"></script>
+    <script src="../../js/views/pagosView.js"></script>
 </body>
-
-<!--JS-->
-<script src="/consultoria-contable/frontend/js/views/pagosView.js"></script>
 </html>
