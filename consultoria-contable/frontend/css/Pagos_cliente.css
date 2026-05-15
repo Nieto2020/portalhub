@@ -240,3 +240,100 @@ i {
     border-radius: 5px;
     padding: 10px;
 }
+
+/*MODAL */
+
+.modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.6) ;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content{
+    background-color: var(--blanco);
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer{
+    from{ opacity: 0; transform: translateY(-20px);}
+    from { opacity: 1; transform: translateY(0);}
+}
+
+.subir-comprobante {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 20px;
+    border: 2px dashed #ccc; 
+    border-radius: 10px;
+    min-height: 120px;
+}
+
+#btn-seleccionar{
+    
+    cursor: pointer;
+    color: var(--blanco);
+    border-style: none;
+    border-radius: 5px;
+    background-color: var(--azul-accion);
+    padding: 10px 20px;
+    font-weight: bold;
+    width: fit-content;
+    align-self: center;
+}
+
+#btn-seleccionar:hover{
+    background-color:#58a1c0;
+}
+
+#nombre-archivo{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: var(--texto);
+}
+
+#btn-subir {
+    background-color: var(--morado);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btn-cancelar{
+    background-color:#c53030;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btn-cancelar:hover{
+    background-color:#a22727;
+}
+
+#btn-subir:hover {
+    background-color: #712d7a; 
+}

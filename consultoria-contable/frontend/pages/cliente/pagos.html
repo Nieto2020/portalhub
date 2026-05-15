@@ -77,7 +77,7 @@
                         <tr>
                             <td>IVA</td>
                             <td>31/12/04</td>
-                            <td><span class="status aprobado">Aprobado</span></td>
+                            <td><span class="status pendiente">Pendiente</span></td>
                             <td> <i class="bx bx-alert-circle" /></i> 
                                  <i class="bx bx-arrow-to-bottom-stroke" /></i> 
                             </td>
@@ -86,7 +86,7 @@
                         <tr>
                             <td>ISR</td>
                             <td>01/12/04</td>
-                            <td><span class="status vencido">Vencido</span></td>
+                            <td><span class="status pendiente">Pendiente</span></td>
                             <td> <i class="bx bx-alert-circle" /></i> 
                                  <i class="bx bx-arrow-to-bottom-stroke" /></i> 
                             </td>
@@ -134,6 +134,27 @@
 
         </div>
 
+    </div>
+
+    <!--MODAL-->
+
+    <div id="modal-container" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Subir Comprobante</h2>
+            <p>Seleccionar nuevo archivo</p>
+
+            <div class="subir-comprobante">
+                <input type="file" name="" id="comprobante" accept=".pdf" hidden>
+                
+                <span id="nombre-archivo">No se ha seleccionado archivo</span>
+                <button id="btn-seleccionar">Seleccionar Archivo</button>
+            </div>
+
+            <div class="modal-acciones">
+                <button id="btn-cancelar">Cancelar</button>
+                <button id="btn-subir" class="btn-principal">Subir Comprobante</button>
+            </div>
+        </div>
     </div>
 
 </body>
