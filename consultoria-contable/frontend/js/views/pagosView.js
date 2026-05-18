@@ -142,3 +142,5 @@ btn_subir.onclick = () => {
         cerrarModal();
     }
 };
+
+console.log("Si funciona")
