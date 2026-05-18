@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas y Solicitudes - Consultancy</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/consultoria-contable/frontend/css/tareas_cliente.css">
+
+    <!-- Boxicons (igual que el resto del proyecto) -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="/consultoria-contable/frontend/css/img/logo.png" alt="Consultancy Servicios Contables">
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/consultoria-contable/frontend/pages/cliente/dashboard.html">Inicio</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/mis-declaraciones.html">Mis Declaraciones</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/documentos.html">Documentos</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/pagos.html">Pagos</a></li>
+                <li><a href="/consultoria-contable/frontend/pages/cliente/tareas.html" class="active">Tareas</a></li>
+                <li><a href="">Reportes</a></li>
+                <li><a href="">Perfil</a></li>
+                <li><a href="">Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ── CONTENIDO ── -->
+    <div class="container-tareas">
+
+        <!-- Tabs principales -->
+        <div class="acciones-tareas">
+            <ul class="tabs-principales">
+                <li class="tab-item active" id="tab-tareas">Mis Tareas</li>
+                <li class="tab-item"        id="tab-solicitudes">Solicitudes</li>
+            </ul>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECCIÓN: MIS TAREAS
+        ══════════════════════════════════════ -->
+        <section class="seccion-tareas active card-blanca" id="seccion-tareas">
+
+            <div class="tareas-toolbar">
+                <h4>
+                    <i class='bx bx-task'></i>
+                    Tareas Asignadas
+                </h4>
+                <!-- Sin botón de acción: el cliente solo ejecuta, no crea tareas -->
+            </div>
+
+            <div class="tips-box">
+                <p><i class='bx bx-info-circle'></i> <strong>Recuerda:</strong> Estas tareas fueron asignadas por tu contador. Completa cada una antes de su fecha límite para evitar retrasos en tu declaración.</p>
+            </div>
+
+            <div class="table-container">
+                <table class="tabla-consultancy" aria-label="Tareas asignadas">
+                    <thead>
+                        <tr>
+                            <th>Tarea</th>
+                            <th>Prioridad</th>
+                            <th>Fecha límite</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-tareas-cuerpo">
+
+                        <!-- Tarea 1 — Pendiente, Alta -->
+                        <tr>
+                            <td data-label="Tarea">
+                                <div class="tarea-nombre">Subir CFDI de Marzo 2026</div>
+                                <div class="tarea-desc">Facturas XML emitidas y recibidas del periodo</div>
+                            </td>
+                            <td data-label="Prioridad">
+                                <span class="prioridad alta">
+                                    <i class='bx bxs-up-arrow'></i> Alta
+                                </span>
+                            </td>
+                            <td data-label="Fecha límite">
+                                <span class="fecha-limite urgente">
+                                    <i class='bx bx-calendar-x'></i> 17/05/2026
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status pendiente">
+                                    <span class="status-ic pendiente">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M5.5 2v7M2 5.5h7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    Pendiente
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <a href="/consultoria-contable/frontend/pages/cliente/documentos.html"
+                                       class="btn-tabla primary">
+                                        <i class='bx bx-upload'></i> Subir
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Tarea 2 — En proceso, Media -->
+                        <tr>
+                            <td data-label="Tarea">
+                                <div class="tarea-nombre">Confirmar datos del representante legal</div>
+                                <div class="tarea-desc">Verificar nombre, RFC y poder notarial vigente</div>
+                            </td>
+                            <td data-label="Prioridad">
+                                <span class="prioridad media">
+                                    <i class='bx bxs-right-arrow'></i> Media
+                                </span>
+                            </td>
+                            <td data-label="Fecha límite">
+                                <span class="fecha-limite proxima">
+                                    <i class='bx bx-calendar'></i> 22/05/2026
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status proceso">
+                                    <span class="status-ic proceso">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <circle cx="5.5" cy="5.5" r="3" stroke="#fff" stroke-width="1.5"/>
+                                        </svg>
+                                    </span>
+                                    En proceso
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-edit'></i> Revisar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Tarea 3 — Pendiente, Alta -->
+                        <tr>
+                            <td data-label="Tarea">
+                                <div class="tarea-nombre">Aprobar borrador declaración Abril 2026</div>
+                                <div class="tarea-desc">Revisar y aprobar el borrador preparado por tu contador</div>
+                            </td>
+                            <td data-label="Prioridad">
+                                <span class="prioridad alta">
+                                    <i class='bx bxs-up-arrow'></i> Alta
+                                </span>
+                            </td>
+                            <td data-label="Fecha límite">
+                                <span class="fecha-limite urgente">
+                                    <i class='bx bx-calendar-x'></i> 19/05/2026
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status pendiente">
+                                    <span class="status-ic pendiente">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M5.5 2v7M2 5.5h7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    Pendiente
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla primary">
+                                        <i class='bx bx-check-circle'></i> Aprobar
+                                    </button>
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-eye'></i> Ver
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Tarea 4 — Completada, Baja -->
+                        <tr>
+                            <td data-label="Tarea">
+                                <div class="tarea-nombre">Enviar estado de cuenta Febrero 2026</div>
+                                <div class="tarea-desc">Estado de cuenta BBVA del mes de febrero</div>
+                            </td>
+                            <td data-label="Prioridad">
+                                <span class="prioridad baja">
+                                    <i class='bx bxs-down-arrow'></i> Baja
+                                </span>
+                            </td>
+                            <td data-label="Fecha límite">
+                                <span class="fecha-limite">
+                                    <i class='bx bx-calendar-check'></i> 10/03/2026
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status completada">
+                                    <span class="status-ic completada">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    Completada
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-eye'></i> Ver
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Tarea 5 — Vencida -->
+                        <tr>
+                            <td data-label="Tarea">
+                                <div class="tarea-nombre">Subir recibos de nómina Enero 2026</div>
+                                <div class="tarea-desc">Recibos timbrados de todos los colaboradores</div>
+                            </td>
+                            <td data-label="Prioridad">
+                                <span class="prioridad alta">
+                                    <i class='bx bxs-up-arrow'></i> Alta
+                                </span>
+                            </td>
+                            <td data-label="Fecha límite">
+                                <span class="fecha-limite urgente">
+                                    <i class='bx bx-error-circle'></i> 10/02/2026
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status vencida">
+                                    <span class="status-ic vencida">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M2 2l7 7M9 2L2 9" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    Vencida
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <a href="/consultoria-contable/frontend/pages/cliente/documentos.html"
+                                       class="btn-tabla delete">
+                                        <i class='bx bx-upload'></i> Subir ahora
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- ══════════════════════════════════════
+             SECCIÓN: SOLICITUDES
+        ══════════════════════════════════════ -->
+        <section class="seccion-tareas card-blanca" id="seccion-solicitudes">
+
+            <div class="tareas-toolbar">
+                <h4>
+                    <i class='bx bx-support'></i>
+                    Mis Solicitudes
+                </h4>
+                <button class="btn-tabla primary" id="btn-nueva-solicitud">
+                    <i class='bx bx-plus'></i> Nueva Solicitud
+                </button>
+            </div>
+
+            <!-- Formulario nueva solicitud (oculto por defecto) -->
+            <div class="form-solicitud" id="form-solicitud">
+                <h5><i class='bx bx-edit-alt'></i> Crear Nueva Solicitud</h5>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tipo-solicitud">Tipo de solicitud</label>
+                        <select id="tipo-solicitud" class="input-standard">
+                            <option value="">Selecciona un tipo...</option>
+                            <option value="consulta">Consulta fiscal</option>
+                            <option value="correccion">Corrección de información</option>
+                            <option value="constancia">Carta constancia</option>
+                            <option value="urgente">Urgente</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="asunto-solicitud">Asunto</label>
+                        <input type="text" id="asunto-solicitud" class="input-standard"
+                               placeholder="Ej. Duda sobre deducción de gastos">
+                    </div>
+                </div>
+
+                <div class="form-grid full">
+                    <div class="form-group">
+                        <label for="desc-solicitud">Descripción</label>
+                        <textarea id="desc-solicitud" class="input-standard"
+                                  placeholder="Describe tu solicitud con el mayor detalle posible..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-tabla secondary" id="btn-cancelar-solicitud">
+                        <i class='bx bx-x'></i> Cancelar
+                    </button>
+                    <button class="btn-tabla primary" id="btn-enviar-solicitud">
+                        <i class='bx bx-send'></i> Enviar Solicitud
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="tips-box">
+                <p><i class='bx bx-bulb'></i> <strong>Tip:</strong> Para solicitudes urgentes usa el tipo "Urgente" y recibirás atención en menos de 24 hrs.</p>
+                <p><i class='bx bx-time-five'></i> <strong>SLA estimado:</strong> Consultas 48 hrs · Correcciones 72 hrs · Constancias 5 días hábiles.</p>
+            </div>
+
+            <!-- Tabla de solicitudes -->
+            <div class="table-container">
+                <table class="tabla-consultancy" aria-label="Solicitudes">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tipo</th>
+                            <th>Asunto</th>
+                            <th>SLA</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-solicitudes-cuerpo">
+
+                        <!-- Solicitud 1 — Abierta -->
+                        <tr>
+                            <td data-label="#">#1024</td>
+                            <td data-label="Tipo">Consulta fiscal</td>
+                            <td data-label="Asunto">
+                                <div class="tarea-nombre">Deducción de gastos de home office</div>
+                                <div class="tarea-desc">¿Puedo deducir mi internet y electricidad?</div>
+                            </td>
+                            <td data-label="SLA">
+                                <span class="sla ok">
+                                    <i class='bx bx-time'></i> 30 hrs restantes
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status abierto">
+                                    <span class="status-ic abierto">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <circle cx="5.5" cy="5.5" r="3.5" stroke="#fff" stroke-width="1.5"/>
+                                        </svg>
+                                    </span>
+                                    Abierto
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-message-square-detail'></i> Ver
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Solicitud 2 — En proceso -->
+                        <tr>
+                            <td data-label="#">#1021</td>
+                            <td data-label="Tipo">Corrección</td>
+                            <td data-label="Asunto">
+                                <div class="tarea-nombre">Error en RFC de factura de proveedor</div>
+                                <div class="tarea-desc">La factura del proveedor XYZ tiene RFC incorrecto</div>
+                            </td>
+                            <td data-label="SLA">
+                                <span class="sla warning">
+                                    <i class='bx bx-time'></i> 8 hrs restantes
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status en-proceso">
+                                    <span class="status-ic en-proceso">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M5.5 2v7M2 5.5h7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    En proceso
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-message-square-detail'></i> Ver
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Solicitud 3 — Resuelta -->
+                        <tr>
+                            <td data-label="#">#1018</td>
+                            <td data-label="Tipo">Carta constancia</td>
+                            <td data-label="Asunto">
+                                <div class="tarea-nombre">Constancia de situación fiscal actualizada</div>
+                                <div class="tarea-desc">Requerida para trámite bancario</div>
+                            </td>
+                            <td data-label="SLA">
+                                <span class="sla ok">
+                                    <i class='bx bx-check'></i> En tiempo
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status resuelto">
+                                    <span class="status-ic resuelto">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    Resuelto
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-eye'></i> Ver
+                                    </button>
+                                    <button class="btn-tabla success">
+                                        <i class='bx bx-download'></i> Descargar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Solicitud 4 — Urgente / SLA vencido -->
+                        <tr>
+                            <td data-label="#">#1015</td>
+                            <td data-label="Tipo">Urgente</td>
+                            <td data-label="Asunto">
+                                <div class="tarea-nombre">Requerimiento SAT — respuesta inmediata</div>
+                                <div class="tarea-desc">Carta invitación recibida el 14/05/2026</div>
+                            </td>
+                            <td data-label="SLA">
+                                <span class="sla over">
+                                    <i class='bx bx-error-circle'></i> Vencido
+                                </span>
+                            </td>
+                            <td data-label="Estado">
+                                <span class="status en-proceso">
+                                    <span class="status-ic en-proceso">
+                                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                                            <path d="M5.5 2v7M2 5.5h7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    En proceso
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones-cell">
+                                    <button class="btn-tabla secondary">
+                                        <i class='bx bx-message-square-detail'></i> Ver
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </div><!-- /container-tareas -->
+
+
+    <!-- JS -->
+    <script src="/consultoria-contable/frontend/js/views/tareasView.js"></script>
+
+    <script>
+        // ── Tab switching (mismo patrón que el resto del proyecto) ──
+        const tabs     = document.querySelectorAll('.tab-item');
+        const secciones = document.querySelectorAll('.seccion-tareas');
+
+        const mapa = {
+            'tab-tareas':       'seccion-tareas',
+            'tab-solicitudes':  'seccion-solicitudes'
+        };
+
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                secciones.forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                const target = document.getElementById(mapa[tab.id]);
+                if (target) target.classList.add('active');
+            });
+        });
+
+        // ── Toggle formulario nueva solicitud ──
+        const btnNueva    = document.getElementById('btn-nueva-solicitud');
+        const formSol     = document.getElementById('form-solicitud');
+        const btnCancelar = document.getElementById('btn-cancelar-solicitud');
+
+        btnNueva.addEventListener('click', function() {
+            formSol.classList.toggle('visible');
+        });
+
+        btnCancelar.addEventListener('click', function() {
+            formSol.classList.remove('visible');
+            document.getElementById('tipo-solicitud').value   = '';
+            document.getElementById('asunto-solicitud').value = '';
+            document.getElementById('desc-solicitud').value   = '';
+        });
+
+        // ── Envío de solicitud (placeholder para tareasView.js) ──
+        document.getElementById('btn-enviar-solicitud').addEventListener('click', function() {
+            const tipo   = document.getElementById('tipo-solicitud').value;
+            const asunto = document.getElementById('asunto-solicitud').value.trim();
+            const desc   = document.getElementById('desc-solicitud').value.trim();
+
+            if (!tipo || !asunto || !desc) {
+                alert('Por favor completa todos los campos antes de enviar.');
+                return;
+            }
+
+            // TODO: conectar con tareasView.js → API /backend/modules/servicios/crear.php
+            alert('Solicitud enviada correctamente. Tu contador la atenderá pronto.');
+            formSol.classList.remove('visible');
+            document.getElementById('tipo-solicitud').value   = '';
+            document.getElementById('asunto-solicitud').value = '';
+            document.getElementById('desc-solicitud').value   = '';
+        });
+    </script>
+
+</body>
+</html>
