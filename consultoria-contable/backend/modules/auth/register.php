@@ -5,7 +5,7 @@ require_once "../../utils/response.php";
 require_once "../../utils/validator.php";
 
 # Solo Administradores pueden registrar nuevos usuarios
-checkRole([1]);
+checkRole([ROL_ADMIN]);
 
 # Verificar que la solicitud sea POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -36,7 +36,7 @@ try {
         sendResponse(400, "El correo ya está registrado");
     }
 
-    $stmt = $conexion->prepare("INSERT INTO usuarios (id_rol, correo, password_hash, numero_cliente) VALUES (?, ?, ?, ?)");
+    $stmt = $conexion->prepare("INSERT INTO usuarios (id_rol, correo, password_hash, numero_cliente, require_password_change) VALUES (?, ?, ?, ?, 1)");
     $stmt->execute([$id_rol, $correo, $password, $numero_cliente]);
 
     sendResponse(201, "Usuario registrado exitosamente");

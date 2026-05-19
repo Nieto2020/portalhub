@@ -6,6 +6,14 @@ try {
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conexion->exec("set names utf8");
 } catch(PDOException $exception) {
-    echo "Error de conexión: " . $exception->getMessage();
+    // Evitar echo para no romper el JSON de la respuesta
+    if (function_exists('sendResponse')) {
+        sendResponse(500, "Error de conexión a la base de datos");
+    } else {
+        header("Content-Type: application/json");
+        http_response_code(500);
+        echo json_encode(["status" => 500, "message" => "Error de conexión a la base de datos"]);
+        exit();
+    }
 }
 ?>

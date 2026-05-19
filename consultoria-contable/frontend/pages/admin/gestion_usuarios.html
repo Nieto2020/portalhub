@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios - Consultoría</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; max-width: 500px; }
+        h2 { color: #333; margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #666; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; color: white; }
+        .btn-primary { background-color: #3498db; }
+        .btn-danger { background-color: #e74c3c; }
+        .btn-success { background-color: #2ecc71; }
+        #message { margin-top: 15px; padding: 10px; border-radius: 4px; display: none; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <h2 style="color: var(--morado); margin: 0;">CONSULTORÍA</h2>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Inicio</a></li>
+                <li><a href="gestion_usuarios.html" class="active">Usuarios</a></li>
+                <li><a href="reportes.html">Reportes</a></li>
+            </ul>
+        </nav>
+        <a href="#" onclick="logout()" style="background-color: #e74c3c; color: white; padding: 8px 20px; border-radius: 5px; text-decoration: none; font-size: 0.9rem;">Cerrar Sesión</a>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="welcome-header">
+            <h1>Gestión de Usuarios</h1>
+            <p>Panel para el control de accesos y perfiles del sistema.</p>
+        </div>
+
+        <!-- Fila superior: Registro y Gestión de Estado -->
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: stretch; margin-bottom: 25px;">
+            <div class="card" style="flex: 1; min-width: 350px; margin-bottom: 0;">
+                <h2>Registrar Nuevo Usuario</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="reg_correo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña Temporal</label>
+                        <input type="text" id="reg_password" required>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Rol</label>
+                            <select id="reg_rol">
+                                <option value="3">Cliente</option>
+                                <option value="2">Asesor</option>
+                                <option value="1">Administrador</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Nº Cliente (Opcional)</label>
+                            <input type="text" id="reg_numero">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Registrar Usuario</button>
+                </form>
+            </div>
+
+            <div class="card" style="flex: 1; min-width: 350px; margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h2>Gestión de Estado y Baja</h2>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">
+                        Selecciona un usuario de la tabla para gestionar su acceso o eliminarlo.
+                    </p>
+                    <div class="form-group">
+                        <label>ID del Usuario</label>
+                        <input type="number" id="manage_id" placeholder="Ej: 5">
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="changeStatus('desactivar')" class="btn-danger" style="flex: 1; background-color: #f39c12;">Dar de Baja</button>
+                        <button onclick="changeStatus('activar')" class="btn-success" style="flex: 1;">Dar de Alta</button>
+                    </div>
+                    <button onclick="hardDelete()" class="btn-danger" style="width: 100%;">ELIMINAR DEFINITIVAMENTE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fila inferior: Tabla de Usuarios -->
+        <div class="card" style="max-width: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+            <h2 style="margin: 0;">Lista de Usuarios</h2>
+            <div style="display: flex; align-items: center; gap: 15px; background: #fff; padding: 5px 15px; border-radius: 20px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <span style="font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold;">Clientes:</span>
+                <div style="font-size: 0.85rem; border-left: 1px solid #ddd; padding-left: 15px;">
+                    <span style="color: #27ae60; font-weight: bold;">Activos:</span>
+                    <span id="activeClientsCount" style="color: var(--texto); font-weight: bold; margin-left: 5px;">0</span>
+                </div>
+                <div style="border-left: 1px solid #ddd; padding-left: 15px; font-size: 0.85rem;">
+                    <span style="color: #c0392b; font-weight: bold;">Inactivos:</span>
+                    <span id="inactiveClientsCount" style="color: var(--texto); font-weight: bold; margin-left: 5px;">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filtros de búsqueda -->
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 150px;">
+                <label style="font-size: 0.8rem; color: #666;">Buscar por ID, Correo o Nº Cliente</label>
+                <input type="text" id="filterSearch" placeholder="Escribe aquí..." onkeyup="applyFilters()">
+            </div>
+            <div style="width: 150px;">
+                <label style="font-size: 0.8rem; color: #666;">Rol</label>
+                <select id="filterRol" onchange="applyFilters()">
+                    <option value="todos">Todos</option>
+                    <option value="administrador">Admin</option>
+                    <option value="asesor">Asesor</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+            </div>
+            <div style="width: 150px;">
+                <label style="font-size: 0.8rem; color: #666;">Estado</label>
+                <select id="filterEstado" onchange="applyFilters()">
+                    <option value="todos">Todos</option>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+            </div>
+            <div style="align-self: flex-end;">
+                <button onclick="loadUsers()" class="btn-primary" style="padding: 8px 15px;">Actualizar</button>
+            </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr style="background-color: #eee; text-align: left;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">ID</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Nº Cliente</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Correo</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Rol</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- Usuarios cargados dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+        </div>
+    </main>
+
+    <div id="message"></div>
+
+    <script src="../../js/helpers/logoutHelper.js"></script>
+    <script>
+        const messageDiv = document.getElementById('message');
+        let allUsers = []; // Para guardar la lista completa y filtrar localmente
+
+        function showMessage(msg, isError = false) {
+            messageDiv.textContent = msg;
+            messageDiv.style.display = 'block';
+            messageDiv.style.backgroundColor = isError ? '#f8d7da' : '#d4edda';
+            messageDiv.style.color = isError ? '#721c24' : '#155724';
+            setTimeout(() => { messageDiv.style.display = 'none'; }, 5000);
+        }
+
+        async function loadUsers() {
+            try {
+                const response = await fetch('../../../backend/modules/usuarios/listar.php');
+                const res = await response.json();
+                
+                if (response.ok) {
+                    allUsers = res.data;
+                    renderTable(allUsers);
+                }
+            } catch (error) {
+                console.error("Error al cargar usuarios:", error);
+            }
+        }
+
+        function renderTable(users) {
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+
+            // Calcular estadísticas de CLIENTES (rol 'cliente')
+            const activeClients = allUsers.filter(u => u.nombre_rol.toLowerCase() === 'cliente' && u.estado === 'activo').length;
+            const inactiveClients = allUsers.filter(u => u.nombre_rol.toLowerCase() === 'cliente' && u.estado === 'inactivo').length;
+            
+            document.getElementById('activeClientsCount').textContent = activeClients;
+            document.getElementById('inactiveClientsCount').textContent = inactiveClients;
+
+            users.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="padding: 10px; border: 1px solid #ddd;">${user.id_usuario}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">${user.numero_cliente || '---'}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">${user.correo}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">${user.nombre_rol}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                        <span style="color: ${user.estado === 'activo' ? 'green' : 'red'}">${user.estado.toUpperCase()}</span>
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                        <button onclick="selectUser(${user.id_usuario})" style="background: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Gestionar</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function applyFilters() {
+            const searchText = document.getElementById('filterSearch').value.toLowerCase();
+            const filterRol = document.getElementById('filterRol').value.toLowerCase();
+            const filterEstado = document.getElementById('filterEstado').value.toLowerCase();
+
+            const filtered = allUsers.filter(user => {
+                const numCliente = user.numero_cliente ? user.numero_cliente.toLowerCase() : '';
+                const matchesSearch = user.id_usuario.toString().includes(searchText) || 
+                                    user.correo.toLowerCase().includes(searchText) ||
+                                    numCliente.includes(searchText);
+                
+                const matchesRol = filterRol === 'todos' || user.nombre_rol.toLowerCase() === filterRol;
+                const matchesEstado = filterEstado === 'todos' || user.estado.toLowerCase() === filterEstado;
+
+                return matchesSearch && matchesRol && matchesEstado;
+            });
+
+            renderTable(filtered);
+        }
+
+        function selectUser(id) {
+            document.getElementById('manage_id').value = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Cargar usuarios al iniciar
+        loadUsers();
+
+        // Registrar Usuario
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                correo: document.getElementById('reg_correo').value,
+                password: document.getElementById('reg_password').value,
+                id_rol: parseInt(document.getElementById('reg_rol').value),
+                numero_cliente: document.getElementById('reg_numero').value || null
+            };
+
+            try {
+                const response = await fetch('../../../backend/modules/usuarios/crear.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const res = await response.json();
+                showMessage(res.message, !response.ok);
+                if(response.ok) {
+                    e.target.reset();
+                    loadUsers();
+                }
+            } catch (error) {
+                showMessage("Error de conexión", true);
+            }
+        });
+
+        // Cambiar Estado (Baja/Alta)
+        async function changeStatus(accion) {
+            const id_usuario = document.getElementById('manage_id').value;
+            if(!id_usuario) return alert("Ingrese un ID");
+
+            try {
+                const response = await fetch('../../../backend/modules/usuarios/gestionar_estado.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_usuario, accion })
+                });
+                const res = await response.json();
+                showMessage(res.message, !response.ok);
+                if(response.ok) loadUsers();
+            } catch (error) {
+                showMessage("Error de conexión", true);
+            }
+        }
+
+        // Eliminación Definitiva
+        async function hardDelete() {
+            const id_usuario = document.getElementById('manage_id').value;
+            if(!id_usuario) return alert("Ingrese un ID");
+
+            if(!confirm("¿ESTÁS SEGURO? Esta acción borrará al usuario y todos sus datos permanentemente.")) return;
+
+            try {
+                const response = await fetch(`../../../backend/modules/usuarios/eliminar.php?id=${id_usuario}`, {
+                    method: 'DELETE'
+                });
+                const res = await response.json();
+                showMessage(res.message, !response.ok);
+                if(response.ok) {
+                    document.getElementById('manage_id').value = '';
+                    loadUsers();
+                }
+            } catch (error) {
+                showMessage("Error de conexión", true);
+            }
+        }
+    </script>
+</body>
+</html>

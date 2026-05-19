@@ -4,7 +4,7 @@ require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 require_once "../../utils/validator.php";
 
-checkRole([1]);
+checkRole([ROL_ADMIN]);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
     sendResponse(405, "Método no permitido");
@@ -22,9 +22,21 @@ $id_rol = $data['id_rol'];
 $estado = $data['estado'];
 $numero_cliente = isset($data['numero_cliente']) ? $data['numero_cliente'] : null;
 
+# contraseña temporal
+$password_sql = "";
+$params = [$correo, $id_rol, $estado, $numero_cliente];
+
+if (!empty($data['temp_password'])) {
+    $password_hash = password_hash($data['temp_password'], PASSWORD_BCRYPT);
+    $password_sql = ", password_hash = ?, require_password_change = 1";
+    $params[] = $password_hash;
+}
+
+$params[] = $id_usuario;
+
 try {
-    $stmt = $conexion->prepare("UPDATE usuarios SET correo = ?, id_rol = ?, estado = ?, numero_cliente = ? WHERE id_usuario = ?");
-    $stmt->execute([$correo, $id_rol, $estado, $numero_cliente, $id_usuario]);
+    $stmt = $conexion->prepare("UPDATE usuarios SET correo = ?, id_rol = ?, estado = ?, numero_cliente = ? $password_sql WHERE id_usuario = ?");
+    $stmt->execute($params);
 
     if ($stmt->rowCount() > 0) {
         sendResponse(200, "Usuario actualizado exitosamente");

@@ -3,7 +3,7 @@ require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
-checkRole([1]);
+checkRole([ROL_ADMIN]);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
     sendResponse(405, "Método no permitido");

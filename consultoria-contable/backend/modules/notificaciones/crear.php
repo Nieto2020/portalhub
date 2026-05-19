@@ -5,7 +5,7 @@ require_once "../../utils/response.php";
 require_once "../../utils/validator.php";
 
 // Solo Admin y Asesor pueden crear notificaciones manualmente
-checkRole([1, 2]);
+checkRole([ROL_ADMIN, ROL_ASESOR]);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     sendResponse(405, "Método no permitido");
