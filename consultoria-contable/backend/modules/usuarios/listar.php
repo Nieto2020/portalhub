@@ -3,8 +3,8 @@ require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
-// Solo Admin (id_rol 1) y Asesor (id_rol 2) pueden listar usuarios
-checkRole([1, 2]);
+// Solo Admin y Asesor pueden listar usuarios
+checkRole([ROL_ADMIN, ROL_ASESOR]);
 
 try {
     $stmt = $conexion->prepare("SELECT u.id_usuario, u.correo, u.numero_cliente, u.estado, u.fecha_registro, r.nombre_rol 

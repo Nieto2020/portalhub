@@ -1,4 +1,5 @@
 <?php
+require_once "../../config/config.php";
 session_start();
 require_once "../../config/conexion.php";
 require_once "../../utils/response.php";
@@ -20,7 +21,7 @@ $correo = trim($data['correo']);
 $password = $data['password'];
 
 try {
-    $stmt = $conexion->prepare("SELECT id_usuario, id_rol, password_hash, estado FROM usuarios WHERE correo = ?");
+    $stmt = $conexion->prepare("SELECT id_usuario, id_rol, password_hash, estado, require_password_change FROM usuarios WHERE correo = ?");
     $stmt->execute([$correo]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -32,15 +33,20 @@ try {
         sendResponse(403, "Usuario inactivo, contacte al administrador");
     }
     
+    # Session Fixation
+    session_regenerate_id(true);
+
     # Establecer sesión
     $_SESSION['id_usuario'] = $usuario['id_usuario'];
     $_SESSION['id_rol'] = $usuario['id_rol'];
+    $_SESSION['require_password_change'] = $usuario['require_password_change'];
     $_SESSION['ultima_actividad'] = time();
 
     # Enviar respuesta exitosa con información del usuario
     sendResponse(200, "Inicio de sesión exitoso", [
         "id_usuario" => $usuario['id_usuario'],
-        "id_rol" => $usuario['id_rol']
+        "id_rol" => $usuario['id_rol'],
+        "require_password_change" => (bool)$usuario['require_password_change']
     ]);
 } catch (PDOException $e) {
     sendResponse(500, "Error en el servidor: " . $e->getMessage());

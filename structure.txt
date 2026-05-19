@@ -5,6 +5,9 @@ consultoria-contable/
 │   │   ├── conexion.php
 │   │   └── config.php
 │   │
+│   ├── middleware/
+│   │    └─ conexion.php
+│   │
 │   ├── modules/
 │   │   ├── auth/
 │   │   │   ├── login.php

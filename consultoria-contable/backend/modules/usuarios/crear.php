@@ -5,7 +5,7 @@ require_once "../../utils/response.php";
 require_once "../../utils/validator.php";
 
 // Solo Admin (id_rol 1) puede crear usuarios directamente
-checkRole([1]);
+checkRole([ROL_ADMIN]);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     sendResponse(405, "Método no permitido");
@@ -33,7 +33,7 @@ try {
         sendResponse(400, "El correo ya está registrado");
     }
 
-    $stmt = $conexion->prepare("INSERT INTO usuarios (id_rol, correo, password_hash, numero_cliente) VALUES (?, ?, ?, ?)");
+    $stmt = $conexion->prepare("INSERT INTO usuarios (id_rol, correo, password_hash, numero_cliente, require_password_change) VALUES (?, ?, ?, ?, 1)");
     $stmt->execute([$id_rol, $correo, $password, $numero_cliente]);
 
     sendResponse(201, "Usuario creado exitosamente");

@@ -148,11 +148,40 @@
     <div id="responseMessage" class="message"></div>
 
     <div class="footer-links">
-        <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+        <p><a href="#" id="forgotPasswordBtn">¿Olvidaste tu contraseña?</a></p>
+        <p>¿No tienes cuenta? contactanos para iniciar tu registro</p>
+        <p>Consultancy-Ventas@ejmplo.com</strong></p>
+    </div>
+
+    <!-- Modal de Soporte -->
+    <div id="supportModal" class="modal" style="display:none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color: white; margin: 15% auto; padding: 20px; border-radius: 8px; width: 80%; max-width: 400px; text-align: center;">
+            <h3>Recuperación de Cuenta</h3>
+            <p>Para recuperar tu acceso, por favor contacta al soporte técnico enviando un correo a:</p>
+            <p><strong>Consultancy-soprte@ejemplo.com</strong></p>
+            <p>El administrador puede pedir los siguientes datos para confirmar tu identidad:</p>
+            <ul style="text-align: left; margin-left: 20px;">
+                <li>correo registrado</li>
+                <li>RFC</li>
+                <li>nombre</li>
+                <li>Nº de cliente</li>
+                <li>número telefónico</li>
+            </ul>
+            <button id="closeSupportModal" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Entendido</button>
+        </div>
     </div>
 </div>
 
 <script>
+    // Lógica del Modal de Soporte - no tocar
+    document.getElementById('forgotPasswordBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('supportModal').style.display = 'block';
+    });
+    document.getElementById('closeSupportModal').addEventListener('click', () => {
+        document.getElementById('supportModal').style.display = 'none';
+    });
+
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -179,12 +208,19 @@
                 messageDiv.className = 'message success';
                 messageDiv.textContent = '¡Éxito! Redirigiendo...';
                 
-                // Simulación de redirección según el rol
+                // Guardar rol para redirección post-cambio
+                localStorage.setItem('user_role', result.data.id_rol);
+
+                // redirección según el rol
                 setTimeout(() => {
-                    const rol = result.data.id_rol;
-                    if (rol == 1) window.location.href = '../admin/dashboard.html';
-                    else if (rol == 2) window.location.href = '../asesor/dashboard.html';
-                    else window.location.href = '../cliente/dashboard.html';
+                    if (result.data.require_password_change) {
+                        window.location.href = 'change_password.html';
+                    } else {
+                        const rol = result.data.id_rol;
+                        if (rol == 1) window.location.href = '../admin/dashboard.html';
+                        else if (rol == 2) window.location.href = '../asesor/dashboard.html';
+                        else window.location.href = '../cliente/dashboard.html';
+                    }
                 }, 1500);
             } else {
                 messageDiv.className = 'message error';

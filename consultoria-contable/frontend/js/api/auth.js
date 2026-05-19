@@ -13,12 +13,3 @@ export const login = async (correo, password) => {
         return { status: 500, message: "Error de conexión" };
     }
 };
-
-export const logout = async () => {
-    try {
-        const response = await fetch('../../../backend/modules/auth/logout.php');
-        return await response.json();
-    } catch (error) {
-        console.error("Error al cerrar sesión:", error);
-    }
-};

@@ -45,6 +45,7 @@ CREATE TABLE `usuarios` (
   `numero_cliente` varchar(50) DEFAULT NULL,
   `password_hash` varchar(255) NOT NULL,
   `estado` enum('activo','inactivo') DEFAULT 'activo',
+  `require_password_change` tinyint(1) DEFAULT 0,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `correo` (`correo`),
