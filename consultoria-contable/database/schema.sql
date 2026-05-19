@@ -156,4 +156,26 @@ CREATE TABLE `pagos_facturacion` (
   CONSTRAINT `pagos_facturacion_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicios_contables` (`id_servicio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `perfiles`
+--
+CREATE TABLE `perfiles` (
+  `id_perfil` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `nombre_completo` varchar(255) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `foto_perfil` varchar(255) DEFAULT NULL,
+  -- Campos específicos de Asesor
+  `especialidad` varchar(100) DEFAULT NULL,
+  `biografia` text DEFAULT NULL,
+  -- Campos específicos de Cliente
+  `rfc` varchar(13) DEFAULT NULL,
+  `razon_social` varchar(255) DEFAULT NULL,
+  `direccion_fiscal` text DEFAULT NULL,
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id_perfil`),
+  UNIQUE KEY `id_usuario` (`id_usuario`),
+  CONSTRAINT `perfiles_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
