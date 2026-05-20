@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+
+     <!-- CSS -->
+    <link rel="stylesheet" href="../../css/Perfil_cliente.css">
+
+    <!-- ICONS -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+</head>
+<body>
+      <header class="navbar">
+        <div class="logo"><img src="../../css/img/logo.png" alt="Consultancy"></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Inicio</a></li>
+                <li><a href="mis_declaraciones.html">Mis Declaraciones</a></li>
+                <li><a href="documentos.html">Documentos</a></li>
+                <li><a href="pagos.html">Pagos</a></li>
+                <li><a href="">Tareas</a></li>
+                <li><a href="">Reportes</a></li>
+                <li><a href="perfil.html" class="active">Perfil</a></li>
+                <li><a href="">Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--CONTENIDO-->
+
+    <!--Foto de perfil-->
+<div class="main-profile-container">
+        
+        <div class="titulo-header-box">
+            <h1 class="titulo-cuenta">Mi Cuenta</h1>
+        </div>
+        
+        <div class="flex-cards-wrapper">
+            
+            <div class="container-perfil">
+                <div class="usuario-image">
+                   <i class="bx bx-user-circle" style="color: var(--morado);"></i> 
+                </div>
+
+                <div class="info-user">
+                    <h5>Nombre:</h5>
+                    <p id="nombre"></p>
+                    <h5>Correo:</h5>
+                    <p id="correo">kotonoha459@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="container-preferencias">
+                <h2 class="titulo-informacion">Mi Información</h2>
+                
+                <div class="rol-user">
+                    <h5>Mi Rol:</h5>
+                    <p class="rol" id="rol"></p>
+                </div>
+
+                <div class="number-user">
+                    <h5>Número de Teléfono:</h5>
+                    <p class="num-tel" id="num-tel">4641035040</p>
+                </div>
+
+                <div class="RFC-user">
+                    <h5>RFC:</h5>
+                    <p class="RFC" id="RFC">4W5890WERU040UUETW4PUJRJERP</p>
+                </div>
+
+                <div class="Preferences-Notifications">
+                    <h4>Preferencias de Notificaciones</h4>
+
+                    <div class="bloque-notificacion">
+                        <h5>Avisos del Asesor</h5>
+                        <div class="fila-checkbox">
+                            <label class="switch">
+                                <input type="checkbox" id="notif-asesor">
+                                <span class="slider"></span>
+                            </label>
+                            <label for="notif-asesor" class="label-texto">Notificarme 3 días antes</label>
+                        </div>
+                    </div>
+
+                    <div class="bloque-notificacion">
+                        <h5>Avisos de Pagos</h5>
+                        <div class="fila-checkbox">
+                            <label class="switch">
+                                <input type="checkbox" id="notif-pagos">
+                                <span class="slider"></span>
+                            </label>
+                            <label for="notif-pagos" class="label-texto">Notificarme 3 días antes</label>
+                        </div>
+                    </div>
+
+                    <div class="bloque-notificacion">
+                        <h5>Avisos de Carga de Documentos</h5>
+                        <div class="fila-checkbox">
+                            <label class="switch">
+                                <input type="checkbox" id="notif-carga">
+                                <span class="slider"></span>
+                            </label>
+                            <label for="notif-carga" class="label-texto">Notificarme 3 días antes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="ActualizarPass" action="" method="post">
+                    <div class="preferences-password">
+                        <h4>Cambio de contraseña</h4>
+                        <div class="grupo-inputs-password">
+                            <input type="password" id="password_input" placeholder="Ingresa la nueva contraseña">
+                            <input type="password" id="password_Confirm" placeholder="Confirmación de la contraseña">
+                        </div>
+                        <button type="submit" class="btn-cambiar-pass" id="btn-cambiar-pass">Cambiar mi contraseña</button>
+                    </div>
+                </form>
+            </div>
+         </div>
+         </div>
+</body>
+
+<script src="../../js/views/perfilView.js"></script>
+</html>
