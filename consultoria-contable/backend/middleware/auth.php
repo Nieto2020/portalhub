@@ -10,7 +10,6 @@ function checkAuth($actualizarActividad = true) {
 
     # Bloqueo por cambio de contraseña obligatorio
     if (isset($_SESSION['require_password_change']) && $_SESSION['require_password_change'] == 1) {
-        # Permitir solo si la petición es para actualizar la contraseña
         $current_script = basename($_SERVER['PHP_SELF']);
         if ($current_script !== 'update_password.php' && $current_script !== 'logout.php' && $current_script !== 'check_session.php') {
             sendResponse(403, "Cambio de contraseña obligatorio", ["require_password_change" => true]);
@@ -34,7 +33,7 @@ function checkAuth($actualizarActividad = true) {
     }
 }
 
-function checkRole($allowedRoles) {
+function checkRole(array $allowedRoles) {
     checkAuth();
     if (!in_array($_SESSION['id_rol'], $allowedRoles)) {
         sendResponse(403, "Acceso denegado. Permisos insuficientes.");
