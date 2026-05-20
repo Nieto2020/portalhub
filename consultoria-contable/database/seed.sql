@@ -20,7 +20,8 @@ INSERT INTO `cat_tipos_documentos` (`id_tipo_doc`, `nombre_tipo`) VALUES
 (2, 'Constancia de Situación Fiscal'),
 (3, 'Comprobante de Domicilio'),
 (4, 'Factura (PDF/XML)'),
-(5, 'Declaración Presentada');
+(5, 'Declaración Presentada'),
+(6, 'Contrato');
 
 -- Usuarios Iniciales
 -- password123 -> $2y$10$C7Y2fN1pxZg6n.1iNybJUOi7hQq.99vEdBvZTxRz4uKhBsPxe6vcK

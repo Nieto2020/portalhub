@@ -128,6 +128,7 @@ CREATE TABLE `documentos` (
   `id_usuario_propietario` int(11) NOT NULL,
   `id_tipo_doc` int(11) NOT NULL,
   `ruta_archivo` varchar(255) NOT NULL,
+  `nombre_original` varchar(255) NOT NULL,
   `version` int(11) DEFAULT 1,
   `validacion_cfdi` tinyint(1) DEFAULT 0,
   `fecha_subida` timestamp NOT NULL DEFAULT current_timestamp(),
