@@ -178,4 +178,25 @@ CREATE TABLE `perfiles` (
   CONSTRAINT `perfiles_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `cliente_asesor`
+--
+CREATE TABLE `cliente_asesor` (
+  `id_asignacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
+  `id_asesor` int(11) NOT NULL,
+  `id_asignador` int(11) NOT NULL, -- Admin que realizó la asignación
+  `fecha_asignacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_fin` timestamp NULL DEFAULT NULL,
+  `estado` enum('activo','inactivo') DEFAULT 'activo',
+  `motivo_cambio` text DEFAULT NULL,
+  PRIMARY KEY (`id_asignacion`),
+  KEY `id_cliente` (`id_cliente`),
+  KEY `id_asesor` (`id_asesor`),
+  KEY `id_asignador` (`id_asignador`),
+  CONSTRAINT `cliente_asesor_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
+  CONSTRAINT `cliente_asesor_ibfk_2` FOREIGN KEY (`id_asesor`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
+  CONSTRAINT `cliente_asesor_ibfk_3` FOREIGN KEY (`id_asignador`) REFERENCES `usuarios` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
