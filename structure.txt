@@ -1,135 +1,130 @@
+================================================================================
+          PROYECTO: PORTAL CLIENTE - CONSULTORÍA CONTABLE
+================================================================================
+
 consultoria-contable/
 │
-├── backend/
-│   ├── config/
-│   │   ├── conexion.php
-│   │   └── config.php
+├── backend/                    # Lógica del servidor y API (PHP)
+│   ├── config/                 # Configuración global
+│   │   ├── conexion.php        # Conexión PDO a la base de datos
+│   │   └── config.php          # Constantes globales (DB, Roles, Timeouts)
 │   │
-│   ├── middleware/
-│   │    └─ auth.php
+│   ├── middleware/             # Capas de seguridad y control
+│   │   └── auth.php            # Verificación de sesión y roles (checkAuth, checkRole)
 │   │
-│   ├── modules/
-│   │   ├── auth/
-│   │   │   ├── login.php
-│   │   │   ├── register.php
-│   │   │   └── logout.php
-│   │   │
-│   │   ├── usuarios/
-│   │   │   ├── crear.php
-│   │   │   ├── listar.php
-│   │   │   ├── actualizar.php
-│   │   │   └── eliminar.php
-│   │   │
-│   │   ├── documentos/
-│   │   │   ├── subir.php
-│   │   │   ├── listar.php
-│   │   │   ├── descargar.php
-│   │   │   └── eliminar.php
-│   │   │
-│   │   ├── citas/
-│   │   │   ├── crear.php
-│   │   │   ├── listar.php
-│   │   │   ├── cancelar.php
-│   │   │   └── modificar.php
-│   │   │
-│   │   ├── servicios/
-│   │   │   ├── crear.php
-│   │   │   ├── actualizar_estado.php
+│   ├── modules/                # Módulos funcionales de la aplicación
+│   │   ├── asignaciones/       # Gestión de relación Cliente-Asesor
+│   │   │   ├── asignar.php
+│   │   │   ├── historial.php
 │   │   │   └── listar.php
 │   │   │
-│   │   ├── notificaciones/
+│   │   ├── auth/               # Autenticación y Gestión de Sesión
+│   │   │   ├── check_session.php
+│   │   │   ├── login.php
+│   │   │   ├── logout.php
+│   │   │   ├── register.php
+│   │   │   └── update_password.php
+│   │   │
+│   │   ├── citas/              # Gestión de agenda y reuniones
+│   │   │   ├── cancelar.php
+│   │   │   ├── crear.php
+│   │   │   ├── listar.php
+│   │   │   └── modificar.php
+│   │   │
+│   │   ├── documentos/         # Gestión de Archivos (PDF, XML, etc.)
+│   │   │   ├── registrar.php   # Registro metadata
+│   │   │   ├── subir.php       # Upload seguro con validación MIME y Versionado
+│   │   │   ├── listar.php      # Filtrado por rol y propiedad
+│   │   │   ├── descargar.php   # Descarga segura con control de permisos
+│   │   │   └── eliminar.php
+│   │   │
+│   │   ├── mensajes/           # Chat interno y Tickets
+│   │   │   ├── conversacion.php
+│   │   │   ├── enviar.php
+│   │   │   └── listar.php
+│   │   │
+│   │   ├── notificaciones/     # Sistema de alertas en tiempo real
 │   │   │   ├── crear.php
 │   │   │   ├── listar.php
 │   │   │   └── marcar_leido.php
 │   │   │
-│   │   ├── mensajes/
-│   │   │   ├── enviar.php
+│   │   ├── pagos/              # Gestión de facturación y pagos de clientes
+│   │   │   ├── actualizar_estado.php
+│   │   │   ├── detalle.php
 │   │   │   ├── listar.php
-│   │   │   └── conversacion.php
+│   │   │   └── registrar.php
 │   │   │
-│   │   └── pagos/
-│   │       ├── registrar.php
+│   │   ├── perfil/             # Información de usuario
+│   │   │   ├── actualizar.php
+│   │   │   └── obtener.php
+│   │   │
+│   │   ├── reportes/           # Estadísticas y métricas para Admin
+│   │   │   └── dashboard.php
+│   │   │
+│   │   ├── servicios/          # Seguimiento de trámites contables
+│   │   │   ├── actualizar_estado.php
+│   │   │   ├── crear.php
+│   │   │   └── listar.php
+│   │   │
+│   │   └── usuarios/           # CRUD de usuarios (Solo Admin)
+│   │       ├── actualizar.php  # Con validación de unicidad y reset de pass
+│   │       ├── crear.php
+│   │       ├── eliminar.php
+│   │       ├── gestionar_estado.php
 │   │       ├── listar.php
-│   │       └── detalle.php
+│   │       └── reset_password_admin.php
 │   │
-│   ├── services/
-│   │   ├── FileService.php
-│   │   ├── EmailService.php
+│   ├── services/               # Lógica de negocio compartida
 │   │   └── NotificationService.php
 │   │
-│   ├── middleware/
-│   │   ├── auth.php
-│   │   └── roles.php
+│   ├── uploads/                # Almacenamiento de archivos físicos
+│   │   └── .htaccess           # Bloqueo de acceso directo (Deny from all)
 │   │
-│   └── utils/
-│       ├── response.php
-│       └── validator.php
+│   └── utils/                  # Herramientas de soporte
+│       ├── response.php        # Formateador estándar de respuestas JSON
+│       └── validator.php       # Funciones de validación de datos
 │
-├── frontend/
-│   ├── pages/
-│   │   ├── auth/
-│   │   │   ├── login.html
-│   │   │   └── register.html
-│   │   │
-│   │   ├── cliente/
-│   │   │   ├── dashboard.html
-│   │   │   ├── documentos.html
-│   │   │   ├── citas.html
-│   │   │   └── servicios.html
-│   │   │
-│   │   ├── asesor/
-│   │   │   ├── dashboard.html
-│   │   │   ├── clientes.html
-│   │   │   ├── documentos.html
-│   │   │   └── citas.html
-│   │   │
-│   │   └── admin/
-│   │       ├── dashboard.html
-│   │       ├── usuarios.html
-│   │       └── reportes.html
-│   │
-│   ├── js/
-│   │   ├── api/
-│   │   │   ├── auth.js
-│   │   │   ├── documentos.js
-│   │   │   ├── citas.js
-│   │   │   └── servicios.js
-│   │   │
-│   │   ├── views/
-│   │   │   ├── documentosView.js
-│   │   │   ├── citasView.js
-│   │   │   └── dashboardView.js
-│   │   │
-│   │   └── utils/
-│   │       └── helpers.js
-│   │
-│   └── css/
-│       └── styles.css
+├── database/                   # Archivos de Base de Datos
+│   ├── schema.sql              # Estructura de tablas e índices
+│   └── seed.sql                # Datos iniciales (Roles, Catálogos, Admin)
 │
-├── storage/
-│   ├── documentos/
-│   ├── temporales/
-│   └── respaldos/
-│
-├── database/
-│   ├── schema.sql
-│   ├── seed.sql
-│   └── migrations/
-│
-├── docs/
-│   ├── arquitectura.md
-│   ├── modulos.md
-│   ├── endpoints.md
-│   ├── base_datos.md
-│   └── flujo_sistema.md
-│
-├── scripts/
-│   ├── enviar_correos.php
-│   ├── limpiar_logs.php
-│   └── backups.php
-│
-├── logs/
-│
-├── .gitignore
-│
-└── README.md
+└── frontend/                   # Interfaz de Usuario (HTML/JS/CSS)
+    ├── css/                    # Estilos visuales
+    │   ├── img/                # Recursos gráficos
+    │   ├── style.css           # Estilos generales
+    │   ├── documentos_cliente.css
+    │   ├── mis_declaraciones.css
+    │   ├── Pagos_cliente.css
+    │   └── Perfil_cliente.css
+    │
+    ├── js/                     # Lógica del lado del cliente
+    │   ├── api/                # Consumo de endpoints del backend
+    │   │   ├── auth.js
+    │   │   ├── citas.js
+    │   │   ├── documentos.js
+    │   │   └── servicios.js
+    │   │
+    │   ├── helpers/            # Funciones de apoyo UI
+    │   │   └── logoutHelper.js
+    │   │
+    │   ├── utils/              # Herramientas generales JS
+    │   │   ├── helpers.js
+    │   │   └── sessionCheck.js
+    │   │
+    │   └── views/              # Controladores de vista
+    │       ├── citasView.js
+    │       ├── dashboardView.js
+    │       ├── declaracionesView.js
+    │       ├── documentosView.js
+    │       ├── pagosView.js
+    │       └── perfilView.js
+    │
+    └── pages/                  # Vistas HTML (Estructuradas por Rol)
+        ├── admin/              # Panel de Administración
+        ├── asesor/             # Panel de Asesor Contable
+        ├── auth/               # Pantallas de Acceso
+        └── cliente/            # Panel del Cliente Final
+
+================================================================================
+ESTADO ACTUAL DEL PROYECTO: Backend Seguro & Optimizado
+================================================================================
