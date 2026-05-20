@@ -32,19 +32,35 @@ if (!in_array($estado, $estados_validos)) {
     sendResponse(400, "Estado no válido");
 }
 
-# contraseña temporal
-$password_sql = "";
-$params = [$correo, $id_rol, $estado, $numero_cliente];
-
-if (!empty($data['temp_password'])) {
-    $password_hash = password_hash($data['temp_password'], PASSWORD_BCRYPT);
-    $password_sql = ", password_hash = ?, require_password_change = 1";
-    $params[] = $password_hash;
-}
-
-$params[] = $id_usuario;
-
 try {
+    // Validar si el correo ya existe en otro usuario
+    $checkStmt = $conexion->prepare("SELECT id_usuario FROM usuarios WHERE correo = ? AND id_usuario != ?");
+    $checkStmt->execute([$correo, $id_usuario]);
+    if ($checkStmt->fetch()) {
+        sendResponse(400, "El correo ya está registrado por otro usuario");
+    }
+
+    // No repetir N cliente.
+    if ($numero_cliente) {
+        $checkCliStmt = $conexion->prepare("SELECT id_usuario FROM usuarios WHERE numero_cliente = ? AND id_usuario != ?");
+        $checkCliStmt->execute([$numero_cliente, $id_usuario]);
+        if ($checkCliStmt->fetch()) {
+            sendResponse(400, "El número de cliente ya está registrado por otro usuario");
+        }
+    }
+
+    # contraseña temporal
+    $password_sql = "";
+    $params = [$correo, $id_rol, $estado, $numero_cliente];
+
+    if (!empty($data['temp_password'])) {
+        $password_hash = password_hash($data['temp_password'], PASSWORD_BCRYPT);
+        $password_sql = ", password_hash = ?, require_password_change = 1";
+        $params[] = $password_hash;
+    }
+
+    $params[] = $id_usuario;
+
     $stmt = $conexion->prepare("UPDATE usuarios SET correo = ?, id_rol = ?, estado = ?, numero_cliente = ? $password_sql WHERE id_usuario = ?");
     $stmt->execute($params);
 
@@ -54,6 +70,7 @@ try {
         sendResponse(404, "Usuario no encontrado o sin cambios");
     }
 } catch (PDOException $e) {
-    sendResponse(500, "Error en el servidor: " . $e->getMessage());
+    error_log("Error en actualizar.php: " . $e->getMessage());
+    sendResponse(500, "Ocurrió un error interno al actualizar el usuario");
 }
 ?>
