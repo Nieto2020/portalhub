@@ -4,7 +4,7 @@ require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
-checkAuth();
+checkRole([ROL_ADMIN, ROL_ASESOR]);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     sendResponse(405, "Método no permitido");
