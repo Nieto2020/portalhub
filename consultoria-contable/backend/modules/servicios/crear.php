@@ -1,14 +1,42 @@
 <?php
 
 require_once "../../config/conexion.php";
+require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
-$id_cliente = 1;
-$id_tipo_servicio = 1;
+checkAuth();
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendResponse(405, "Método no permitido");
+}
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+$id_cliente = $data['id_cliente'] ?? null;
+$id_tipo_servicio = $data['id_tipo_servicio'] ?? null;
+
+if (!$id_cliente || !$id_tipo_servicio) {
+    sendResponse(400, "Faltan campos requeridos");
+}
+
 $estado = "Pendiente";
 
 try {
-    $sql = "INSERT INTO servicios_contables 
+
+    // Validar tipo de servicio
+    $validar = $conexion->prepare("
+        SELECT COUNT(*) 
+        FROM cat_servicios 
+        WHERE id_tipo_servicio = ?
+    ");
+
+    $validar->execute([$id_tipo_servicio]);
+
+    if ($validar->fetchColumn() == 0) {
+        sendResponse(404, "Tipo de servicio no válido");
+    }
+
+    $sql = "INSERT INTO servicios_contables
             (id_cliente, id_tipo_servicio, estado)
             VALUES (:id_cliente, :id_tipo_servicio, :estado)";
 
@@ -25,9 +53,11 @@ try {
     ]);
 
 } catch (PDOException $e) {
+
     sendResponse(500, "Error al crear servicio", [
         "error" => $e->getMessage()
     ]);
+
 }
 
 ?>

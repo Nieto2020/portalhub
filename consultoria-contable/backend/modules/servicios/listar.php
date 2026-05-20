@@ -1,9 +1,13 @@
 <?php
+
 require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
 checkAuth();
+
+$id_usuario = $_SESSION['id_usuario'];
+$rol = $_SESSION['rol'] ?? null;
 
 try {
     $sql = "
@@ -19,8 +23,17 @@ try {
             ON sc.id_tipo_servicio = cs.id_tipo_servicio
     ";
 
+    $params = [];
+
+    if ($rol === ROL_CLIENTE) {
+        $sql .= " WHERE sc.id_cliente = ?";
+        $params[] = $id_usuario;
+    }
+
+    $sql .= " ORDER BY sc.fecha_actualizacion DESC";
+
     $stmt = $conexion->prepare($sql);
-    $stmt->execute();
+    $stmt->execute($params);
 
     $servicios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

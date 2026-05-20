@@ -1,9 +1,20 @@
 <?php
 
 require_once "../../config/conexion.php";
+require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
-$id_pago = 4;
+checkAuth();
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    sendResponse(405, "Método no permitido");
+}
+
+$id_pago = $_GET['id_pago'] ?? null;
+
+if (!$id_pago) {
+    sendResponse(400, "ID de pago no proporcionado");
+}
 
 try {
 
