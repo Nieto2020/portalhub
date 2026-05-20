@@ -16,17 +16,13 @@ if (!$id_usuario) {
 }
 
 try {
-    $stmt = $conexion->prepare("
-        UPDATE usuarios 
-        SET estado = 'inactivo' 
-        WHERE id_usuario = ?
-    ");
+    $stmt = $conexion->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
     $stmt->execute([$id_usuario]);
 
     if ($stmt->rowCount() > 0) {
-        sendResponse(200, "Usuario desactivado exitosamente");
+        sendResponse(200, "Usuario eliminado exitosamente");
     } else {
-        sendResponse(404, "Usuario no encontrado o ya estaba inactivo");
+        sendResponse(404, "Usuario no encontrado");
     }
 } catch (PDOException $e) {
     sendResponse(500, "Error en el servidor: " . $e->getMessage());
