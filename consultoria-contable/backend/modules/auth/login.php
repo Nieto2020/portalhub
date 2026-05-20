@@ -26,6 +26,8 @@ try {
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$usuario || !password_verify($password, $usuario['password_hash'])) {
+        //retraso en caso de fallo
+        sleep(1);
         sendResponse(401, "Credenciales incorrectas");
     }
 
@@ -49,6 +51,7 @@ try {
         "require_password_change" => (bool)$usuario['require_password_change']
     ]);
 } catch (PDOException $e) {
-    sendResponse(500, "Error en el servidor: " . $e->getMessage());
+    error_log("Error en login.php: " . $e->getMessage());
+    sendResponse(500, "Ocurrió un error interno en el servidor");
 }
 ?>

@@ -4,7 +4,7 @@ require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 
-checkAuth();
+checkRole([ROL_ADMIN, ROL_ASESOR]);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     sendResponse(405, "Método no permitido");
@@ -51,14 +51,11 @@ try {
 
     $stmt->execute();
 
-    sendResponse(200, "Estado actualizado correctamente");
+    sendResponse(200, "Estado del servicio actualizado correctamente");
 
 } catch (PDOException $e) {
-
-    sendResponse(500, "Error al actualizar estado", [
-        "error" => $e->getMessage()
-    ]);
-
+    error_log("Error en servicios/actualizar_estado.php: " . $e->getMessage());
+    sendResponse(500, "Error interno al actualizar el estado del servicio");
 }
 
 ?>

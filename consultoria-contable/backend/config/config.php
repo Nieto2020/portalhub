@@ -1,6 +1,14 @@
 <?php
 ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 0); // se deja en 0 para pruebas Locales
+
+//proteccion contra formularios, CSRF, request
+$isSecure = false;
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+    $isSecure = true;
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' || !empty($_SERVER['HTTP_FRONT_END_HTTPS']) && $_SERVER['HTTP_FRONT_END_HTTPS'] !== 'off') {
+    $isSecure = true;
+}
+ini_set('session.cookie_secure', $isSecure ? 1 : 0); 
 ini_set('session.use_only_cookies', 1);
 ini_set('session.cookie_samesite', 'Lax');
 
