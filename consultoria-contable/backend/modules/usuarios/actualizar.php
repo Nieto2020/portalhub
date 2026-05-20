@@ -22,6 +22,16 @@ $id_rol = $data['id_rol'];
 $estado = $data['estado'];
 $numero_cliente = isset($data['numero_cliente']) ? $data['numero_cliente'] : null;
 
+if (!validateEmail($correo)) {
+    sendResponse(400, "Formato de correo inválido");
+}
+
+$estados_validos = ['activo', 'inactivo'];
+
+if (!in_array($estado, $estados_validos)) {
+    sendResponse(400, "Estado no válido");
+}
+
 # contraseña temporal
 $password_sql = "";
 $params = [$correo, $id_rol, $estado, $numero_cliente];
