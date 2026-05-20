@@ -47,6 +47,13 @@ try {
         sendResponse(404, "Pago no encontrado");
     }
 
+    $id_usuario = $_SESSION['id_usuario'];
+    $rol = $_SESSION['rol'] ?? null;
+    
+    if ($rol === ROL_CLIENTE && $pago['id_cliente'] != $id_usuario) {
+        sendResponse(403, "No tiene permisos para ver este pago");
+    }
+
     sendResponse(200, "Detalle de pago obtenido correctamente", $pago);
 
 } catch (PDOException $e) {
