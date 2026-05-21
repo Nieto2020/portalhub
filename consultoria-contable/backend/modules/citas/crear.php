@@ -3,6 +3,7 @@
 require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
+require_once "../../services/NotificationService.php";
 
 checkAuth();
 
@@ -51,6 +52,10 @@ try {
     $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
 
     $stmt->execute();
+
+    // Notificar al asesor
+    $notificador = new NotificationService($conexion);
+    $notificador->notify($id_asesor, "Cita", "Se ha programado una nueva cita para el: $fecha_hora");
 
     sendResponse(201, "Cita creada correctamente", [
         "id_cita" => $conexion->lastInsertId()

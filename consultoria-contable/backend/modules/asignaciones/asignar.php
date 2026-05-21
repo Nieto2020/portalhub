@@ -3,6 +3,7 @@ require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
 require_once "../../utils/validator.php";
+require_once "../../services/NotificationService.php";
 
 // Solo el administrador puede asignar o cambiar asesores
 checkRole([ROL_ADMIN]);
@@ -52,6 +53,10 @@ try {
     // 3. Crear nueva asignación
     $stmt = $conexion->prepare("INSERT INTO cliente_asesor (id_cliente, id_asesor, id_asignador, motivo_cambio) VALUES (?, ?, ?, ?)");
     $stmt->execute([$id_cliente, $id_asesor, $id_asignador, $motivo]);
+
+    // 4. Notificar al cliente
+    $notificador = new NotificationService($conexion);
+    $notificador->notify($id_cliente, "Asignación", "Se le ha asignado un nuevo asesor contable.");
 
     $conexion->commit();
     sendResponse(201, "Asesor asignado exitosamente");

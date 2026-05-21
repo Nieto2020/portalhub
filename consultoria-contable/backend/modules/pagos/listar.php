@@ -7,7 +7,7 @@ require_once "../../utils/response.php";
 checkAuth();
 
 $id_usuario = $_SESSION['id_usuario'];
-$rol = $_SESSION['rol'] ?? null;
+$id_rol = $_SESSION['id_rol'] ?? null;
 
 try {
 
@@ -31,7 +31,7 @@ try {
 
     $params = [];
 
-    if ($rol === ROL_CLIENTE) {
+    if ($id_rol == ROL_CLIENTE) {
         $sql .= " WHERE pf.id_cliente = ?";
         $params[] = $id_usuario;
     }

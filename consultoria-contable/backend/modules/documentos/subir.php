@@ -3,6 +3,7 @@
 require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
+require_once "../../services/NotificationService.php";
 
 checkAuth();
 
@@ -123,6 +124,21 @@ try {
         ':version' => $version,
         ':cfdi' => $cfdi
     ]);
+
+    // Notificaciones
+    $notificador = new NotificationService($conexion);
+    if ($id_rol_sesion == ROL_CLIENTE) {
+        // Cliente sube documento -> Notificar a su asesor asignado
+        $stmtAsesor = $conexion->prepare("SELECT id_asesor FROM cliente_asesor WHERE id_cliente = ? AND estado = 'activo' LIMIT 1");
+        $stmtAsesor->execute([$id_usuario_sesion]);
+        $asesor = $stmtAsesor->fetch(PDO::FETCH_ASSOC);
+        if ($asesor) {
+            $notificador->notify($asesor['id_asesor'], "Documento", "El cliente ha subido un nuevo documento: $nombreOriginal");
+        }
+    } else {
+        // Admin o Asesor sube documento -> Notificar al cliente propietario
+        $notificador->notify($id_usuario_propietario, "Documento", "Se ha subido un nuevo documento a su expediente: $nombreOriginal");
+    }
 
     sendResponse(201, "Archivo subido correctamente", [
         "id_documento" => $conexion->lastInsertId(),

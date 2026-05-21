@@ -3,6 +3,7 @@
 require_once "../../config/conexion.php";
 require_once "../../middleware/auth.php";
 require_once "../../utils/response.php";
+require_once "../../services/NotificationService.php";
 
 checkRole([ROL_ADMIN, ROL_ASESOR]);
 
@@ -28,14 +29,16 @@ if (!in_array($estado, $estados_validos)) {
 try {
 
     $buscar = $conexion->prepare("
-        SELECT id_servicio 
-        FROM servicios_contables 
-        WHERE id_servicio = ?
+        SELECT sc.id_cliente, cs.nombre_servicio 
+        FROM servicios_contables sc
+        JOIN cat_servicios cs ON sc.id_tipo_servicio = cs.id_tipo_servicio
+        WHERE sc.id_servicio = ?
     ");
 
     $buscar->execute([$id_servicio]);
+    $servicio = $buscar->fetch(PDO::FETCH_ASSOC);
 
-    if (!$buscar->fetch()) {
+    if (!$servicio) {
         sendResponse(404, "Servicio no encontrado");
     }
 
@@ -49,7 +52,14 @@ try {
     $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
     $stmt->bindParam(":id_servicio", $id_servicio, PDO::PARAM_INT);
 
-    $stmt->execute();
+    if ($stmt->execute()) {
+        $notificador = new NotificationService($conexion);
+        $notificador->notify(
+            $servicio['id_cliente'], 
+            "Servicio", 
+            "El estado de su servicio '{$servicio['nombre_servicio']}' ha cambiado a: $estado"
+        );
+    }
 
     sendResponse(200, "Estado del servicio actualizado correctamente");
 
