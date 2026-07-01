@@ -2,26 +2,478 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios - Consultoría</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; max-width: 500px; }
-        h2 { color: #333; margin-top: 0; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #666; }
-        input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; color: white; }
-        .btn-primary { background-color: #3498db; }
-        .btn-danger { background-color: #e74c3c; }
-        .btn-success { background-color: #2ecc71; }
-        #message { margin-top: 15px; padding: 10px; border-radius: 4px; display: none; }
+        /* ===== Variables CSS ===== */
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --success: #2ecc71;
+            --success-dark: #27ae60;
+            --danger: #e74c3c;
+            --danger-dark: #c0392b;
+            --warning: #f39c12;
+            --warning-dark: #e67e22;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --border: #e0e0e0;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --radius: 10px;
+            --transition: 0.2s ease;
+        }
+
+        /* ===== Reset y base ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 0 24px;
+            height: 64px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #6c5ce7;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-logout {
+            background: var(--danger);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background var(--transition);
+        }
+
+        .btn-logout:hover {
+            background: var(--danger-dark);
+        }
+
+        /* ===== Contenido principal ===== */
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .welcome-header {
+            margin-bottom: 28px;
+        }
+
+        .welcome-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .welcome-header p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 4px;
+        }
+
+        /* ===== Cards ===== */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            transition: box-shadow var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        /* ===== Formularios ===== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: #fafafa;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+            background: #fff;
+        }
+
+        /* ===== Botones ===== */
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background var(--transition), transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: var(--success-dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-dark);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: #fff;
+        }
+
+        .btn-warning:hover {
+            background: var(--warning-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ===== Fila superior (registro + gestión) ===== */
+        .top-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .top-row .card {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .inline-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .inline-group .form-group {
+            flex: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .action-buttons .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons .row button {
+            flex: 1;
+        }
+
+        /* ===== Estadísticas de clientes ===== */
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--card-bg);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .stats-bar .label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .stats-bar .stat {
+            font-size: 0.85rem;
+            border-left: 1px solid var(--border);
+            padding-left: 16px;
+        }
+
+        .stats-bar .stat span:first-child {
+            font-weight: 600;
+        }
+
+        .stats-bar .stat .active {
+            color: var(--success);
+        }
+
+        .stats-bar .stat .inactive {
+            color: var(--danger);
+        }
+
+        /* ===== Filtros ===== */
+        .filters {
+            background: #f8f9fa;
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filters .filter-group {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .filters .filter-group label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .filters .filter-group input,
+        .filters .filter-group select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: #fff;
+        }
+
+        .filters .filter-group input:focus,
+        .filters .filter-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        /* ===== Tabla ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead th {
+            background: #f1f3f5;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+
+        /* ===== Mensajes ===== */
+        #message {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 200;
+            max-width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to   { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 12px 16px;
+                gap: 8px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .top-row .card {
+                min-width: 100%;
+            }
+
+            .inline-group {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 8px 12px;
+            }
+
+            .filters .filter-group {
+                min-width: 100%;
+            }
+
+            .action-buttons .row {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- ===== Navbar ===== -->
     <header class="navbar">
         <div class="logo">
-            <h2 style="color: var(--morado); margin: 0;">CONSULTORÍA</h2>
+            <h2>CONSULTORÍA</h2>
         </div>
         <nav>
             <ul class="nav-links">
@@ -30,138 +482,146 @@
                 <li><a href="reportes.html">Reportes</a></li>
             </ul>
         </nav>
-        <a href="#" onclick="logout()" style="background-color: #e74c3c; color: white; padding: 8px 20px; border-radius: 5px; text-decoration: none; font-size: 0.9rem;">Cerrar Sesión</a>
+        <a href="#" onclick="logout()" class="btn-logout">Cerrar Sesión</a>
     </header>
 
+    <!-- ===== Contenido principal ===== -->
     <main class="dashboard-content">
+
         <div class="welcome-header">
             <h1>Gestión de Usuarios</h1>
             <p>Panel para el control de accesos y perfiles del sistema.</p>
         </div>
 
         <!-- Fila superior: Registro y Gestión de Estado -->
-        <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: stretch; margin-bottom: 25px;">
-            <div class="card" style="flex: 1; min-width: 350px; margin-bottom: 0;">
+        <div class="top-row">
+
+            <!-- Registrar Nuevo Usuario -->
+            <div class="card">
                 <h2>Registrar Nuevo Usuario</h2>
                 <form id="registerForm">
                     <div class="form-group">
-                        <label>Correo Electrónico</label>
-                        <input type="email" id="reg_correo" required>
+                        <label for="reg_correo">Correo Electrónico</label>
+                        <input type="email" id="reg_correo" required placeholder="usuario@ejemplo.com">
                     </div>
                     <div class="form-group">
-                        <label>Contraseña Temporal</label>
-                        <input type="text" id="reg_password" required>
+                        <label for="reg_password">Contraseña Temporal</label>
+                        <input type="text" id="reg_password" required placeholder="Mín. 8 caracteres">
                     </div>
-                    <div style="display: flex; gap: 15px;">
-                        <div class="form-group" style="flex: 1;">
-                            <label>Rol</label>
+                    <div class="inline-group">
+                        <div class="form-group">
+                            <label for="reg_rol">Rol</label>
                             <select id="reg_rol">
                                 <option value="3">Cliente</option>
                                 <option value="2">Asesor</option>
                                 <option value="1">Administrador</option>
                             </select>
                         </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label>Nº Cliente (Opcional)</label>
-                            <input type="text" id="reg_numero">
+                        <div class="form-group">
+                            <label for="reg_numero">Nº Cliente (Opcional)</label>
+                            <input type="text" id="reg_numero" placeholder="Ej: CLI-002">
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Registrar Usuario</button>
+                    <button type="submit" class="btn-primary" style="width:100%;">Registrar Usuario</button>
                 </form>
             </div>
 
-            <div class="card" style="flex: 1; min-width: 350px; margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <h2>Gestión de Estado y Baja</h2>
-                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">
-                        Selecciona un usuario de la tabla para gestionar su acceso o eliminarlo.
-                    </p>
-                    <div class="form-group">
-                        <label>ID del Usuario</label>
-                        <input type="number" id="manage_id" placeholder="Ej: 5">
-                    </div>
+            <!-- Gestión de Estado y Baja -->
+            <div class="card">
+                <h2>Gestión de Estado y Baja</h2>
+                <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:16px;">
+                    Selecciona un usuario de la tabla para gestionar su acceso o eliminarlo.
+                </p>
+                <div class="form-group">
+                    <label for="manage_id">ID del Usuario</label>
+                    <input type="number" id="manage_id" placeholder="Ej: 5">
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div style="display: flex; gap: 10px;">
-                        <button onclick="changeStatus('desactivar')" class="btn-danger" style="flex: 1; background-color: #f39c12;">Dar de Baja</button>
-                        <button onclick="changeStatus('activar')" class="btn-success" style="flex: 1;">Dar de Alta</button>
+                <div class="action-buttons">
+                    <div class="row">
+                        <button onclick="changeStatus('desactivar')" class="btn-warning">Dar de Baja</button>
+                        <button onclick="changeStatus('activar')" class="btn-success">Dar de Alta</button>
                     </div>
-                    <button onclick="hardDelete()" class="btn-danger" style="width: 100%;">ELIMINAR DEFINITIVAMENTE</button>
+                    <button onclick="hardDelete()" class="btn-danger" style="width:100%;">ELIMINAR DEFINITIVAMENTE</button>
                 </div>
             </div>
         </div>
 
         <!-- Fila inferior: Tabla de Usuarios -->
-        <div class="card" style="max-width: 100%;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
-            <h2 style="margin: 0;">Lista de Usuarios</h2>
-            <div style="display: flex; align-items: center; gap: 15px; background: #fff; padding: 5px 15px; border-radius: 20px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <span style="font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold;">Clientes:</span>
-                <div style="font-size: 0.85rem; border-left: 1px solid #ddd; padding-left: 15px;">
-                    <span style="color: #27ae60; font-weight: bold;">Activos:</span>
-                    <span id="activeClientsCount" style="color: var(--texto); font-weight: bold; margin-left: 5px;">0</span>
+        <div class="card" style="max-width:100%;">
+
+            <!-- Cabecera con estadísticas -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+                <h2 style="margin:0;">Lista de Usuarios</h2>
+                <div class="stats-bar">
+                    <span class="label">Clientes:</span>
+                    <div class="stat">
+                        <span class="active">Activos:</span>
+                        <span id="activeClientsCount" style="font-weight:700; margin-left:4px;">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="inactive">Inactivos:</span>
+                        <span id="inactiveClientsCount" style="font-weight:700; margin-left:4px;">0</span>
+                    </div>
                 </div>
-                <div style="border-left: 1px solid #ddd; padding-left: 15px; font-size: 0.85rem;">
-                    <span style="color: #c0392b; font-weight: bold;">Inactivos:</span>
-                    <span id="inactiveClientsCount" style="color: var(--texto); font-weight: bold; margin-left: 5px;">0</span>
+            </div>
+
+            <!-- Filtros de búsqueda -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="filterSearch">Buscar por ID, Correo o Nº Cliente</label>
+                    <input type="text" id="filterSearch" placeholder="Escribe aquí..." onkeyup="applyFilters()">
+                </div>
+                <div class="filter-group">
+                    <label for="filterRol">Rol</label>
+                    <select id="filterRol" onchange="applyFilters()">
+                        <option value="todos">Todos</option>
+                        <option value="administrador">Admin</option>
+                        <option value="asesor">Asesor</option>
+                        <option value="cliente">Cliente</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filterEstado">Estado</label>
+                    <select id="filterEstado" onchange="applyFilters()">
+                        <option value="todos">Todos</option>
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <div style="align-self:flex-end;">
+                    <button onclick="loadUsers()" class="btn-primary btn-sm">Actualizar</button>
                 </div>
             </div>
-        </div>
-        
-        <!-- Filtros de búsqueda -->
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 150px;">
-                <label style="font-size: 0.8rem; color: #666;">Buscar por ID, Correo o Nº Cliente</label>
-                <input type="text" id="filterSearch" placeholder="Escribe aquí..." onkeyup="applyFilters()">
-            </div>
-            <div style="width: 150px;">
-                <label style="font-size: 0.8rem; color: #666;">Rol</label>
-                <select id="filterRol" onchange="applyFilters()">
-                    <option value="todos">Todos</option>
-                    <option value="administrador">Admin</option>
-                    <option value="asesor">Asesor</option>
-                    <option value="cliente">Cliente</option>
-                </select>
-            </div>
-            <div style="width: 150px;">
-                <label style="font-size: 0.8rem; color: #666;">Estado</label>
-                <select id="filterEstado" onchange="applyFilters()">
-                    <option value="todos">Todos</option>
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
-                </select>
-            </div>
-            <div style="align-self: flex-end;">
-                <button onclick="loadUsers()" class="btn-primary" style="padding: 8px 15px;">Actualizar</button>
+
+            <!-- Tabla -->
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nº Cliente</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- Usuarios cargados dinámicamente -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-            <thead>
-                <tr style="background-color: #eee; text-align: left;">
-                    <th style="padding: 10px; border: 1px solid #ddd;">ID</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Nº Cliente</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Correo</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Rol</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="userTableBody">
-                <!-- Usuarios cargados dinámicamente -->
-            </tbody>
-        </table>
-    </div>
-
-        </div>
     </main>
 
+    <!-- Mensaje flotante -->
     <div id="message"></div>
 
     <script src="../../js/helpers/logoutHelper.js"></script>
     <script>
         const messageDiv = document.getElementById('message');
-        let allUsers = []; // Para guardar la lista completa y filtrar localmente
+        let allUsers = [];
 
         function showMessage(msg, isError = false) {
             messageDiv.textContent = msg;
@@ -175,7 +635,6 @@
             try {
                 const response = await fetch('../../../backend/modules/usuarios/listar.php');
                 const res = await response.json();
-                
                 if (response.ok) {
                     allUsers = res.data;
                     renderTable(allUsers);
@@ -189,25 +648,23 @@
             const tbody = document.getElementById('userTableBody');
             tbody.innerHTML = '';
 
-            // Calcular estadísticas de CLIENTES (rol 'cliente')
             const activeClients = allUsers.filter(u => u.nombre_rol.toLowerCase() === 'cliente' && u.estado === 'activo').length;
             const inactiveClients = allUsers.filter(u => u.nombre_rol.toLowerCase() === 'cliente' && u.estado === 'inactivo').length;
-            
+
             document.getElementById('activeClientsCount').textContent = activeClients;
             document.getElementById('inactiveClientsCount').textContent = inactiveClients;
 
             users.forEach(user => {
                 const tr = document.createElement('tr');
+                const estadoClass = user.estado === 'activo' ? 'active' : 'inactive';
                 tr.innerHTML = `
-                    <td style="padding: 10px; border: 1px solid #ddd;">${user.id_usuario}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${user.numero_cliente || '---'}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${user.correo}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${user.nombre_rol}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">
-                        <span style="color: ${user.estado === 'activo' ? 'green' : 'red'}">${user.estado.toUpperCase()}</span>
-                    </td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">
-                        <button onclick="selectUser(${user.id_usuario})" style="background: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Gestionar</button>
+                    <td>${user.id_usuario}</td>
+                    <td>${user.numero_cliente || '---'}</td>
+                    <td>${user.correo}</td>
+                    <td>${user.nombre_rol}</td>
+                    <td><span class="status-badge ${estadoClass}">${user.estado.toUpperCase()}</span></td>
+                    <td>
+                        <button onclick="selectUser(${user.id_usuario})" class="btn-primary btn-sm">Gestionar</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -221,13 +678,11 @@
 
             const filtered = allUsers.filter(user => {
                 const numCliente = user.numero_cliente ? user.numero_cliente.toLowerCase() : '';
-                const matchesSearch = user.id_usuario.toString().includes(searchText) || 
-                                    user.correo.toLowerCase().includes(searchText) ||
-                                    numCliente.includes(searchText);
-                
+                const matchesSearch = user.id_usuario.toString().includes(searchText) ||
+                                      user.correo.toLowerCase().includes(searchText) ||
+                                      numCliente.includes(searchText);
                 const matchesRol = filterRol === 'todos' || user.nombre_rol.toLowerCase() === filterRol;
                 const matchesEstado = filterEstado === 'todos' || user.estado.toLowerCase() === filterEstado;
-
                 return matchesSearch && matchesRol && matchesEstado;
             });
 
@@ -239,10 +694,8 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Cargar usuarios al iniciar
         loadUsers();
 
-        // Registrar Usuario
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const data = {
@@ -260,7 +713,7 @@
                 });
                 const res = await response.json();
                 showMessage(res.message, !response.ok);
-                if(response.ok) {
+                if (response.ok) {
                     e.target.reset();
                     loadUsers();
                 }
@@ -269,10 +722,9 @@
             }
         });
 
-        // Cambiar Estado (Baja/Alta)
         async function changeStatus(accion) {
             const id_usuario = document.getElementById('manage_id').value;
-            if(!id_usuario) return alert("Ingrese un ID");
+            if (!id_usuario) return alert("Ingrese un ID");
 
             try {
                 const response = await fetch('../../../backend/modules/usuarios/gestionar_estado.php', {
@@ -282,18 +734,17 @@
                 });
                 const res = await response.json();
                 showMessage(res.message, !response.ok);
-                if(response.ok) loadUsers();
+                if (response.ok) loadUsers();
             } catch (error) {
                 showMessage("Error de conexión", true);
             }
         }
 
-        // Eliminación Definitiva
         async function hardDelete() {
             const id_usuario = document.getElementById('manage_id').value;
-            if(!id_usuario) return alert("Ingrese un ID");
+            if (!id_usuario) return alert("Ingrese un ID");
 
-            if(!confirm("¿ESTÁS SEGURO? Esta acción borrará al usuario y todos sus datos permanentemente.")) return;
+            if (!confirm("¿ESTÁS SEGURO? Esta acción borrará al usuario y todos sus datos permanentemente.")) return;
 
             try {
                 const response = await fetch(`../../../backend/modules/usuarios/eliminar.php?id=${id_usuario}`, {
@@ -301,7 +752,7 @@
                 });
                 const res = await response.json();
                 showMessage(res.message, !response.ok);
-                if(response.ok) {
+                if (response.ok) {
                     document.getElementById('manage_id').value = '';
                     loadUsers();
                 }
