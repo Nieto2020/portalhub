@@ -12,10 +12,10 @@ ini_set('session.cookie_secure', $isSecure ? 1 : 0);
 ini_set('session.use_only_cookies', 1);
 ini_set('session.cookie_samesite', 'Lax');
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'prueba_1');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', getenv('MYSQL_HOST') ?: 'mysql');
+define('DB_NAME', getenv('MYSQL_DATABASE') ?: 'consultoria');
+define('DB_USER', getenv('MYSQL_USER') ?: 'consultancy');
+define('DB_PASS', getenv('MYSQL_PASSWORD') ?: 'consultancy123');
 
 // Configuración de sesión (30 minutos de inactividad)
 define('SESSION_TIMEOUT', 1800); 
