@@ -200,4 +200,22 @@ CREATE TABLE `cliente_asesor` (
   CONSTRAINT `cliente_asesor_ibfk_3` FOREIGN KEY (`id_asignador`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `reportes`
+--
+CREATE TABLE `reportes` (
+  `id_reporte` int(11) NOT NULL AUTO_INCREMENT,
+  `id_asesor` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `descripcion` text NOT NULL,
+  `contenido` text DEFAULT NULL,
+  `tipo` enum('Mensual','Trimestral','Anual','Especial') DEFAULT 'Mensual',
+  `estado` enum('Borrador','Publicado','Archivado') DEFAULT 'Borrador',
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id_reporte`),
+  KEY `id_asesor` (`id_asesor`),
+  CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`id_asesor`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
