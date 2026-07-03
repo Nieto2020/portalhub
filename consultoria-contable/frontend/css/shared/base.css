@@ -1,0 +1,31 @@
+/* =============================================
+   ESTILOS BASE COMPARTIDOS
+   Reset y estilos globales
+   ============================================= */
+
+*, *::before, *::after { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ── Layout principal ── */
+.dashboard-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 28px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-content { 
+        padding: 20px 16px; 
+    }
+}

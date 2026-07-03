@@ -1,0 +1,50 @@
+/* =============================================
+   VARIABLES CSS COMPARTIDAS
+   Reutilizables en todo el proyecto
+   ============================================= */
+
+:root {
+    /* ── Colores Primarios ── */
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --primary-light: #eef2ff;
+
+    /* ── Colores de Estado ── */
+    --success: #10b981;
+    --success-hover: #059669;
+    --success-light: #ecfdf5;
+
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --danger-light: #fef2f2;
+
+    --warning: #f59e0b;
+    --warning-hover: #d97706;
+    --warning-light: #fffbeb;
+
+    /* ── Colores Neutros ── */
+    --bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --text: #0f172a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+
+    /* ── Sombras ── */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+
+    /* ── Bordes y Espaciado ── */
+    --radius: 14px;
+    --radius-sm: 10px;
+    --transition: 0.2s ease;
+
+    /* ── Tipografía ── */
+    --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-size-xs: 0.7rem;
+    --font-size-sm: 0.75rem;
+    --font-size-base: 0.9rem;
+    --font-size-lg: 1.05rem;
+    --font-size-xl: 1.75rem;
+}

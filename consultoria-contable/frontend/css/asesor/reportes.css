@@ -1,0 +1,207 @@
+/* =============================================
+   ESTILOS ESPECÍFICOS - ASESOR REPORTES
+   Ruta: pages/asesor/reportes.html
+   ============================================= */
+
+/* ── PAGE HEADER ── */
+.page-header {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    flex-wrap: wrap; 
+    gap: 16px; 
+    margin-bottom: 24px;
+}
+.page-header h1 { 
+    font-size: 1.75rem; 
+    font-weight: 700; 
+    color: var(--text); 
+}
+.page-header p { 
+    color: var(--text-secondary); 
+    font-size: 0.95rem; 
+    margin-top: 4px; 
+}
+
+/* ── GRID PRINCIPAL ── */
+.main-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 24px; 
+}
+@media (max-width: 900px) { 
+    .main-grid { 
+        grid-template-columns: 1fr; 
+    } 
+}
+
+/* ── CARD ESTILOS ── */
+.card {
+    background: var(--card-bg); 
+    border-radius: 16px; 
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+.card h2 {
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: var(--text); 
+    margin-bottom: 20px;
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+}
+
+/* ── FORMULARIO ESPECÍFICO ── */
+.form-row { 
+    display: flex; 
+    gap: 12px; 
+}
+.form-row .form-group { 
+    flex: 1; 
+}
+@media (max-width: 500px) { 
+    .form-row { 
+        flex-direction: column; 
+    } 
+}
+
+.form-group textarea { 
+    min-height: 80px; 
+    resize: vertical;
+}
+
+.btn-submit {
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 10px; 
+    font-size: 0.95rem; 
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--success), #34d399); 
+    color: #fff;
+    border: none; 
+    cursor: pointer; 
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(16,185,129,0.35);
+}
+.btn-submit:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(16,185,129,0.45); 
+}
+
+/* ── TABLA REPORTES ── */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 0.85rem; 
+}
+thead th {
+    text-align: left; 
+    padding: 10px 12px; 
+    background: #f8fafc; 
+    color: var(--text-muted);
+    font-weight: 600; 
+    font-size: 0.7rem; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+}
+tbody td { 
+    padding: 10px 12px; 
+    border-bottom: 1px solid #f1f5f9; 
+}
+tbody tr:last-child td { 
+    border-bottom: none; 
+}
+tbody tr:hover { 
+    background: #f8fafc; 
+}
+
+/* ── BADGE REPORTES ── */
+.badge {
+    display: inline-block; 
+    padding: 2px 8px; 
+    border-radius: 20px;
+    font-size: 0.65rem; 
+    font-weight: 600;
+}
+.badge.publicado { 
+    background: #dcfce7; 
+    color: #166534; 
+}
+.badge.borrador { 
+    background: #fef3c7; 
+    color: #92400e; 
+}
+.badge.archivado { 
+    background: #f1f5f9; 
+    color: var(--text-muted); 
+}
+.badge.mensual { 
+    background: var(--primary-light); 
+    color: #3730a3; 
+}
+.badge.trimestral { 
+    background: #fce7f3; 
+    color: #9d174d; 
+}
+.badge.anual { 
+    background: var(--success-light); 
+    color: #065f46; 
+}
+.badge.especial { 
+    background: var(--warning-light); 
+    color: #92400e; 
+}
+
+/* ── TOAST NOTIFICATION ── */
+#toast {
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    padding: 14px 24px;
+    border-radius: 10px; 
+    font-weight: 600; 
+    font-size: 0.9rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15); 
+    z-index: 300;
+    display: none; 
+    animation: slideInToast 0.3s ease;
+}
+@keyframes slideInToast { 
+    from { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    } 
+    to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    } 
+}
+#toast.success { 
+    background: var(--success-light); 
+    color: #166534; 
+}
+#toast.error { 
+    background: var(--danger-light); 
+    color: #991b1b; 
+}
+
+/* ── EMPTY STATE ── */
+.empty-state { 
+    text-align: center; 
+    padding: 30px; 
+    color: var(--text-muted); 
+}
+.empty-state i { 
+    font-size: 36px; 
+    display: block; 
+    margin-bottom: 8px; 
+}
+
+/* ── FORM FEEDBACK ── */
+#formFeedback { 
+    font-size: 0.85rem; 
+    margin-top: 8px; 
+    min-height: 1.2em; 
+}

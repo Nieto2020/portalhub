@@ -1,0 +1,129 @@
+/* =============================================
+   ESTILOS DE BOTONES COMPARTIDOS
+   Reutilizables en admin, asesor, cliente
+   ============================================= */
+
+/* ── Botones generales ── */
+button {
+    padding: 11px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: var(--font-family);
+}
+
+button:active { 
+    transform: scale(0.97); 
+}
+
+/* ── Variantes de botones ── */
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+.btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+}
+
+.btn-success {
+    background: var(--success);
+    color: #fff;
+}
+.btn-success:hover {
+    background: var(--success-hover);
+    box-shadow: 0 4px 12px rgba(16,185,129,0.35);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+.btn-danger:hover {
+    background: var(--danger-hover);
+    box-shadow: 0 4px 12px rgba(239,68,68,0.35);
+}
+
+.btn-warning {
+    background: var(--warning);
+    color: #fff;
+}
+.btn-warning:hover {
+    background: var(--warning-hover);
+    box-shadow: 0 4px 12px rgba(245,158,11,0.35);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+.btn-outline:hover {
+    background: var(--primary-light);
+}
+
+/* ── Tamaños ── */
+.btn-sm {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+}
+
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 1rem;
+}
+
+/* ── Botones header ── */
+.btn-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+    text-decoration: none;
+}
+
+.btn-header.primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
+.btn-header.primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+}
+
+.btn-header.outline {
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+.btn-header.outline:hover {
+    background: #f8fafc;
+    border-color: var(--text-muted);
+}
+
+/* ── Botones de vista ── */
+.btn-view {
+    background: var(--primary-light); 
+    color: var(--primary);
+    border: none;
+}
+.btn-view:hover { 
+    background: var(--primary); 
+    color: #fff; 
+}

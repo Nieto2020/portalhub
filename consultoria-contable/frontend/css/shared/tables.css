@@ -1,0 +1,156 @@
+/* =============================================
+   ESTILOS DE TABLAS COMPARTIDAS
+   Reutilizables en admin, asesor, cliente
+   ============================================= */
+
+/* ── Contenedor de tabla ── */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 8px;
+    border-radius: var(--radius-sm);
+}
+
+/* ── Tabla general ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+/* ── Headers de tabla ── */
+thead th {
+    background: #f8fafc;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+}
+
+/* ── Celdas de tabla ── */
+tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+/* ── Filas de tabla ── */
+tbody tr { 
+    transition: background 0.15s ease; 
+}
+tbody tr:hover { 
+    background: #f8fafc; 
+}
+
+tbody tr:last-child td { 
+    border-bottom: none; 
+}
+
+/* ── Tabla alternativa (mini-table) ── */
+.mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.mini-table thead th {
+    text-align: left; 
+    padding: 14px 18px; 
+    background: #f8fafc; 
+    color: var(--text-muted);
+    font-weight: 600; 
+    font-size: var(--font-size-sm); 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+}
+
+.mini-table tbody td { 
+    padding: 14px 18px; 
+    border-bottom: 1px solid #f1f5f9; 
+    vertical-align: middle; 
+}
+
+.mini-table tbody tr:hover { 
+    background: #f8fafc; 
+}
+
+.mini-table tbody tr:last-child td { 
+    border-bottom: none; 
+}
+
+/* ── Títulos de reporte en tabla ── */
+.report-title {
+    font-weight: 600; 
+    color: var(--text); 
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.report-title:hover { 
+    color: var(--primary); 
+}
+
+/* ── Estados en tabla ── */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.status-badge.active { 
+    background: var(--success-light); 
+    color: #065f46; 
+}
+.status-badge.inactive { 
+    background: var(--danger-light);  
+    color: #991b1b; 
+}
+
+/* ── Mensaje de estado ── */
+.status-message {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+}
+
+.status-message.error {
+    color: var(--danger);
+}
+
+.status-message i {
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ── Empty state ── */
+.empty-state { 
+    text-align: center; 
+    padding: 40px; 
+    color: var(--text-muted); 
+}
+
+.empty-state i { 
+    font-size: 48px; 
+    display: block; 
+    margin-bottom: 12px; 
+}
+
+@media (max-width: 768px) {
+    .table-wrapper {
+        font-size: 0.8rem;
+    }
+    
+    thead th,
+    tbody td {
+        padding: 10px 12px;
+    }
+}
