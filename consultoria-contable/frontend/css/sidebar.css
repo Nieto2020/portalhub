@@ -97,6 +97,8 @@ body.sidebar-collapsed {
 .sidebar.collapsed .logo-section {
     justify-content: center;
     gap: 0;
+    flex-shrink: 0;
+    order: 1;
 }
 
 .sidebar.collapsed .logo-section .logo-text {
@@ -106,12 +108,10 @@ body.sidebar-collapsed {
 }
 
 .sidebar.collapsed .sidebar-header {
-    padding: 18px 8px;
-    justify-content: space-between;
-}
-
-.sidebar.collapsed .toggle-btn {
-    margin: 0;
+    padding: 14px 6px;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: nowrap;
 }
 
 /* =============================================
@@ -140,7 +140,11 @@ body.sidebar-collapsed {
 }
 
 .sidebar.collapsed .toggle-btn {
-    margin: 8px 0 0 0;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    order: 2;
 }
 
 /* =============================================
