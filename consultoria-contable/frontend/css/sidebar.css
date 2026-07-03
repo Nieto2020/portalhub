@@ -4,7 +4,7 @@
 
 :root {
     --sidebar-width: 260px;
-    --sidebar-collapsed: 72px;
+    --sidebar-collapsed: 88px;
     --sidebar-bg: #0f172a;
     --sidebar-surface: rgba(30, 41, 59, 0.7);
     --sidebar-hover: rgba(99, 102, 241, 0.25);
@@ -106,8 +106,12 @@ body.sidebar-collapsed {
 }
 
 .sidebar.collapsed .sidebar-header {
-    padding: 18px 0;
-    justify-content: center;
+    padding: 18px 8px;
+    justify-content: space-between;
+}
+
+.sidebar.collapsed .toggle-btn {
+    margin: 0;
 }
 
 /* =============================================

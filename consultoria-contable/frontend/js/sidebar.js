@@ -112,7 +112,7 @@
                 <div class="sidebar-header">
                     <div class="logo-section">
                         <img src="../../css/img/icon.png" alt="Logo" onerror="this.style.display='none'">
-                        <span class="logo-text">CONSULTORÍA</span>
+                        <span class="logo-text">CONSULTANCY</span>
                     </div>
                     <button class="toggle-btn" id="sidebarToggle" aria-label="Colapsar menú">
                         <i class="bx bx-chevron-left"></i>
