@@ -5,38 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Documentos</title>
 
-
      <!--CSS-->
+     <link rel="stylesheet" href="../../css/sidebar.css">
      <link rel="stylesheet" href="../../css/documentos_cliente.css">
 
     <!--ICONS-->
-    <!-- Basic Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
-<!-- Filled Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
-<!-- Brand Icons -->
-<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+
 </head>
 <body>
     
- <header class="navbar">
-        <div class="logo"><img src="../../css/img/logo.png" alt=""></div>
-
-        <nav>
-            <ul class="nav-links">
-                <li><a href="../../pages/cliente/dashboard.html">Inicio</a></li>
-                <li><a href="../../pages/cliente/mis_declaraciones.html">Mis Declaraciones</a></li>
-                <li><a href="../../pages/cliente/documentos.html"  class="active">Documentos</a></li>
-                <li><a href="../../pages/cliente/pagos.html">Pagos</a></li>
-                <li><a href="">Tareas</a></li>
-                <li><a href="">Reportes</a></li>
-                <li><a href="perfil.html">Perfil</a></li>
-                <li><a href="">Ayuda</a></li>
-            </ul>
-        </nav>
-
-    </header>
-
     <!--CONTENIDO-->
 <div class="container-documentos">
 
@@ -113,7 +92,6 @@
                 </div>
             </div>
 
-
                 <!--Estado de Cuenta-->
 
     <section id="cont-bancos" class="sub-seccion-contenido" style="display: none;" >
@@ -185,7 +163,6 @@
         </div>
     </div>
 </section>
-
 
 <!--Recibos de Nomina-->
 
@@ -301,9 +278,16 @@
 
     </div>
 
-
-
-</body>
-<!--JS-->
 <script src="../../js/views/documentosView.js"></script>
+<script src="../../js/helpers/logoutHelper.js"></script>
+<script>
+    window.SIDEBAR_CONFIG = {
+        role: 'cliente',
+        userName: 'Cliente',
+        userRole: 'Cliente',
+        currentPage: 'documentos'
+    };
+</script>
+<script src="../../js/sidebar.js"></script>
+</body>
 </html>

@@ -6,30 +6,15 @@
     <title>Pagos - Consultancy</title>
     
     <!-- CSS -->
+    <link rel="stylesheet" href="../../css/sidebar.css">
     <link rel="stylesheet" href="../../css/Pagos_cliente.css">
 
     <!-- ICONS -->
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+
 </head>
 <body>
-
-    <header class="navbar">
-        <div class="logo"><img src="../../css/img/logo.png" alt="Consultancy"></div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="../../pages/cliente/dashboard.html">Inicio</a></li>
-                <li><a href="../../pages/cliente/mis_declaraciones.html">Mis Declaraciones</a></li>
-                <li><a href="../../pages/cliente/documentos.html">Documentos</a></li>
-                <li><a href="pagos.html" class="active">Pagos</a></li>
-                <li><a href="">Tareas</a></li>
-                <li><a href="">Reportes</a></li>
-                <li><a href="perfil.html">Perfil</a></li>
-                <li><a href="">Ayuda</a></li>
-            </ul>
-        </nav>
-    </header>
 
     <div class="container-pagos">
         <div class="acciones-pagos">
@@ -124,4 +109,15 @@
 </body>
 
 <script src="../../js/views/pagosView.js"></script>
+<script src="../../js/helpers/logoutHelper.js"></script>
+<script>
+    window.SIDEBAR_CONFIG = {
+        role: 'cliente',
+        userName: 'Cliente',
+        userRole: 'Cliente',
+        currentPage: 'pagos'
+    };
+</script>
+<script src="../../js/sidebar.js"></script>
+</body>
 </html>

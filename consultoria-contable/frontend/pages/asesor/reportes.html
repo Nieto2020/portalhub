@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Asesor</title>
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f8; color: #1e293b; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+        }
+        .page-header h1 { font-size: 1.75rem; font-weight: 700; color: #0f172a; }
+        .page-header p { color: #64748b; font-size: 0.95rem; margin-top: 4px; }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+            border: none; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(99,102,241,0.35); text-decoration: none;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.45); }
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 600;
+            background: #fff; color: #1e293b; border: 1px solid #e2e8f0;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+        /* ── Grid principal ── */
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: #fff; border-radius: 16px; padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .card h2 {
+            font-size: 1.1rem; font-weight: 600; color: #0f172a; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        /* ── Formulario ── */
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block; font-size: 0.8rem; font-weight: 600; color: #64748b;
+            margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 10px;
+            font-size: 0.9rem; color: #1e293b; background: #f8fafc;
+            font-family: inherit; resize: vertical;
+        }
+        .form-group textarea { min-height: 80px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #6366f1; outline: none;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1); background: #fff;
+        }
+        .form-row { display: flex; gap: 12px; }
+        .form-row .form-group { flex: 1; }
+        @media (max-width: 500px) { .form-row { flex-direction: column; } }
+
+        .btn-submit {
+            width: 100%; padding: 12px; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+            background: linear-gradient(135deg, #10b981, #34d399); color: #fff;
+            border: none; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(16,185,129,0.35);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.45); }
+
+        /* ── Tabla ── */
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        thead th {
+            text-align: left; padding: 10px 12px; background: #f8fafc; color: #94a3b8;
+            font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tbody td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #f8fafc; }
+
+        .badge {
+            display: inline-block; padding: 2px 8px; border-radius: 20px;
+            font-size: 0.65rem; font-weight: 600;
+        }
+        .badge.publicado { background: #dcfce7; color: #166534; }
+        .badge.borrador  { background: #fef3c7; color: #92400e; }
+        .badge.archivado { background: #f1f5f9; color: #64748b; }
+        .badge.mensual   { background: #eef2ff; color: #3730a3; }
+        .badge.trimestral{ background: #fce7f3; color: #9d174d; }
+        .badge.anual     { background: #ecfdf5; color: #065f46; }
+        .badge.especial  { background: #fef3c7; color: #92400e; }
+
+        /* ── Toast ── */
+        #toast {
+            position: fixed; top: 20px; right: 20px; padding: 14px 24px;
+            border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); z-index: 300;
+            display: none; animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        #toast.success { background: #dcfce7; color: #166534; }
+        #toast.error   { background: #fef2f2; color: #991b1b; }
+
+        .empty-state { text-align: center; padding: 30px; color: #94a3b8; }
+        .empty-state i { font-size: 36px; display: block; margin-bottom: 8px; }
+
+        #formFeedback { font-size: 0.85rem; margin-top: 8px; min-height: 1.2em; }
+    </style>
+</head>
+<body>
+
+    <main class="dashboard-content">
+
+        <div class="page-header">
+            <div>
+                <h1>Mis Reportes</h1>
+                <p>Crea y comparte reportes para el equipo administrativo.</p>
+            </div>
+        </div>
+
+        <div class="main-grid">
+
+            <!-- Crear Reporte -->
+            <div class="card" id="formCard">
+                <h2><i class="bx bx-plus-circle" style="color:#6366f1;"></i> Nuevo Reporte</h2>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="reportTitulo">Título del Reporte *</label>
+                        <input type="text" id="reportTitulo" placeholder="Ej: Avance fiscal Q2" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reportTipo">Tipo *</label>
+                            <select id="reportTipo" required>
+                                <option value="Mensual">Mensual</option>
+                                <option value="Trimestral">Trimestral</option>
+                                <option value="Anual">Anual</option>
+                                <option value="Especial">Especial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reportEstado">Estado</label>
+                            <select id="reportEstado">
+                                <option value="Borrador">Borrador</option>
+                                <option value="Publicado">Publicado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reportDescripcion">Descripción *</label>
+                        <textarea id="reportDescripcion" placeholder="Resumen del reporte..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reportContenido">Contenido Detallado</label>
+                        <textarea id="reportContenido" rows="5" placeholder="Análisis detallado, cifras, observaciones..."></textarea>
+                    </div>
+                    <div id="formFeedback"></div>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="bx bx-send"></i> Enviar Reporte
+                    </button>
+                </form>
+            </div>
+
+            <!-- Historial -->
+            <div class="card">
+                <h2><i class="bx bx-history" style="color:#10b981;"></i> Historial</h2>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Tipo</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="4">
+                                    <div class="empty-state">
+                                        <i class="bx bx-loader bx-spin"></i>
+                                        <p>Cargando mis reportes...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <script src="../../js/helpers/logoutHelper.js"></script>
+    <script>
+        window.SIDEBAR_CONFIG = {
+            role: 'asesor', userName: 'Asesor', userRole: 'Asesor', currentPage: 'reportes'
+        };
+    </script>
+    <script src="../../js/sidebar.js"></script>
+    <script>
+        const toast = document.getElementById('toast');
+        const showToast = (msg, ok) => {
+            toast.textContent = msg;
+            toast.className = ok ? 'success' : 'error';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        };
+
+        async function loadMyReports() {
+            const tbody = document.getElementById('historyTableBody');
+            try {
+                const res = await fetch('../../../backend/modules/reportes/listar.php');
+                const json = await res.json();
+                const reports = json.data || [];
+
+                if (reports.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-file-blank"></i><p>Aún no has creado reportes</p></div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                reports.forEach(r => {
+                    const tipoClass  = r.tipo.toLowerCase();
+                    const estadoClass = r.estado.toLowerCase();
+                    const fecha = r.fecha_creacion
+                        ? new Date(r.fecha_creacion).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' })
+                        : '---';
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${r.titulo}</strong></td>
+                        <td><span class="badge ${tipoClass}">${r.tipo}</span></td>
+                        <td><span class="badge ${estadoClass}">${r.estado}</span></td>
+                        <td>${fecha}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-error-circle"></i><p>Error al cargar</p></div></td></tr>';
+            }
+        }
+
+        document.getElementById('reportForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const feedback = document.getElementById('formFeedback');
+            const btn = document.getElementById('submitBtn');
+
+            feedback.textContent = '';
+            feedback.style.color = '';
+
+            const data = {
+                titulo:      document.getElementById('reportTitulo').value.trim(),
+                descripcion: document.getElementById('reportDescripcion').value.trim(),
+                contenido:   document.getElementById('reportContenido').value.trim(),
+                tipo:        document.getElementById('reportTipo').value,
+                estado:      document.getElementById('reportEstado').value
+            };
+
+            if (!data.titulo || !data.descripcion) {
+                feedback.textContent = '⚠️ Título y descripción son obligatorios.';
+                feedback.style.color = '#991b1b';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bx bx-loader bx-spin"></i> Enviando...';
+
+            try {
+                const res = await fetch('../../../backend/modules/reportes/crear.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const json = await res.json();
+
+                if (res.ok) {
+                    showToast('✅ Reporte creado exitosamente', true);
+                    this.reset();
+                    loadMyReports();
+                } else {
+                    showToast('❌ ' + (json.message || 'Error'), false);
+                }
+            } catch (err) {
+                showToast('❌ Error de conexión', false);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bx bx-send"></i> Enviar Reporte';
+            }
+        });
+
+        loadMyReports();
+    </script>
+</body>
+</html>

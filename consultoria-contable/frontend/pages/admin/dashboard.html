@@ -4,102 +4,372 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Consultoría Contable</title>
-    <link rel="stylesheet" href="../../css/style.css">
-    <style>
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        .admin-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            text-decoration: none;
-            color: var(--texto);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #eee;
-        }
-        .admin-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border-color: var(--azul-accion);
-        }
-        .admin-card i {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: var(--morado);
-        }
-        .admin-card h3 {
-            margin: 10px 0;
-            font-size: 1.2rem;
-            color: #1A305E;
-        }
-        .admin-card p {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 0;
-        }
-        .logout-btn {
-            background-color: #e74c3c;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-    </style>
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">
-            <h2 style="color: var(--morado); margin: 0;">CONSULTORÍA</h2>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="dashboard.html" class="active">Inicio</a></li>
-                <li><a href="gestion_usuarios.html">Usuarios</a></li>
-                <li><a href="reportes.html">Reportes</a></li>
-            </ul>
-        </nav>
-        <a href="#" onclick="logout()" class="logout-btn">Cerrar Sesión</a>
-    </header>
-
     <main class="dashboard-content">
-        <div class="welcome-header">
-            <h1>Panel Administrativo</h1>
-            <p>Bienvenido al centro de control del portal.</p>
+
+        <!-- ── Header ── -->
+        <div class="page-header">
+            <div>
+                <h1>Panel Administrativo</h1>
+                <p>Bienvenido al centro de control del portal.</p>
+            </div>
+            <div class="header-actions">
+                <a href="test_reset.html" class="btn-header outline">
+                    <i class="bx bx-key"></i> Reset Passwords
+                </a>
+                <a href="reportes.html" class="btn-header primary">
+                    <i class="bx bx-bar-chart-alt-2"></i> Ver Reportes
+                </a>
+            </div>
         </div>
 
-        <div class="admin-grid">
-            <a href="gestion_usuarios.html" class="admin-card">
-                <div style="font-size: 40px; margin-bottom: 10px;">👥</div>
-                <h3>Gestión de Usuarios</h3>
-                <p>Registra, da de baja o elimina clientes, asesores y administradores.</p>
-            </a>
-
-            <a href="reportes.html" class="admin-card">
-                <div style="font-size: 40px; margin-bottom: 10px;">📊</div>
-                <h3>Reportes y Estadísticas</h3>
-                <p>Visualiza el estado general de la plataforma y actividades.</p>
-            </a>
-
-            <a href="test_reset.html" class="admin-card">
-                <div style="font-size: 40px; margin-bottom: 10px;">🔑</div>
-                <h3>Reset de Contraseñas</h3>
-                <p>Genera accesos temporales rápidos para los usuarios.</p>
-            </a>
+        <!-- ── Stats ── -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon"><i class="bx bx-group"></i></div>
+                    <span class="stat-change" id="activeBadge">--</span>
+                </div>
+                <div class="stat-value"><span id="totalUsers">--</span></div>
+                <div class="stat-label">Usuarios Registrados</div>
+                <div class="stat-sub" id="newThisMonth"></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon"><i class="bx bx-user-check"></i></div>
+                    <span class="stat-change up" id="activePercentBadge">--</span>
+                </div>
+                <div class="stat-value"><span id="activeUsers">--</span></div>
+                <div class="stat-label">Usuarios Activos</div>
+                <div class="stat-sub" id="activeSub"></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon"><i class="bx bx-user-x"></i></div>
+                    <span class="stat-change down" id="inactivePercent">--</span>
+                </div>
+                <div class="stat-value"><span id="inactiveUsers">--</span></div>
+                <div class="stat-label">Usuarios Inactivos</div>
+                <div class="stat-sub" id="inactiveSub"></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon"><i class="bx bx-calendar-check"></i></div>
+                    <span class="stat-change" id="citasBadge">--</span>
+                </div>
+                <div class="stat-value"><span id="totalCitas">--</span></div>
+                <div class="stat-label">Citas Registradas</div>
+                <div class="stat-sub" id="citasSub"></div>
+            </div>
         </div>
+
+        <!-- ── Main Grid ── -->
+        <div class="main-grid">
+
+            <!-- Actividad Reciente -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="bx bx-trending-up icon-indigo" aria-hidden="true"></i> Actividad Reciente</h2>
+                    <a href="gestion_usuarios.html">Ver todo</a>
+                </div>
+                <div class="activity-list" id="activityList">
+                    <div class="status-message">
+                        <i class="bx bx-loader bx-spin" aria-hidden="true"></i>
+                        <p>Cargando actividad...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="bx bx-zap icon-amber" aria-hidden="true"></i> Acciones Rápidas</h2>
+                </div>
+                <div class="quick-actions">
+                    <a href="gestion_usuarios.html" class="quick-action">
+                        <i class="bx bx-user-plus"></i>
+                        <span>Nuevo Usuario</span>
+                    </a>
+                    <a href="gestion_usuarios.html" class="quick-action">
+                        <i class="bx bx-user-x"></i>
+                        <span>Dar de Baja</span>
+                    </a>
+                    <a href="test_reset.html" class="quick-action">
+                        <i class="bx bx-key"></i>
+                        <span>Reset Password</span>
+                    </a>
+                    <a href="reportes.html" class="quick-action">
+                        <i class="bx bx-bar-chart-square"></i>
+                        <span>Ver Reportes</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Bottom Grid ── -->
+        <div class="bottom-grid">
+
+            <!-- Distribución de Usuarios -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="bx bx-pie-chart-alt icon-indigo" aria-hidden="true"></i> Distribución</h2>
+                </div>
+                <div class="donut-container">
+                    <div class="donut">
+                        <div class="donut-hole">
+                            <strong id="activePercentDonut">0%</strong>
+                            <span>Activos</span>
+                        </div>
+                    </div>
+                    <div class="donut-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot active"></span>
+                            Activos
+                            <span class="l-val" id="legendActive">0</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot inactive"></span>
+                            Inactivos
+                            <span class="l-val" id="legendInactive">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Últimos Usuarios Registrados -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="bx bx-group icon-green" aria-hidden="true"></i> Últimos Registros</h2>
+                    <a href="gestion_usuarios.html">Gestionar</a>
+                </div>
+                <table class="mini-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentUsersTable">
+                        <tr>
+                            <td colspan="4" class="status-message">
+                                <i class="bx bx-loader bx-spin" aria-hidden="true"></i> Cargando...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Resumen Rápido -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="bx bx-info-circle icon-blue" aria-hidden="true"></i> Resumen</h2>
+                </div>
+                <div class="mini-stat">
+                    <div class="ms-icon purple"><i class="bx bx-group"></i></div>
+                    <div class="ms-info">
+                        <h4>Total Usuarios</h4>
+                        <span>Registrados en el sistema</span>
+                    </div>
+                    <div class="ms-value" id="totalUsersMini">--</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="ms-icon green"><i class="bx bx-user-check"></i></div>
+                    <div class="ms-info">
+                        <h4>Clientes Activos</h4>
+                        <span>Con acceso al portal</span>
+                    </div>
+                    <div class="ms-value" id="activeClientsMini">--</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="ms-icon amber"><i class="bx bx-user-voice"></i></div>
+                    <div class="ms-info">
+                        <h4>Asesores</h4>
+                        <span>Dando soporte</span>
+                    </div>
+                    <div class="ms-value" id="asesoresCount">--</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script src="../../js/helpers/logoutHelper.js"></script>
+    <script>
+        window.SIDEBAR_CONFIG = {
+            role: 'admin',
+            userName: 'Administrador',
+            userRole: 'Administrador',
+            currentPage: 'dashboard'
+        };
+    </script>
+    <script src="../../js/sidebar.js"></script>
+    <script>
+        // ── Cargar datos desde APIs ──
+        (async function loadDashboardData() {
+            try {
+                const [usersRes, reportRes] = await Promise.all([
+                    fetch('../../../backend/modules/usuarios/listar.php'),
+                    fetch('../../../backend/modules/reportes/dashboard.php')
+                ]);
+
+                const usersJson = await usersRes.json();
+                const reportJson = await reportRes.json();
+
+                // ── Datos de usuarios ──
+                const users = usersJson.data || [];
+                const total = users.length;
+                const activos = users.filter(u => u.estado === 'activo');
+                const inactivos = users.filter(u => u.estado === 'inactivo');
+                const clientesActivos = users.filter(u => u.nombre_rol?.toLowerCase() === 'cliente' && u.estado === 'activo');
+                const asesores = users.filter(u => u.nombre_rol?.toLowerCase() === 'asesor');
+
+                // ── Datos del reporte ──
+                const report = reportJson.data || {};
+                const citas      = report.citas      || {};
+                const pagos      = report.pagos      || {};
+                const servicios  = report.servicios  || {};
+
+                // ══════════════════════════════════════════════
+                //  TARJETAS DE ESTADÍSTICAS SUPERIORES
+                // ══════════════════════════════════════════════
+
+                const setText = (id, val) => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = val ?? '--';
+                };
+                const setBadge = (id, text, isUp) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.textContent = text;
+                    el.className = 'stat-change ' + (isUp ? 'up' : 'down');
+                };
+
+                // ── Tarjeta 1: Usuarios Registrados ──
+                setText('totalUsers', total);
+                setBadge('activeBadge', total > 0 ? `${activos.length} activos` : 'Sin datos', activos.length >= inactivos.length);
+                setText('newThisMonth', `📅 ${users.filter(u => {
+                    if (!u.fecha_registro) return false;
+                    const d = new Date(u.fecha_registro);
+                    const now = new Date();
+                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                }).length} nuevos este mes`);
+
+                // ── Tarjeta 2: Activos ──
+                const pctAct = total > 0 ? Math.round((activos.length / total) * 100) : 0;
+                setText('activeUsers', activos.length);
+                setBadge('activePercentBadge', `${pctAct}%`, true);
+                setText('activeSub', `${clientesActivos.length} clientes · ${asesores.length} asesores`);
+
+                // ── Tarjeta 3: Inactivos ──
+                const pctIna = total > 0 ? Math.round((inactivos.length / total) * 100) : 0;
+                setText('inactiveUsers', inactivos.length);
+                setBadge('inactivePercent', `${pctIna}%`, pctIna <= 20);
+                setText('inactiveSub', inactivos.length === 0 ? '✅ Todos activos' : `${inactivos.length} usuarios sin acceso`);
+
+                // ── Tarjeta 4: Citas ──
+                const citasTotal = citas.total || 0;
+                const citasProg  = citas.programadas || 0;
+                setText('totalCitas', citasTotal);
+                setBadge('citasBadge', citasProg > 0 ? `${citasProg} programadas` : 'Sin citas', citasProg > 0);
+                setText('citasSub', `💰 $${Number(pagos.monto_total || 0).toLocaleString('es-MX')} en pagos`);
+
+                // ══════════════════════════════════════════════
+                //  RESUMEN RÁPIDO (columna derecha abajo)
+                // ══════════════════════════════════════════════
+                setText('totalUsersMini', total);
+                setText('activeClientsMini', clientesActivos.length);
+                setText('asesoresCount', asesores.length);
+
+                // ══════════════════════════════════════════════
+                //  GRÁFICO DONUT
+                // ══════════════════════════════════════════════
+                const pct = total > 0 ? Math.round((activos.length / total) * 100) : 0;
+                setText('activePercentDonut', pct + '%');
+                setText('legendActive', activos.length);
+                setText('legendInactive', inactivos.length);
+                const donut = document.querySelector('.donut');
+                if (donut) {
+                    donut.style.background = total === 0
+                        ? '#e2e8f0'
+                        : `conic-gradient(#6366f1 0% ${pct}%, #e2e8f0 ${pct}% 100%)`;
+                }
+
+                // ══════════════════════════════════════════════
+                //  ÚLTIMOS 5 USUARIOS REGISTRADOS
+                // ══════════════════════════════════════════════
+                const sorted = [...users].filter(u => u.fecha_registro)
+                    .sort((a, b) => new Date(b.fecha_registro) - new Date(a.fecha_registro));
+                const recent = sorted.slice(0, 5);
+                const tbody = document.getElementById('recentUsersTable');
+                tbody.innerHTML = '';
+
+                if (recent.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="status-message">📭 Sin usuarios registrados aún</td></tr>';
+                } else {
+                    recent.forEach(u => {
+                        const cls = u.estado === 'activo' ? 'active' : 'inactive';
+                        const tr = document.createElement('tr');
+                        const fecha = u.fecha_registro
+                            ? new Date(u.fecha_registro).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' })
+                            : '---';
+                        tr.innerHTML = `
+                            <td>#${u.id_usuario}</td>
+                            <td>${u.correo}</td>
+                            <td>${u.nombre_rol || '---'}</td>
+                            <td><span class="badge ${cls}">${u.estado.toUpperCase()}</span></td>
+                        `;
+                        tr.title = `Registrado el ${fecha}`;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // ══════════════════════════════════════════════
+                //  ACTIVIDAD RECIENTE
+                // ══════════════════════════════════════════════
+                const activityList = document.getElementById('activityList');
+                activityList.innerHTML = '';
+
+                if (recent.length === 0) {
+                    activityList.innerHTML = '<div class="status-message">📭 No hay actividad reciente</div>';
+                } else {
+                    const dots = ['green', 'purple', 'blue', 'amber', 'red'];
+                    recent.forEach((u, i) => {
+                        const estadoIcon = u.estado === 'activo' ? '✅' : '🔴';
+                        const fecha = u.fecha_registro
+                            ? new Date(u.fecha_registro).toLocaleDateString('es-MX', {
+                                day: 'numeric', month: 'short', year: 'numeric'
+                              })
+                            : 'Fecha desconocida';
+
+                        const item = document.createElement('div');
+                        item.className = 'activity-item';
+                        item.innerHTML = `
+                            <span class="activity-dot ${dots[i % dots.length]}"></span>
+                            <div class="activity-info">
+                                <p>${estadoIcon} <strong>${u.correo}</strong> — ${u.nombre_rol || 'usuario'}</p>
+                                <span>Registrado el ${fecha} · ID #${u.id_usuario}</span>
+                            </div>
+                        `;
+                        activityList.appendChild(item);
+                    });
+                }
+
+            } catch (e) {
+                console.warn('Error al cargar datos del dashboard:', e);
+                document.querySelectorAll('.stat-value span, .stat-sub').forEach(el => el.textContent = '--');
+                document.getElementById('activityList').innerHTML =
+                    '<div class="status-message error">⚠️ Error al conectar con el servidor</div>';
+                document.getElementById('recentUsersTable').innerHTML =
+                    '<tr><td colspan="4" class="status-message error">⚠️ Error de conexión</td></tr>';
+            }
+        })();
+    </script>
 </body>
 </html>

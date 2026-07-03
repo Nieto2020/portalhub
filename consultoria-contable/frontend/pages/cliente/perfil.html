@@ -6,30 +6,16 @@
     <title>Perfil</title>
 
      <!-- CSS -->
+    <link rel="stylesheet" href="../../css/sidebar.css">
     <link rel="stylesheet" href="../../css/Perfil_cliente.css">
 
     <!-- ICONS -->
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+
 </head>
 <body>
-      <header class="navbar">
-        <div class="logo"><img src="../../css/img/logo.png" alt="Consultancy"></div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="dashboard.html">Inicio</a></li>
-                <li><a href="mis_declaraciones.html">Mis Declaraciones</a></li>
-                <li><a href="documentos.html">Documentos</a></li>
-                <li><a href="pagos.html">Pagos</a></li>
-                <li><a href="">Tareas</a></li>
-                <li><a href="">Reportes</a></li>
-                <li><a href="perfil.html" class="active">Perfil</a></li>
-                <li><a href="">Ayuda</a></li>
-            </ul>
-        </nav>
-    </header>
-
+    
     <!--CONTENIDO-->
 
     <!--Foto de perfil-->
@@ -125,4 +111,15 @@
 </body>
 
 <script src="../../js/views/perfilView.js"></script>
+<script src="../../js/helpers/logoutHelper.js"></script>
+<script>
+    window.SIDEBAR_CONFIG = {
+        role: 'cliente',
+        userName: 'Cliente',
+        userRole: 'Cliente',
+        currentPage: 'perfil'
+    };
+</script>
+<script src="../../js/sidebar.js"></script>
+</body>
 </html>

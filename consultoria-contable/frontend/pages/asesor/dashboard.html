@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Asesor</title>
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <main class="dashboard-content">
+        <div class="welcome-header">
+            <h1>Panel del Asesor</h1>
+            <p>Bienvenido al panel de atención al cliente.</p>
+        </div>
+    </main>
+
+    <script src="../../js/helpers/logoutHelper.js"></script>
+    <script>
+        window.SIDEBAR_CONFIG = {
+            role: 'asesor',
+            userName: 'Asesor',
+            userRole: 'Asesor',
+            currentPage: 'dashboard'
+        };
+    </script>
+    <script src="../../js/sidebar.js"></script>
+</body>
+</html>
