@@ -40,6 +40,12 @@
     --radius-sm: 10px;
     --transition: 0.2s ease;
 
+    /* ── Animaciones ── */
+    --duration-fast: 0.3s;
+    --duration-normal: 0.5s;
+    --duration-slow: 0.8s;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
     /* ── Tipografía ── */
     --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     --font-size-xs: 0.7rem;
@@ -47,4 +53,107 @@
     --font-size-base: 0.9rem;
     --font-size-lg: 1.05rem;
     --font-size-xl: 1.75rem;
+}
+
+/* =============================================
+   ANIMACIONES GLOBALES
+   ============================================= */
+
+/* ── Entrada de página (fade + slide up) ── */
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Salida de página (fade + slide down) ── */
+@keyframes pageExit {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* ── Entrada suave (fade rápida) ── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ── Salida suave (fade rápida) ── */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* ── Slide de sección (izquierda a derecha) ── */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ── Slide de sección (derecha a izquierda) ── */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ── Scale suave (zoom in) ── */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =============================================
+   TEMA OSCURO
+   ============================================= */
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: #334155;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+    --primary-light: #1e1b4b;
+    --success-light: #052e16;
+    --danger-light: #2e1515;
+    --warning-light: #2e2a0f;
 }

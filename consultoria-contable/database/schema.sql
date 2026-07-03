@@ -218,4 +218,20 @@ CREATE TABLE `reportes` (
   CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`id_asesor`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `reset_logs`
+-- Historial de reseteos de contraseña por Administradores
+--
+CREATE TABLE `reset_logs` (
+  `id_log` int(11) NOT NULL AUTO_INCREMENT,
+  `id_admin` int(11) NOT NULL COMMENT 'Admin que realizó el reseteo',
+  `id_usuario_afectado` int(11) NOT NULL COMMENT 'Usuario al que se le resetéo la contraseña',
+  `fecha_reseteo` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_log`),
+  KEY `id_admin` (`id_admin`),
+  KEY `id_usuario_afectado` (`id_usuario_afectado`),
+  CONSTRAINT `reset_logs_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
+  CONSTRAINT `reset_logs_ibfk_2` FOREIGN KEY (`id_usuario_afectado`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;

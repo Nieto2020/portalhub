@@ -37,6 +37,10 @@ try {
     $stmt->execute([$password_hash, $id_usuario]);
 
     if ($stmt->rowCount() > 0) {
+        # Registrar en el historial de reseteos
+        require_once __DIR__ . "/reset_log.php";
+        registrarResetLog($conexion, $_SESSION['id_usuario'], $id_usuario);
+
         sendResponse(200, "Contraseña restablecida correctamente", [
             "temporary_password" => $temp_password
         ]);

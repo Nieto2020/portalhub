@@ -4,273 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset de Contraseña - Admin</title>
+    <link rel="stylesheet" href="../../css/shared/variables.css">
+    <link rel="stylesheet" href="../../css/shared/base.css">
+    <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/forms.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
     <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/admin/test_reset.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #f1f5f9;
-            color: #0f172a;
-            min-height: 100vh;
-        }
-
-        /* ── Layout ── */
-        .dashboard-content {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 32px 28px;
-        }
-
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .page-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .page-header p {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-top: 2px;
-        }
-
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #64748b;
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .btn-back:hover { background: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
-
-        /* ── Card ── */
-        .reset-card {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
-            padding: 32px;
-            max-width: 560px;
-        }
-
-        .reset-card h2 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .reset-card .subtitle {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
-        /* ── Form ── */
-        .form-group { margin-bottom: 20px; }
-
-        .form-group label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #64748b;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .input-with-icon {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 14px;
-            color: #94a3b8;
-            font-size: 18px;
-            pointer-events: none;
-        }
-
-        .input-with-icon input {
-            width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            color: #0f172a;
-            background: #f8fafc;
-            transition: all 0.2s ease;
-        }
-
-        .input-with-icon input:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
-            background: #fff;
-        }
-
-        .input-with-icon input::placeholder {
-            color: #cbd5e1;
-        }
-
-        /* ── Buttons ── */
-        .btn-reset {
-            width: 100%;
-            padding: 13px 20px;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(99,102,241,0.35);
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .btn-reset:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(99,102,241,0.45);
-        }
-        .btn-reset:active { transform: scale(0.97); }
-        .btn-reset:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ── Feedback ── */
-        .feedback {
-            padding: 14px 18px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            display: none;
-            line-height: 1.5;
-        }
-
-        .feedback.error {
-            display: block;
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .feedback.success {
-            display: block;
-            background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        .feedback.info {
-            display: block;
-            background: #eff6ff;
-            color: #1e40af;
-            border: 1px solid #bfdbfe;
-        }
-
-        /* ── Result box ── */
-        .result-box {
-            margin-top: 20px;
-            padding: 18px;
-            border-radius: 10px;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            display: none;
-        }
-
-        .result-box.visible { display: block; }
-
-        .result-box .temp-password {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #6366f1;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-            background: #fff;
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 8px;
-            margin: 8px 0;
-            border: 1px dashed #c7d2fe;
-            user-select: all;
-            cursor: text;
-        }
-
-        .result-box .note {
-            font-size: 0.82rem;
-            color: #64748b;
-            margin-top: 6px;
-            line-height: 1.5;
-        }
-
-        .result-box .icon-copy {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-left: 10px;
-            font-size: 0.78rem;
-            color: #6366f1;
-            cursor: pointer;
-            font-weight: 600;
-            background: none;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
-        }
-        .result-box .icon-copy:hover { background: #eef2ff; }
-
-        /* ── Tips ── */
-        .tips-box {
-            margin-top: 24px;
-            padding: 14px 18px;
-            border-radius: 10px;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            font-size: 0.83rem;
-            color: #92400e;
-            line-height: 1.6;
-        }
-
-        .tips-box strong { color: #78350f; }
-
-        /* ── Responsive ── */
-        @media (max-width: 768px) {
-            .dashboard-content { padding: 20px 16px; }
-            .reset-card { padding: 24px 20px; max-width: 100%; }
-        }
-    </style>
 </head>
 <body>
 
@@ -286,46 +27,80 @@
             </a>
         </div>
 
-        <div class="reset-card">
-            <h2><i class="bx bx-lock-open-alt" style="color:#6366f1;"></i> Restablecer Acceso</h2>
-            <p class="subtitle">
-                Ingresa el ID del usuario que olvidó su contraseña. Se generará una clave
-                temporal que el usuario deberá cambiar al iniciar sesión.
-            </p>
+        <div class="reset-layout">
+            <!-- ── Columna Izquierda: Formulario ── -->
+            <div class="reset-card">
+                <h2><i class="bx bx-lock-open-alt"></i> Restablecer Acceso</h2>
+                <p class="subtitle">
+                    Ingresa el ID del usuario que olvidó su contraseña. Se generará una clave
+                    temporal que el usuario deberá cambiar al iniciar sesión.
+                </p>
 
-            <div id="feedback" class="feedback"></div>
+                <div id="feedback" class="feedback"></div>
 
-            <div class="form-group">
-                <label for="userId">ID del Usuario</label>
-                <div class="input-with-icon">
-                    <i class="bx bx-id-card"></i>
-                    <input type="number" id="userId" placeholder="Ej: 5" autofocus>
+                <div class="form-group">
+                    <label for="userId">ID del Usuario</label>
+                    <div class="input-with-icon">
+                        <i class="bx bx-id-card"></i>
+                        <input type="number" id="userId" placeholder="Ej: 5" autofocus>
+                    </div>
+                </div>
+
+                <button id="resetBtn" class="btn-reset" onclick="resetPassword()">
+                    <i class="bx bx-refresh"></i> Generar Contraseña Temporal
+                </button>
+
+                <div id="resultBox" class="result-box">
+                    <strong>Nueva contraseña temporal:</strong>
+                    <div class="result-password-row">
+                        <span class="temp-password" id="tempPass"></span>
+                        <button class="icon-copy" onclick="copyPassword()" title="Copiar al portapapeles">
+                            <i class="bx bx-copy"></i>
+                        </button>
+                    </div>
+                    <p class="note">
+                        ⚠️ Copia esta contraseña y entrégasela al usuario. Al iniciar sesión,
+                        el sistema le obligará a cambiarla por una propia.
+                    </p>
+                </div>
+
+                <div class="tips-box">
+                    <strong>💡 Tips de seguridad:</strong><br>
+                    • La contraseña generada es de un solo uso y expira al cambiarse.<br>
+                    • No compartas esta contraseña por canales inseguros.<br>
+                    • El usuario puede encontrarse en <a href="gestion_usuarios.html">Gestión de Usuarios</a>.
                 </div>
             </div>
 
-            <button id="resetBtn" class="btn-reset" onclick="resetPassword()">
-                <i class="bx bx-refresh"></i> Generar Contraseña Temporal
-            </button>
-
-            <div id="resultBox" class="result-box">
-                <strong style="color:#0f172a;">Nueva contraseña temporal:</strong>
-                <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px;">
-                    <span class="temp-password" id="tempPass"></span>
-                    <button class="icon-copy" onclick="copyPassword()" title="Copiar al portapapeles">
-                        <i class="bx bx-copy"></i> Copiar
+            <!-- ── Columna Derecha: Historial ── -->
+            <div class="history-section">
+                <div class="history-header">
+                    <button class="btn-refresh" onclick="loadHistory()" title="Actualizar">
+                        <i class="bx bx-refresh"></i>
                     </button>
                 </div>
-                <p class="note">
-                    ⚠️ Copia esta contraseña y entrégasela al usuario. Al iniciar sesión,
-                    el sistema le obligará a cambiarla por una propia.
-                </p>
-            </div>
-
-            <div class="tips-box">
-                <strong>💡 Tips de seguridad:</strong><br>
-                • La contraseña generada es de un solo uso y expira al cambiarse.<br>
-                • No compartas esta contraseña por canales inseguros.<br>
-                • El usuario puede encontrarse en <a href="gestion_usuarios.html" style="color:#6366f1;font-weight:600;">Gestión de Usuarios</a>.
+                <div class="history-table-wrap">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Admin</th>
+                                <th>Usuario Afectado</th>
+                                <th>Rol</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                            <tr>
+                                <td colspan="4">
+                                    <div class="empty-state">
+                                        <i class="bx bx-loader bx-spin"></i>
+                                        <p>Cargando historial...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -385,6 +160,7 @@
                     resultBox.classList.add('visible');
                     showFeedback('✅ Contraseña temporal generada exitosamente.', 'success');
                     document.getElementById('userId').value = '';
+                    loadHistory(); // refrescar historial
                 } else {
                     showFeedback('❌ ' + (data.message || 'Error al procesar la solicitud.'), 'error');
                 }
@@ -419,6 +195,48 @@
         document.getElementById('userId').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') resetPassword();
         });
+
+        // ── Historial de reseteos ──
+        async function loadHistory() {
+            const tbody = document.getElementById('historyBody');
+            tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-loader bx-spin"></i><p>Cargando historial...</p></div></td></tr>';
+
+            try {
+                const res = await fetch('../../../backend/modules/usuarios/listar_reset_logs.php');
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.message);
+
+                const logs = json.data || [];
+                if (logs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-file-blank"></i><p>No hay reseteos registrados aún.</p></div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                logs.forEach(log => {
+                    const fecha = new Date(log.fecha_reseteo).toLocaleString('es-MX', {
+                        day: '2-digit', month: '2-digit', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit'
+                    });
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td data-label="Admin"><span class="log-admin"><i class="bx bx-shield"></i> ${log.correo_admin}</span></td>
+                        <td data-label="Usuario">
+                            <span class="log-user">${log.correo_afectado}</span>
+                            ${log.numero_cliente_afectado ? `<span class="log-client-num">#${log.numero_cliente_afectado}</span>` : ''}
+                        </td>
+                        <td data-label="Rol"><span class="badge-rol ${log.rol_afectado.toLowerCase()}">${log.rol_afectado}</span></td>
+                        <td data-label="Fecha"><span class="log-date">${fecha}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-error-circle"></i><p>Error al cargar el historial</p></div></td></tr>';
+            }
+        }
+
+        // Cargar historial al iniciar y después de cada reseteo exitoso
+        loadHistory();
     </script>
 </body>
 </html>
