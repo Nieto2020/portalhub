@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../css/shared/cards.css">
     <link rel="stylesheet" href="../../css/sidebar.css">
     <link rel="stylesheet" href="../../css/admin/test_reset.css">
+    <link rel="stylesheet" href="../../css/shared/notifications.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
 <body>
@@ -22,9 +23,11 @@
                 <h1><i class="bx bx-key" style="color:#6366f1;"></i> Reset de Contraseñas</h1>
                 <p>Genera una contraseña temporal para cualquier usuario del sistema.</p>
             </div>
-            <a href="dashboard.html" class="btn-back">
-                <i class="bx bx-arrow-back"></i> Volver al Dashboard
-            </a>
+            <div class="header-actions">
+                <a href="dashboard.html" class="btn-back">
+                    <i class="bx bx-arrow-back"></i> Volver al Dashboard
+                </a>
+            </div>
         </div>
 
         <div class="reset-layout">
@@ -74,7 +77,7 @@
 
             <!-- ── Columna Derecha: Historial ── -->
             <div class="history-section">
-                <div class="history-header">
+                <div class="history-header"><h2><i class="bx bx-history"></i> Historial de reseteos</h2>
                     <button class="btn-refresh" onclick="loadHistory()" title="Actualizar">
                         <i class="bx bx-refresh"></i>
                     </button>
@@ -116,6 +119,7 @@
         };
     </script>
     <script src="../../js/sidebar.js"></script>
+    <script src="../../js/notifications.js"></script>
     <script>
         const feedback = document.getElementById('feedback');
         const resultBox = document.getElementById('resultBox');
