@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - Cliente</title>
+    <title>Mi Perfil - Asesor</title>
     <link rel="stylesheet" href="../../css/shared/variables.css">
     <link rel="stylesheet" href="../../css/shared/base.css">
     <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
     <link rel="stylesheet" href="../../css/sidebar.css">
-    <link rel="stylesheet" href="../../css/cliente/perfil.css">
+    <link rel="stylesheet" href="../../css/asesor/perfil.css">
     <link rel="stylesheet" href="../../css/shared/notifications.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
@@ -16,11 +17,16 @@
 
     <main class="dashboard-content">
 
-        <div class="main-profile-container" style="margin-top:0;padding-top:30px;">
-
-            <div class="titulo-header-box">
-                <h1 class="titulo-cuenta"><i class="bx bx-user"></i> Mi Cuenta</h1>
+        <div class="page-header">
+            <div>
+                <h1><i class="bx bx-user" style="color:#a78bfa;"></i> Mi Perfil</h1>
+                <p>Información de tu cuenta de asesor.</p>
             </div>
+            <div class="header-actions">
+            </div>
+        </div>
+
+        <div class="main-profile-container" style="margin-top:0;">
 
             <!-- Loading -->
             <div class="profile-loading" id="profileLoading">
@@ -52,21 +58,19 @@
                 <!-- ── Tarjeta derecha: Información detallada ── -->
                 <div class="container-preferencias">
 
-                    <h2 class="titulo-informacion"><i class="bx bx-detail"></i> Mi Información</h2>
+                    <h2 class="titulo-informacion"><i class="bx bx-detail"></i> Información</h2>
 
                     <!-- Vista de solo lectura -->
                     <div id="profileView">
                         <h5>Teléfono:</h5>
                         <p id="userTelefono">—</p>
 
-                        <!-- Campos específicos de Cliente -->
-                        <div id="clienteFields" style="display:none;">
-                            <h5>RFC:</h5>
-                            <p id="userRfc">—</p>
-                            <h5>Razón Social:</h5>
-                            <p id="userRazonSocial">—</p>
-                            <h5>Dirección Fiscal:</h5>
-                            <p id="userDireccionFiscal">—</p>
+                        <!-- Campos específicos de Asesor -->
+                        <div id="asesorFields" style="display:none;">
+                            <h5>Especialidad:</h5>
+                            <p id="userEspecialidad">—</p>
+                            <h5>Biografía:</h5>
+                            <p id="userBiografia">—</p>
                         </div>
                     </div>
 
@@ -84,19 +88,15 @@
                             <input type="text" id="editTelefono" placeholder="Ej: 4641234567">
                         </div>
 
-                        <!-- Campos específicos de Cliente -->
-                        <div id="clienteFields">
+                        <!-- Campos específicos de Asesor -->
+                        <div id="asesorFields">
                             <div class="form-group">
-                                <label for="editRfc">RFC</label>
-                                <input type="text" id="editRfc" placeholder="Ej: XXXX000000XXX">
+                                <label for="editEspecialidad">Especialidad</label>
+                                <input type="text" id="editEspecialidad" placeholder="Ej: Contabilidad fiscal">
                             </div>
                             <div class="form-group">
-                                <label for="editRazonSocial">Razón Social</label>
-                                <input type="text" id="editRazonSocial" placeholder="Nombre o razón social">
-                            </div>
-                            <div class="form-group">
-                                <label for="editDireccionFiscal">Dirección Fiscal</label>
-                                <input type="text" id="editDireccionFiscal" placeholder="Calle, número, colonia, CP">
+                                <label for="editBiografia">Biografía</label>
+                                <textarea id="editBiografia" placeholder="Breve descripción profesional..."></textarea>
                             </div>
                         </div>
 
@@ -126,9 +126,9 @@
     <script src="../../js/helpers/logoutHelper.js"></script>
     <script>
         window.SIDEBAR_CONFIG = {
-            role: 'cliente',
-            userName: 'Cliente',
-            userRole: 'Cliente',
+            role: 'asesor',
+            userName: 'Asesor',
+            userRole: 'Asesor',
             currentPage: 'perfil'
         };
     </script>

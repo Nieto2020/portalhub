@@ -32,6 +32,7 @@
                     title: 'Sistema',
                     links: [
                         { label: 'Reset Passwords', icon: 'bx bx-key', href: 'test_reset.html', id: 'reset' },
+                        { label: 'Mi Perfil', icon: 'bx bx-user', href: 'perfil.html', id: 'perfil' },
                     ]
                 }
             ]
@@ -51,6 +52,7 @@
                     title: 'Reportes',
                     links: [
                         { label: 'Mis Reportes', icon: 'bx bx-bar-chart-alt-2', href: 'reportes.html', id: 'reportes' },
+                        { label: 'Mi Perfil', icon: 'bx bx-user', href: 'perfil.html', id: 'perfil' },
                     ]
                 }
             ]
