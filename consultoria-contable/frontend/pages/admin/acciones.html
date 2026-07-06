@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acciones - Admin</title>
+    <link rel="stylesheet" href="../../css/shared/variables.css">
+    <link rel="stylesheet" href="../../css/shared/base.css">
+    <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/admin/acciones.css">
+    <link rel="stylesheet" href="../../css/shared/notifications.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+</head>
+<body>
+
+    <main class="dashboard-content">
+
+        <!-- ── Header ── -->
+        <div class="page-header">
+            <div>
+                <h1><i class="bx bxs-zap" style="color:#f59e0b;"></i> Acciones</h1>
+                <p>Acciones rápidas y herramientas administrativas del sistema.</p>
+            </div>
+            <a href="dashboard.html" class="btn-back">
+                <i class="bx bx-arrow-back"></i> Volver al Dashboard
+            </a>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             SECCIÓN: ADMIN
+             ══════════════════════════════════════ -->
+        <h2 class="acciones-section-title">
+            <i class="bx bx-shield-quarter"></i> Administración
+        </h2>
+
+        <div class="acciones-grid">
+
+            <!-- ── Asignar Asesores ── -->
+            <a href="asignaciones.html" class="accion-card asignar">
+                <div class="accion-icon">
+                    <i class="bx bx-user-pin"></i>
+                </div>
+                <h3 class="accion-title">Asignar Asesores</h3>
+                <p class="accion-desc">
+                    Asigna asesores contables a los clientes registrados. Gestiona las relaciones
+                    cliente-asesor y mantén el control de asignaciones activas.
+                </p>
+                <span class="accion-link">
+                    Ir a Asignaciones <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <!-- ── Gestión de Usuarios ── -->
+            <a href="gestion_usuarios.html" class="accion-card usuarios">
+                <div class="accion-icon">
+                    <i class="bx bx-group"></i>
+                </div>
+                <h3 class="accion-title">Gestión de Usuarios</h3>
+                <p class="accion-desc">
+                    Administra todos los usuarios del sistema: registra nuevos, modifica roles,
+                    activa o desactiva cuentas y gestiona permisos.
+                </p>
+                <span class="accion-link">
+                    Ir a Gestión <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <!-- ── Reset Passwords ── -->
+            <a href="test_reset.html" class="accion-card reset">
+                <div class="accion-icon">
+                    <i class="bx bx-key"></i>
+                </div>
+                <h3 class="accion-title">Reset Passwords</h3>
+                <p class="accion-desc">
+                    Genera contraseñas temporales para cualquier usuario del sistema. Revisa el
+                    historial de reseteos realizados por los administradores.
+                </p>
+                <span class="accion-link">
+                    Ir a Reset <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <!-- ── Crear Notificaciones y Anuncios ── -->
+            <a href="notificaciones_admin.html" class="accion-card notificar">
+                <div class="accion-icon">
+                    <i class="bx bx-bell-plus"></i>
+                </div>
+                <h3 class="accion-title">Notificaciones y Anuncios</h3>
+                <p class="accion-desc">
+                    Envía notificaciones y anuncios a usuarios específicos o a todos los roles.
+                    Comunica avisos importantes, recordatorios y alertas del sistema.
+                </p>
+                <span class="accion-link">
+                    Ir a Notificaciones <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+        </div>
+
+        <!-- ══════════════════════════════════════
+             SECCIÓN: RÁPIDOS (accesos directos)
+             ══════════════════════════════════════ -->
+        <h2 class="acciones-section-title">
+            <i class="bx bx-link"></i> Accesos Rápidos
+        </h2>
+
+        <div class="acciones-grid">
+
+            <a href="reportes.html" class="accion-card" style="--accent-color: #8b5cf6;">
+                <div class="accion-icon" style="background:rgba(139,92,246,0.12);color:#8b5cf6;">
+                    <i class="bx bx-bar-chart-alt-2"></i>
+                </div>
+                <h3 class="accion-title">Ver Reportes</h3>
+                <p class="accion-desc">
+                    Consulta todos los reportes generados por los asesores del sistema.
+                </p>
+                <span class="accion-link">
+                    Ir a Reportes <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <a href="perfil.html" class="accion-card" style="--accent-color: #06b6d4;">
+                <div class="accion-icon" style="background:rgba(6,182,212,0.12);color:#06b6d4;">
+                    <i class="bx bx-user-circle"></i>
+                </div>
+                <h3 class="accion-title">Mi Perfil</h3>
+                <p class="accion-desc">
+                    Visualiza y edita tu información personal de cuenta de administrador.
+                </p>
+                <span class="accion-link">
+                    Ir a Perfil <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <a href="asignaciones/historial.html" class="accion-card" style="--accent-color: #f97316;">
+                <div class="accion-icon" style="background:rgba(249,115,22,0.12);color:#f97316;">
+                    <i class="bx bx-history"></i>
+                </div>
+                <h3 class="accion-title">Historial de Asignaciones</h3>
+                <p class="accion-desc">
+                    Revisa el historial completo de asignaciones de asesores a clientes.
+                </p>
+                <span class="accion-link">
+                    Ver Historial <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <!-- Placeholder para futuras acciones de otros roles -->
+            <div class="accion-card" style="--accent-color:#94a3b8;opacity:0.5;pointer-events:none;cursor:default;">
+                <div class="accion-icon" style="background:rgba(148,163,184,0.12);color:#94a3b8;">
+                    <i class="bx bx-dots-horizontal-rounded"></i>
+                </div>
+                <h3 class="accion-title">Próximamente</h3>
+                <p class="accion-desc">
+                    Más acciones disponibles próximamente para todos los roles del sistema.
+                </p>
+                <span class="accion-link" style="color:#94a3b8;">
+                    Disponible pronto
+                </span>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../../js/helpers/logoutHelper.js"></script>
+    <script>
+        window.SIDEBAR_CONFIG = {
+            role: 'admin',
+            userName: 'Administrador',
+            userRole: 'Administrador',
+            currentPage: 'acciones'
+        };
+    </script>
+    <script src="../../js/sidebar.js"></script>
+    <script src="../../js/notifications.js"></script>
+</body>
+</html>

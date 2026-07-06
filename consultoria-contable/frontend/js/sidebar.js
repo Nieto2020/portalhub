@@ -24,14 +24,13 @@
                     title: 'Principal',
                     links: [
                         { label: 'Inicio', icon: 'bx bx-home', href: 'dashboard.html', id: 'dashboard' },
-                        { label: 'Usuarios', icon: 'bx bx-group', href: 'gestion_usuarios.html', id: 'usuarios' },
+                        { label: 'Acciones', icon: 'bx bxs-zap', href: 'acciones.html', id: 'acciones' },
                         { label: 'Reportes', icon: 'bx bx-bar-chart-alt-2', href: 'reportes.html', id: 'reportes' },
                     ]
                 },
                 {
                     title: 'Sistema',
                     links: [
-                        { label: 'Reset Passwords', icon: 'bx bx-key', href: 'test_reset.html', id: 'reset' },
                         { label: 'Mi Perfil', icon: 'bx bx-user', href: 'perfil.html', id: 'perfil' },
                     ]
                 }
