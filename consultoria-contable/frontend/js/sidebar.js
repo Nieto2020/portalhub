@@ -109,15 +109,6 @@
 
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
-                <div class="sidebar-header">
-                    <div class="logo-section">
-                        <img src="../../css/img/icon.png" alt="Logo" onerror="this.style.display='none'">
-                        <span class="logo-text">CONSULTANCY</span>
-                    </div>
-                    <button class="toggle-btn" id="sidebarToggle" aria-label="Colapsar menú">
-                        <i class="bx bx-chevron-left"></i>
-                    </button>
-                </div>
 
                 <div class="sidebar-profile">
                     <div class="avatar">${initials}</div>
@@ -146,6 +137,10 @@
                     </a>
                 </div>
             </aside>
+
+            <button class="toggle-btn" id="sidebarToggle" aria-label="Colapsar menú">
+                <i class="bx bx-chevron-left"></i>
+            </button>
         `;
 
         // Insertar al inicio del body

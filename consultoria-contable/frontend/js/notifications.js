@@ -59,7 +59,7 @@
         const topBarHTML = `
             <div id="globalTopBar">
                 <div class="topbar-brand">
-                    <i class="bx bx-buildings"></i>
+                    <img src="../../css/img/icon.png" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
                     <span>CONSULTANCY</span>
                 </div>
                 <div class="topbar-right" id="notifBellContainer">

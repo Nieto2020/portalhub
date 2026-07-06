@@ -37,9 +37,12 @@
     overflow: hidden;
 }
 
-#globalTopBar .topbar-brand i {
-    font-size: 1.4rem;
-    color: var(--sidebar-accent, #6366f1);
+#globalTopBar .topbar-brand .topbar-logo {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 6px;
 }
 
 #globalTopBar .topbar-brand span {
