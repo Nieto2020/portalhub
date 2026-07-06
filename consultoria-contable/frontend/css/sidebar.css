@@ -49,6 +49,7 @@ body.sidebar-collapsed {
     transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     box-shadow: var(--sidebar-shadow);
+    padding-top: 8px;
 }
 
 .sidebar.collapsed {
@@ -56,98 +57,47 @@ body.sidebar-collapsed {
 }
 
 /* =============================================
-   Brand Header
-   ============================================= */
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 16px;
-    min-height: 72px;
-    flex-shrink: 0;
-    border-bottom: 1px solid var(--sidebar-border);
-    background: rgba(15, 23, 42, 0.95);
-}
-
-.sidebar-header .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    overflow: hidden;
-}
-
-.sidebar-header .logo-section img {
-    height: 34px;
-    width: 34px;
-    object-fit: contain;
-    flex-shrink: 0;
-    border-radius: 8px;
-}
-
-.sidebar-header .logo-section .logo-text {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #f1f5f9;
-    white-space: nowrap;
-    letter-spacing: 0.5px;
-    background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transition: opacity 0.2s ease, width 0.2s ease;
-}
-
-.sidebar.collapsed .logo-section {
-    justify-content: center;
-    gap: 0;
-    flex-shrink: 0;
-    order: 1;
-}
-
-.sidebar.collapsed .logo-section .logo-text {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-}
-
-.sidebar.collapsed .sidebar-header {
-    padding: 14px 6px;
-    justify-content: center;
-    gap: 6px;
-    flex-wrap: nowrap;
-}
-
-/* =============================================
-   Toggle Button
+   Toggle Button — sobre el contorno derecho
    ============================================= */
 .toggle-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--sidebar-text);
-    font-size: 20px;
+    position: fixed;
+    top: calc(var(--topbar-height) + 50vh);
+    left: calc(var(--sidebar-width) - 14px);
+    transform: translateY(-50%);
+    z-index: 1001;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--sidebar-bg);
+    border: 1.5px solid rgba(148, 163, 184, 0.2);
+    color: var(--sidebar-text-dim);
+    font-size: 16px;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    backdrop-filter: blur(8px);
 }
 
 .toggle-btn:hover {
-    background: rgba(99, 102, 241, 0.2);
-    color: #fff;
-    border-color: rgba(99, 102, 241, 0.3);
+    background: var(--sidebar-bg);
+    color: #a5b4fc;
+    border-color: rgba(99, 102, 241, 0.45);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25);
+    width: 32px;
+    height: 32px;
+    left: calc(var(--sidebar-width) - 16px);
 }
 
-.sidebar.collapsed .toggle-btn {
-    margin: 0;
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    order: 2;
+body.sidebar-collapsed .toggle-btn {
+    left: calc(var(--sidebar-collapsed) - 14px);
+}
+
+body.sidebar-collapsed .toggle-btn:hover {
+    left: calc(var(--sidebar-collapsed) - 16px);
 }
 
 /* =============================================
@@ -435,7 +385,6 @@ body.sidebar-collapsed {
         width: 280px !important;
     }
 
-    .sidebar.collapsed .logo-section .logo-text,
     .sidebar.collapsed .sidebar-profile .user-info,
     .sidebar.collapsed .sidebar-nav a .nav-label,
     .sidebar.collapsed .sidebar-footer a .nav-label,
@@ -448,6 +397,11 @@ body.sidebar-collapsed {
         justify-content: flex-start;
         padding: 10px 14px;
         margin: 2px 0;
+    }
+
+    /* Ocultar toggle de contorno en móvil */
+    .toggle-btn {
+        display: none !important;
     }
 }
 
