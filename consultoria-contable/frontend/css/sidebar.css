@@ -15,12 +15,14 @@
     --sidebar-border: rgba(148, 163, 184, 0.08);
     --sidebar-avatar: linear-gradient(135deg, #6366f1, #a78bfa);
     --sidebar-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+    --topbar-height: 56px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     margin-left: var(--sidebar-width);
+    padding-top: var(--topbar-height);
     transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     min-height: 100vh;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -35,9 +37,10 @@ body.sidebar-collapsed {
    ============================================= */
 .sidebar {
     position: fixed;
-    top: 0; left: 0;
+    top: var(--topbar-height);
+    left: 0;
     width: var(--sidebar-width);
-    height: 100vh;
+    height: calc(100vh - var(--topbar-height));
     background: var(--sidebar-bg);
     color: var(--sidebar-text);
     display: flex;
@@ -384,7 +387,7 @@ body.sidebar-collapsed {
 .mobile-toggle {
     display: none;
     position: fixed;
-    top: 16px;
+    top: calc(var(--topbar-height) + 8px);
     left: 16px;
     z-index: 1001;
     background: var(--sidebar-bg);
