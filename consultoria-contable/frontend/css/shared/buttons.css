@@ -111,10 +111,43 @@ button:active {
     background: var(--card-bg);
     color: var(--text);
     border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+.btn-header.outline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
 }
 .btn-header.outline:hover {
-    background: #f8fafc;
-    border-color: var(--text-muted);
+    border-color: var(--primary);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+}
+.btn-header.outline:hover::before {
+    opacity: 1;
+}
+.btn-header.outline:hover i {
+    animation: spin 0.6s ease-in-out;
+}
+.btn-header.outline i,
+.btn-header.outline span,
+.btn-header.outline .bx {
+    position: relative;
+    z-index: 1;
+}
+.btn-header.outline:active {
+    transform: scale(0.96);
+}
+
+@keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* ── Botones de vista ── */

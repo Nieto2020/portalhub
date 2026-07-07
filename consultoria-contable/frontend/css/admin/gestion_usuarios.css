@@ -3,52 +3,115 @@
    Ruta: pages/admin/gestion_usuarios.html
    ============================================= */
 
-/* ── HEADER ESPECÍFICO ── */
-.welcome-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 32px;
+/* ── HEADER ── */
+/* (estandarizado en base.css → .page-header) */
+
+/* ── CARD SECTIONS ── */
+.card {
+    position: relative;
 }
 
-.welcome-header h1 {
-    font-size: 1.7rem;
+/* Subtle accent bar on top of each card */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #a78bfa);
+    border-radius: var(--radius) var(--radius) 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
 }
 
-.welcome-header h1::before {
-    content: '👥';
-    font-size: 1.6rem;
+/* ── FORM INSIDE CARDS ── */
+.card .form-group {
+    margin-bottom: 16px;
 }
 
-.welcome-header p {
+.card .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
     color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.card .form-group input,
+.card .form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
-    margin-top: 2px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--card-bg);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
 }
 
-.welcome-header ~ .header-actions {
-    display: flex;
-    gap: 10px;
+.card .form-group input:focus,
+.card .form-group select:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-/* ── ACTION BUTTONS ESPECÍFICO ── */
+.card .inline-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+@media (max-width: 500px) {
+    .card .inline-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── CARD DESCRIPTION ── */
+.card-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    padding: 12px 16px;
+    background: rgba(99, 102, 241, 0.04);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--primary);
+}
+
+/* ── ACTION BUTTONS ── */
 .action-buttons {
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-top: 20px;
 }
+
 .action-buttons .row {
     display: flex;
     gap: 12px;
 }
+
 .action-buttons .row button { 
     flex: 1; 
 }
@@ -59,18 +122,79 @@
     }
 }
 
+/* ── TABLE HEADER ── */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.table-header h2 {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+/* ── TABLE HEADER STATS BAR ── */
+.stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(99, 102, 241, 0.04);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.stats-bar .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-right: 4px;
+}
+
+.stats-bar .stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.stats-bar .stat strong {
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.stats-bar .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.stats-bar .dot.green { background: var(--success); }
+.stats-bar .dot.red { background: var(--danger); }
+
 /* ── TOAST MESSAGE ── */
 #message {
     position: fixed;
-    top: 24px;
+    top: 72px;
     right: 24px;
-    padding: 16px 24px;
+    padding: 14px 22px;
     border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 0.9rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     display: none;
-    z-index: 300;
+    z-index: 10000;
     max-width: 420px;
     animation: slideIn 0.3s ease;
 }
@@ -91,4 +215,28 @@
         flex-direction: column; 
         align-items: flex-start; 
     }
+}
+
+/* ── DARK MODE ADJUSTMENTS ── */
+html[data-theme="dark"] .card-description {
+    background: rgba(99, 102, 241, 0.08);
+    border-left-color: var(--primary);
+}
+
+html[data-theme="dark"] .stats-bar {
+    background: rgba(99, 102, 241, 0.06);
+    border-color: #334155;
+}
+
+html[data-theme="dark"] .card .form-group input,
+html[data-theme="dark"] .card .form-group select {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-color: #475569;
+}
+
+html[data-theme="dark"] .card .form-group input:focus,
+html[data-theme="dark"] .card .form-group select:focus {
+    border-color: var(--primary);
+    background: #1e293b;
 }
