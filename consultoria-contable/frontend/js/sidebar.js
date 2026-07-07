@@ -124,10 +124,6 @@
                 </nav>
 
                 <div class="sidebar-footer">
-                    <button class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
-                        <i class="bx bx-moon"></i>
-                        <span class="nav-label" id="themeLabel">Modo Oscuro</span>
-                    </button>
                     <a href="../../pages/auth/change_password.html" title="Cambiar contraseña">
                         <i class="bx bx-lock-alt"></i>
                         <span class="nav-label">Cambiar Contraseña</span>
@@ -192,33 +188,6 @@
             });
         }
 
-        // ── Theme toggle ──
-        const themeToggle = document.getElementById('themeToggle');
-        const themeLabel  = document.getElementById('themeLabel');
-        const themeIcon   = themeToggle ? themeToggle.querySelector('i') : null;
-
-        function applyTheme(dark) {
-            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-            if (themeIcon) {
-                themeIcon.className = dark ? 'bx bx-sun' : 'bx bx-moon';
-            }
-            if (themeLabel) {
-                themeLabel.textContent = dark ? 'Modo Claro' : 'Modo Oscuro';
-            }
-            localStorage.setItem('theme', dark ? 'dark' : 'light');
-        }
-
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-        applyTheme(isDark);
-
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function () {
-                const current = document.documentElement.getAttribute('data-theme') === 'dark';
-                applyTheme(!current);
-            });
-        }
     }
 
     // ===== Ejecutar =====

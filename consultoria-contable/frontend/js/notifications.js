@@ -63,6 +63,9 @@
                     <span>CONSULTANCY</span>
                 </div>
                 <div class="topbar-right" id="notifBellContainer">
+                    <button class="topbar-theme-btn" id="themeToggle" title="Cambiar tema">
+                        <i class="bx bx-moon"></i>
+                    </button>
                     <div class="notif-bell" id="notifBell">
                         <i class="bx bx-bell"></i>
                         <span class="notif-badge hidden" id="notifBadge">0</span>
@@ -271,10 +274,37 @@
         return div.innerHTML;
     }
 
+    // ── Theme toggle (lógica movida desde sidebar) ──
+    function initThemeToggle() {
+        const btn = document.getElementById('themeToggle');
+        const icon = btn ? btn.querySelector('i') : null;
+
+        function applyTheme(dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            if (icon) {
+                icon.className = dark ? 'bx bx-sun' : 'bx bx-moon';
+            }
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        applyTheme(isDark);
+
+        if (btn) {
+            btn.addEventListener('click', function () {
+                const current = document.documentElement.getAttribute('data-theme') === 'dark';
+                applyTheme(!current);
+            });
+        }
+    }
+
     // ── Inicializar ──
     function init() {
         injectTopBar();
         bindEvents();
+        initThemeToggle();
         startPolling();
     }
 
