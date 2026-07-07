@@ -3,237 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Consultoría Contable</title>
+    <title>Iniciar Sesión — CONSULTANCY</title>
     <link rel="stylesheet" href="../../css/shared/variables.css">
     <link rel="stylesheet" href="../../css/shared/base.css">
     <link rel="stylesheet" href="../../css/auth/auth.css">
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --error-color: #e74c3c;
-            --bg-color: #f4f7f6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .login-container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header h1 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        .login-header p {
-            color: #7f8c8d;
-            margin-top: 0.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn-login:hover {
-            background-color: #1a252f;
-        }
-
-        .message {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            border-radius: 5px;
-            text-align: center;
-            display: none;
-        }
-
-        .message.error {
-            background-color: #fdeaea;
-            color: var(--error-color);
-            display: block;
-        }
-
-        .message.success {
-            background-color: #eafaf1;
-            color: #27ae60;
-            display: block;
-        }
-
-        .footer-links {
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .footer-links a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-    </style>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="login-container">
-    <div class="login-header">
-        <h1>Bienvenido</h1>
-        <p>Portal de Consultoría Contable</p>
-    </div>
+<canvas id="nodes-bg"></canvas>
 
-    <form id="loginForm">
-        <div class="form-group">
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+<div class="auth-wrapper">
+
+    <!-- ── Panel izquierdo: Branding ── -->
+    <section class="auth-brand">
+        <div class="auth-brand-content">
+            <div class="auth-brand-logo">
+                <img src="../../css/img/logo_completo_blanco.png" alt="CONSULTANCY" class="auth-full-logo">
+            </div>
+            <h1>Acceso Seguro a tu <br><span>Panel Financiero</span></h1>
+            <p>Precisión contable de nivel institucional y paneles de auditoría en tiempo real, diseñados para la excelencia corporativa.</p>
+
+            <div class="auth-features">
+                <div class="auth-feature">
+                    <i class="bx bx-shield-quarter"></i>
+                    <strong>Seguridad Bancaria</strong>
+                    <span>Cifrado AES-256 para todos tus datos.</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bx bx-line-chart"></i>
+                    <strong>Auditoría en Vivo</strong>
+                    <span>Supervisión en tiempo real de cada movimiento.</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bx bx-cloud"></i>
+                    <strong>Acceso Cloud</strong>
+                    <span>Tus documentos desde cualquier lugar.</span>
+                </div>
+                <div class="auth-feature">
+                    <i class="bx bx-support"></i>
+                    <strong>Soporte Dedicado</strong>
+                    <span>Atención personalizada para tu empresa.</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="••••••••" required>
+    <!-- ── Panel derecho: Formulario ── -->
+    <section class="auth-panel">
+
+        <div class="auth-panel-inner">
+
+            <!-- Logo móvil -->
+            <div class="auth-mobile-logo">
+                <img src="../../css/img/logo_completo_blanco.png" alt="CONSULTANCY" class="auth-full-logo">
+            </div>
+
+            <div class="auth-panel-header">
+                <h2>Bienvenido</h2>
+                <p>Accede a tu panel de consultoría.</p>
+            </div>
+
+            <!-- Mensaje de feedback -->
+            <div id="authMessage" class="auth-message"></div>
+
+            <form id="loginForm" class="auth-form">
+
+                <div class="form-group">
+                    <label for="correo">Correo Electrónico</label>
+                    <div class="input-wrap">    
+                        <i class="bx bx-envelope"></i>
+                        <input type="email" id="correo" placeholder="tu_correo@consultancy.com" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <i class="bx bx-lock-alt"></i>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-pass" onclick="togglePassword()" tabindex="-1">
+                            <i class="bx bx-hide" id="passIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-options">
+                    <label class="auth-remember">
+                        <input type="checkbox" id="remember"> Recordarme
+                    </label>
+                    <a href="#" class="auth-forgot" id="forgotPasswordBtn">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="auth-btn" id="loginBtn">
+                    <span>Iniciar Sesión</span>
+                    <i class="bx bx-chevron-right"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                ¿No tienes cuenta? <a href="#">Contacta al administrador</a><br>
+                <small>Consultancy-Ventas@ejemplo.com</small>
+            </div>
+
         </div>
+    </section>
+</div>
 
-        <button type="submit" class="btn-login">Iniciar Sesión</button>
-    </form>
-
-    <div id="responseMessage" class="message"></div>
-
-    <div class="footer-links">
-        <p><a href="#" id="forgotPasswordBtn">¿Olvidaste tu contraseña?</a></p>
-        <p>¿No tienes cuenta? contactanos para iniciar tu registro</p>
-        <p>Consultancy-Ventas@ejmplo.com</strong></p>
-    </div>
-
-    <!-- Modal de Soporte -->
-    <div id="supportModal" class="modal" style="display:none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-        <div class="modal-content" style="background-color: white; margin: 15% auto; padding: 20px; border-radius: 8px; width: 80%; max-width: 400px; text-align: center;">
-            <h3>Recuperación de Cuenta</h3>
-            <p>Para recuperar tu acceso, por favor contacta al soporte técnico enviando un correo a:</p>
-            <p><strong>Consultancy-soprte@ejemplo.com</strong></p>
-            <p>El administrador puede pedir los siguientes datos para confirmar tu identidad:</p>
-            <ul style="text-align: left; margin-left: 20px;">
-                <li>correo registrado</li>
-                <li>RFC</li>
-                <li>nombre</li>
-                <li>Nº de cliente</li>
-                <li>número telefónico</li>
-            </ul>
-            <button id="closeSupportModal" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Entendido</button>
-        </div>
+<!-- ── Modal de Soporte ── -->
+<div class="auth-modal" id="supportModal">
+    <div class="auth-modal-content">
+        <h3>🔐 Recuperación de Cuenta</h3>
+        <p>Para recuperar tu acceso, contacta al soporte técnico enviando un correo a:</p>
+        <p><strong>Consultancy-soporte@ejemplo.com</strong></p>
+        <p>El administrador puede solicitar los siguientes datos:</p>
+        <ul>
+            <li>Correo registrado</li>
+            <li>RFC</li>
+            <li>Nombre completo</li>
+            <li>Nº de cliente</li>
+            <li>Número telefónico</li>
+        </ul>
+        <button class="auth-modal-btn" id="closeSupportModal">Entendido</button>
     </div>
 </div>
 
 <script>
-    // Lógica del Modal de Soporte - no tocar
-    document.getElementById('forgotPasswordBtn').addEventListener('click', (e) => {
+    // ── Toggle visibilidad de contraseña ──
+    function togglePassword() {
+        const pwd = document.getElementById('password');
+        const icon = document.getElementById('passIcon');
+        if (pwd.type === 'password') {
+            pwd.type = 'text';
+            icon.className = 'bx bx-show';
+        } else {
+            pwd.type = 'password';
+            icon.className = 'bx bx-hide';
+        }
+    }
+
+    // ── Modal de soporte ──
+    document.getElementById('forgotPasswordBtn').addEventListener('click', function (e) {
         e.preventDefault();
-        document.getElementById('supportModal').style.display = 'block';
+        document.getElementById('supportModal').classList.add('active');
     });
-    document.getElementById('closeSupportModal').addEventListener('click', () => {
-        document.getElementById('supportModal').style.display = 'none';
+    document.getElementById('closeSupportModal').addEventListener('click', function () {
+        document.getElementById('supportModal').classList.remove('active');
+    });
+    document.getElementById('supportModal').addEventListener('click', function (e) {
+        if (e.target === this) this.classList.remove('active');
     });
 
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    // ── Login con API ──
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        
-        const correo = document.getElementById('correo').value;
+
+        const correo = document.getElementById('correo').value.trim();
         const password = document.getElementById('password').value;
-        const messageDiv = document.getElementById('responseMessage');
+        const messageDiv = document.getElementById('authMessage');
+        const btn = document.getElementById('loginBtn');
 
-        messageDiv.className = 'message';
-        messageDiv.textContent = 'Procesando...';
-        messageDiv.style.display = 'block';
+        messageDiv.className = 'auth-message';
+        messageDiv.textContent = '';
+        messageDiv.style.display = 'none';
+
+        if (!correo || !password) {
+            messageDiv.textContent = '⚠️ Por favor ingresa tu correo y contraseña.';
+            messageDiv.className = 'auth-message error';
+            messageDiv.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bx bx-loader bx-spin"></i> Ingresando...';
 
         try {
             const response = await fetch('../../../backend/modules/auth/login.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo, password })
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                messageDiv.className = 'message success';
-                messageDiv.textContent = '¡Éxito! Redirigiendo...';
-                
-                // Guardar rol para redirección post-cambio
+                messageDiv.textContent = '✅ ¡Éxito! Redirigiendo...';
+                messageDiv.className = 'auth-message success';
+                messageDiv.style.display = 'block';
+
                 localStorage.setItem('user_role', result.data.id_rol);
 
-                // redirección según el rol
-                setTimeout(() => {
+                setTimeout(function () {
                     if (result.data.require_password_change) {
                         window.location.href = 'change_password.html';
                     } else {
-                        const rol = result.data.id_rol;
-                        if (rol == 1) window.location.href = '../admin/dashboard.html';
+                        var rol = result.data.id_rol;
+                        if (rol == 1)      window.location.href = '../admin/dashboard.html';
                         else if (rol == 2) window.location.href = '../asesor/dashboard.html';
-                        else window.location.href = '../cliente/dashboard.html';
+                        else               window.location.href = '../cliente/dashboard.html';
                     }
                 }, 1500);
             } else {
-                messageDiv.className = 'message error';
-                messageDiv.textContent = result.message || 'Error al iniciar sesión';
+                messageDiv.textContent = '❌ ' + (result.message || 'Error al iniciar sesión');
+                messageDiv.className = 'auth-message error';
+                messageDiv.style.display = 'block';
             }
         } catch (error) {
-            messageDiv.className = 'message error';
-            messageDiv.textContent = 'Error de conexión con el servidor';
-            console.error('Error:', error);
+            messageDiv.textContent = '❌ Error de conexión con el servidor.';
+            messageDiv.className = 'auth-message error';
+            messageDiv.style.display = 'block';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<span>Iniciar Sesión</span><i class="bx bx-chevron-right"></i>';
         }
     });
+</script>
+
+<script>
+(function () {
+    const canvas = document.getElementById('nodes-bg');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let mouse = { x: -1000, y: -1000, r: 180 };
+    const nodeCount = 75;
+    const connectDist = 130;
+    const nodes = [];
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    function seed() {
+        nodes.length = 0;
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
+                r: 1.8 + Math.random() * 2.2
+            });
+        }
+    }
+
+    function update() {
+        for (const n of nodes) {
+            // Move
+            n.x += n.vx;
+            n.y += n.vy;
+
+            // Wrap edges
+            if (n.x < -20) n.x = width + 20;
+            if (n.x > width + 20) n.x = -20;
+            if (n.y < -20) n.y = height + 20;
+            if (n.y > height + 20) n.y = -20;
+
+            // Mouse repulsion
+            const dx = n.x - mouse.x;
+            const dy = n.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < mouse.r) {
+                const force = (mouse.r - dist) / mouse.r;
+                n.vx += (dx / dist) * force * 0.08;
+                n.vy += (dy / dist) * force * 0.08;
+            }
+
+            // Damping
+            n.vx *= 0.999;
+            n.vy *= 0.999;
+
+            // Speed limit
+            const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+            if (speed > 1.5) {
+                n.vx = (n.vx / speed) * 1.5;
+                n.vy = (n.vy / speed) * 1.5;
+            }
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Connections
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < connectDist) {
+                    const alpha = 1 - dist / connectDist;
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.strokeStyle = 'rgba(99,102,241,' + (alpha * 0.18).toFixed(3) + ')';
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Nodes
+        for (const n of nodes) {
+            // Glow
+            const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2.5);
+            g.addColorStop(0, 'rgba(99,102,241,0.35)');
+            g.addColorStop(1, 'rgba(99,102,241,0)');
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = g;
+            ctx.fill();
+
+            // Core
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(148,163,184,0.6)';
+            ctx.fill();
+        }
+
+        // Mouse halo
+        if (mouse.x > 0 && mouse.y > 0) {
+            const h = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, mouse.r * 0.8);
+            h.addColorStop(0, 'rgba(99,102,241,0.08)');
+            h.addColorStop(1, 'rgba(99,102,241,0)');
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, mouse.r * 0.8, 0, Math.PI * 2);
+            ctx.fillStyle = h;
+            ctx.fill();
+        }
+    }
+
+    function loop() {
+        update();
+        draw();
+        requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('resize', () => { resize(); seed(); });
+    window.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+    window.addEventListener('mouseleave', function () {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+    // Touch support
+    window.addEventListener('touchmove', function (e) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+    }, { passive: true });
+    window.addEventListener('touchend', function () {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+
+    resize();
+    seed();
+    loop();
+})();
 </script>
 
 </body>

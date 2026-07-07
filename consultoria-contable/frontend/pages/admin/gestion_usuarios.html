@@ -20,14 +20,13 @@
     <!-- ===== Contenido principal ===== -->
     <main class="dashboard-content">
 
-        <div class="welcome-header">
+        <div class="page-header">
             <div>
-                <h1>Gestión de Usuarios</h1>
+                <h1><i class="bx bx-group"></i> Gestión de Usuarios</h1>
                 <p>Panel para el control de accesos y perfiles del sistema.</p>
             </div>
             <div class="header-actions">
-                <button onclick="loadUsers()" class="btn-header outline">🔄 Actualizar</button>
-                <a href="dashboard.html" class="btn-header primary">📋 Dashboard</a>
+                <button onclick="loadUsers()" class="btn-header outline" id="refreshBtn"><i class="bx bx-refresh"></i> Actualizar</button>
             </div>
         </div>
 
@@ -88,8 +87,8 @@
         <div class="card" style="max-width:100%;">
 
             <!-- Cabecera con estadísticas -->
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
-                <h2 style="margin:0;">Lista de Usuarios</h2>
+            <div class="table-header">
+                <h2>Lista de Usuarios</h2>
                 <div class="stats-bar">
                     <span class="label">Clientes</span>
                     <div class="stat">

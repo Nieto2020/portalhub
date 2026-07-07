@@ -31,33 +31,55 @@ body {
     }
 }
 
-/* ── Welcome header (usado por asesor y cliente) ── */
-.welcome-header {
+/* ── Page header estandarizado ── */
+.page-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 16px;
-    border-bottom: 2px solid var(--primary, #7ED3F7);
-    margin-bottom: 25px;
-    padding-bottom: 10px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
     width: 100%;
 }
 
-.welcome-header h1 {
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), #a78bfa, transparent);
+    border-radius: 2px;
+}
+
+.page-header h1 {
     color: var(--text);
-    font-size: 26px;
-    font-weight: 600;
+    font-size: 1.65rem;
+    font-weight: 700;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
 }
 
-.welcome-header p {
+.page-header h1 i,
+.page-header h1 .bx {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.page-header p {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-top: 4px;
+    font-size: 0.88rem;
+    margin-top: 3px;
 }
 
-/* ── Header actions (botones y campana en la derecha del header) ── */
+/* ── Header actions ── */
 .header-actions {
     display: flex;
     align-items: center;
