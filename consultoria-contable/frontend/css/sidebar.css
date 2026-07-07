@@ -3,8 +3,8 @@
    ============================================= */
 
 :root {
-    --sidebar-width: 260px;
-    --sidebar-collapsed: 88px;
+    --sidebar-width: 210px;
+    --sidebar-collapsed: 60px;
     --sidebar-bg: #0f172a;
     --sidebar-surface: rgba(30, 41, 59, 0.7);
     --sidebar-hover: rgba(99, 102, 241, 0.25);
@@ -62,42 +62,41 @@ body.sidebar-collapsed {
 .toggle-btn {
     position: fixed;
     top: calc(var(--topbar-height) + 50vh);
-    left: calc(var(--sidebar-width) - 14px);
+    left: var(--sidebar-width);
     transform: translateY(-50%);
     z-index: 1001;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    width: 15px;
+    height: 56px;
+    border-radius: 0 8px 8px 0;
     background: var(--sidebar-bg);
-    border: 1.5px solid rgba(148, 163, 184, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-left: none;
     color: var(--sidebar-text-dim);
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    backdrop-filter: blur(8px);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    padding: 0;
 }
 
 .toggle-btn:hover {
-    background: var(--sidebar-bg);
+    background: #1e293b;
     color: #a5b4fc;
     border-color: rgba(99, 102, 241, 0.45);
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25);
-    width: 32px;
-    height: 32px;
-    left: calc(var(--sidebar-width) - 16px);
+    box-shadow: 2px 0 16px rgba(99, 102, 241, 0.2);
+    width: 24px;
 }
 
 body.sidebar-collapsed .toggle-btn {
-    left: calc(var(--sidebar-collapsed) - 14px);
+    left: var(--sidebar-collapsed);
 }
 
 body.sidebar-collapsed .toggle-btn:hover {
-    left: calc(var(--sidebar-collapsed) - 16px);
+    left: var(--sidebar-collapsed);
 }
 
 /* =============================================
