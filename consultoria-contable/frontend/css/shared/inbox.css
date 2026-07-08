@@ -1,0 +1,333 @@
+/* =============================================
+   INBOX — Mensajería global
+   ============================================= */
+
+/* ── Layout principal ── */
+.inbox-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: calc(100vh - var(--topbar-height) - 64px);
+    max-height: calc(100vh - var(--topbar-height) - 64px);
+    gap: 0;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* ── Panel izquierdo: lista de contactos ── */
+.inbox-contacts {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    overflow: hidden;
+}
+
+.inbox-contacts-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.inbox-contacts-header i {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.inbox-contacts-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.inbox-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+}
+
+.inbox-contact-item:hover {
+    background: rgba(99, 102, 241, 0.06);
+}
+
+.inbox-contact-item.active {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.inbox-contact-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #a78bfa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.inbox-contact-info {
+    overflow: hidden;
+    flex: 1;
+}
+
+.inbox-contact-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inbox-contact-preview {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inbox-contact-badge {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+}
+
+.inbox-contact-time {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    position: absolute;
+    top: 12px;
+    right: 14px;
+}
+
+.inbox-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    text-align: center;
+    gap: 8px;
+}
+
+.inbox-empty i {
+    font-size: 2.5rem;
+    opacity: 0.4;
+}
+
+/* ── Panel derecho: conversación ── */
+.inbox-chat {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.inbox-chat-empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    gap: 12px;
+}
+
+.inbox-chat-empty i {
+    font-size: 4rem;
+    opacity: 0.15;
+}
+
+.inbox-chat-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.inbox-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.inbox-msg {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    position: relative;
+    word-break: break-word;
+}
+
+.inbox-msg.sent {
+    align-self: flex-end;
+    background: var(--primary);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.inbox-msg.received {
+    align-self: flex-start;
+    background: var(--bg);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+    border: 1px solid var(--border);
+}
+
+.inbox-msg-time {
+    font-size: 0.65rem;
+    opacity: 0.6;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.inbox-composer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.inbox-composer input {
+    flex: 1;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.inbox-composer input:focus {
+    border-color: var(--primary);
+}
+
+.inbox-composer button {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.inbox-composer button:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+.inbox-composer button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ── Loading ── */
+.inbox-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: var(--text-muted);
+    gap: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .inbox-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .inbox-contacts {
+        display: none;
+    }
+
+    .inbox-contacts.mobile-visible {
+        display: flex;
+    }
+
+    .inbox-chat {
+        display: none;
+    }
+
+    .inbox-chat.mobile-visible {
+        display: flex;
+    }
+
+    .inbox-mobile-back {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        color: var(--primary);
+        cursor: pointer;
+        padding: 6px 0;
+        font-size: 0.85rem;
+        font-family: inherit;
+    }
+}
+
+@media (min-width: 769px) {
+    .inbox-mobile-back {
+        display: none;
+    }
+}
+
+/* ── Dark mode ── */
+html[data-theme="dark"] .inbox-contact-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+html[data-theme="dark"] .inbox-contact-item.active {
+    background: rgba(99, 102, 241, 0.15);
+}
+html[data-theme="dark"] .inbox-msg.received {
+    background: #1e293b;
+    border-color: #334155;
+}

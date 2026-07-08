@@ -23,14 +23,46 @@ if ($id_usuario_actual == $id_otro_usuario) {
 
 try {
     $validarUsuario = $conexion->prepare("
-        SELECT id_usuario 
+        SELECT id_usuario, id_rol 
         FROM usuarios 
         WHERE id_usuario = ?
     ");
     $validarUsuario->execute([$id_otro_usuario]);
+    $otroUsuario = $validarUsuario->fetch(PDO::FETCH_ASSOC);
 
-    if (!$validarUsuario->fetch()) {
+    if (!$otroUsuario) {
         sendResponse(404, "Usuario no encontrado");
+    }
+
+    // ── Validar permisos según rol ──
+    $id_rol_actual = $_SESSION['id_rol'];
+    $id_rol_otro  = $otroUsuario['id_rol'];
+
+    if ($id_rol_actual != ROL_ADMIN) {
+        if ($id_rol_actual == ROL_ASESOR) {
+            if ($id_rol_otro == ROL_CLIENTE) {
+                $checkAsign = $conexion->prepare("
+                    SELECT id_asignacion FROM cliente_asesor 
+                    WHERE id_cliente = ? AND id_asesor = ? AND estado = 'activo'
+                ");
+                $checkAsign->execute([$id_otro_usuario, $id_usuario_actual]);
+                if (!$checkAsign->fetch()) {
+                    sendResponse(403, "No tienes permiso para ver la conversación con este cliente");
+                }
+            }
+        } elseif ($id_rol_actual == ROL_CLIENTE) {
+            if ($id_rol_otro != ROL_ASESOR) {
+                sendResponse(403, "Solo puedes conversar con tu asesor asignado");
+            }
+            $checkAsign = $conexion->prepare("
+                SELECT id_asignacion FROM cliente_asesor 
+                WHERE id_cliente = ? AND id_asesor = ? AND estado = 'activo'
+            ");
+            $checkAsign->execute([$id_usuario_actual, $id_otro_usuario]);
+            if (!$checkAsign->fetch()) {
+                sendResponse(403, "No tienes un asesor asignado activo");
+            }
+        }
     }
 
     $stmt = $conexion->prepare("

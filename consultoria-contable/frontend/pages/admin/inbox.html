@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox — CONSULTANCY</title>
+    <link rel="stylesheet" href="../../css/shared/variables.css">
+    <link rel="stylesheet" href="../../css/shared/base.css">
+    <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/shared/notifications.css">
+    <link rel="stylesheet" href="../../css/shared/inbox.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<main class="dashboard-content">
+
+    <div class="page-header">
+        <div>
+            <h1><i class="bx bx-message-square-detail"></i> Inbox</h1>
+            <p>Mensajes y comunicación con el equipo.</p>
+        </div>
+    </div>
+
+    <div class="inbox-layout">
+
+        <!-- ── Lista de contactos ── -->
+        <div class="inbox-contacts mobile-visible" id="inboxContacts">
+            <div class="inbox-contacts-header">
+                <i class="bx bx-group"></i> Contactos
+            </div>
+            <div class="inbox-contacts-list" id="inboxContactList">
+                <div class="inbox-loading"><i class="bx bx-loader bx-spin"></i> Cargando...</div>
+            </div>
+        </div>
+
+        <!-- ── Panel de conversación ── -->
+        <div class="inbox-chat" id="inboxChat">
+
+            <!-- Estado vacío -->
+            <div class="inbox-chat-empty" id="inboxChatEmpty">
+                <i class="bx bx-message-detail"></i>
+                <p>Selecciona un contacto para comenzar</p>
+            </div>
+
+            <!-- Conversación activa -->
+            <div class="inbox-chat" id="inboxChatContent" style="display:none;">
+                <div class="inbox-chat-header">
+                    <button class="inbox-mobile-back" id="inboxMobileBack">
+                        <i class="bx bx-arrow-back"></i> Contactos
+                    </button>
+                    <span id="inboxChatName" style="font-weight:600;color:var(--text);"></span>
+                </div>
+                <div class="inbox-messages" id="inboxMessages"></div>
+                <div class="inbox-composer">
+                    <input type="text" id="inboxInput" placeholder="Escribe un mensaje...">
+                    <button id="inboxSendBtn" title="Enviar"><i class="bx bx-send"></i></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Comunicación Masiva (solo Admin) ── -->
+    <div class="mass-inbox-section" id="massInboxSection">
+        <div class="section-label" style="margin-top:32px;">
+            <i class="bx bx-broadcast"></i> Comunicación Masiva
+        </div>
+        <div class="mass-inbox-actions">
+            <button class="mass-action-btn" id="massMsgBtnInbox">
+                <i class="bx bx-message-square-detail"></i>
+                <div>
+                    <strong>Enviar Mensaje a Todos</strong>
+                    <span>Llega al inbox de cada usuario según el rol</span>
+                </div>
+            </button>
+            <button class="mass-action-btn" id="massNotifBtnInbox">
+                <i class="bx bx-bell"></i>
+                <div>
+                    <strong>Enviar Notificación a Todos</strong>
+                    <span>Llega a la campana de notificaciones según el rol</span>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Modal de envío masivo ── -->
+    <div class="mass-modal-overlay" id="massModalOverlay">
+        <div class="mass-modal">
+            <div class="mass-modal-header">
+                <h3 id="massModalTitle">Enviar Mensaje</h3>
+                <button class="mass-modal-close" id="massModalClose">&times;</button>
+            </div>
+            <form id="massForm">
+                <div class="form-group">
+                    <label for="massTitulo">Asunto</label>
+                    <input type="text" id="massTitulo" placeholder="Ej: Aviso importante" required>
+                </div>
+                <div class="form-group">
+                    <label for="massContenido">Contenido</label>
+                    <textarea id="massContenido" rows="4" placeholder="Escribe el contenido aquí..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Enviar a:</label>
+                    <div class="mass-roles">
+                        <label class="mass-check"><input type="checkbox" value="3" checked> Clientes</label>
+                        <label class="mass-check"><input type="checkbox" value="2"> Asesores</label>
+                        <label class="mass-check"><input type="checkbox" value="1"> Administradores</label>
+                        <label class="mass-check mass-check-all"><input type="checkbox" id="massTodos" checked> Todos</label>
+                    </div>
+                </div>
+                <button type="submit" class="mass-submit-btn" id="massSubmitBtn">
+                    <i class="bx bx-send"></i> Enviar
+                </button>
+            </form>
+        </div>
+    </div>
+
+</main>
+
+<script src="../../js/helpers/logoutHelper.js"></script>
+<script>
+    window.SIDEBAR_CONFIG = {
+        role: 'admin',
+        userName: 'Administrador',
+        userRole: 'Administrador',
+        currentPage: 'inbox'
+    };
+    // ID del usuario actual (lo obtiene el sidebar de la sesión)
+    // Se setea desde el backend o se deja como placeholder que inbox.js usará
+    window.USER_ID = null;
+</script>
+<script src="../../js/sidebar.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/inbox.js"></script>
+<script>
+    // ── Comunicación Masiva (solo Admin) ──
+    (function () {
+        // Inyectar CSS de comunicación masiva si no existe
+        if (!document.querySelector('style[data-mass]')) {
+            const style = document.createElement('style');
+            style.setAttribute('data-mass', '');
+            style.textContent = `
+                .mass-inbox-section { max-width:800px; }
+                .mass-inbox-actions { display:flex; flex-direction:column; gap:10px; }
+                .mass-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(3px); }
+                .mass-modal-overlay.active { display:flex; }
+                .mass-modal { background:var(--card-bg); border-radius:18px; padding:28px; width:92%; max-width:480px; box-shadow:0 24px 64px rgba(0,0,0,0.25); animation:massPopIn .3s ease; }
+                @keyframes massPopIn { from{transform:translateY(20px) scale(.96);opacity:0} to{transform:translateY(0) scale(1);opacity:1} }
+                .mass-modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+                .mass-modal-header h3 { font-size:1.05rem; font-weight:700; color:var(--text); }
+                .mass-modal-close { background:none; border:none; font-size:1.5rem; color:var(--text-muted); cursor:pointer; }
+                .mass-modal .form-group { margin-bottom:14px; }
+                .mass-modal .form-group label { display:block; font-size:.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:5px; }
+                .mass-modal .form-group input, .mass-modal .form-group textarea { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:.88rem; font-family:inherit; background:var(--bg); color:var(--text); box-sizing:border-box; transition:border-color .2s; }
+                .mass-modal .form-group textarea { resize:vertical; }
+                .mass-modal .form-group input:focus, .mass-modal .form-group textarea:focus { border-color:var(--primary); outline:none; }
+                .mass-submit-btn { width:100%; padding:12px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-weight:600; font-size:.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:background .2s; }
+                .mass-submit-btn:hover { background:var(--primary-hover); }
+                .mass-submit-btn:disabled { opacity:.6; cursor:not-allowed; }
+                .mass-roles { display:flex; flex-wrap:wrap; gap:8px 14px; }
+                .mass-check { display:flex; align-items:center; gap:5px; font-size:.82rem; color:var(--text-secondary); cursor:pointer; }
+                .mass-check input { accent-color:var(--primary); width:15px; height:15px; cursor:pointer; }
+                .mass-check-all { font-weight:600; color:var(--text); }
+                .mass-action-btn { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(99,102,241,.04); border:1.5px solid var(--border); border-radius:14px; cursor:pointer; transition:all .2s ease; text-align:left; font-family:inherit; width:100%; }
+                .mass-action-btn:hover { background:rgba(99,102,241,.08); border-color:var(--primary); transform:translateY(-1px); }
+                .mass-action-btn i { font-size:1.35rem; color:var(--primary); flex-shrink:0; }
+                .mass-action-btn strong { display:block; font-size:.84rem; color:var(--text); margin-bottom:1px; }
+                .mass-action-btn span { font-size:.72rem; color:var(--text-muted); }
+                .section-label { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+                .section-label i { color:var(--primary); }
+            `;
+            document.head.appendChild(style);
+        }
+
+        const modal   = document.getElementById('massModalOverlay');
+        const modalTitle = document.getElementById('massModalTitle');
+        const form    = document.getElementById('massForm');
+        const tituloEl= document.getElementById('massTitulo');
+        const contEl  = document.getElementById('massContenido');
+        const submitBtn = document.getElementById('massSubmitBtn');
+        const closeBtn = document.getElementById('massModalClose');
+
+        let modo = '';
+
+        function abrirModal(nuevoModo) {
+            modo = nuevoModo;
+            modalTitle.textContent = modo === 'mensaje' ? 'Enviar Mensaje Directo a Todos' : 'Enviar Notificación a Todos';
+            submitBtn.innerHTML = '<i class="bx bx-send"></i> Enviar a Todos';
+            form.reset();
+            document.querySelectorAll('.mass-roles input[type="checkbox"]').forEach(c => c.checked = true);
+            modal.classList.add('active');
+        }
+
+        function cerrarModal() { modal.classList.remove('active'); }
+
+        document.getElementById('massMsgBtnInbox').addEventListener('click', () => abrirModal('mensaje'));
+        document.getElementById('massNotifBtnInbox').addEventListener('click', () => abrirModal('notificacion'));
+        closeBtn.addEventListener('click', cerrarModal);
+        modal.addEventListener('click', e => { if (e.target === modal) cerrarModal(); });
+
+        document.getElementById('massTodos').addEventListener('change', function() {
+            document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)')
+                .forEach(c => c.checked = this.checked);
+        });
+        document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)')
+            .forEach(c => c.addEventListener('change', function() {
+                document.getElementById('massTodos').checked =
+                    Array.from(document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)')).every(ch => ch.checked);
+            }));
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const titulo = tituloEl.value.trim();
+            const contenido = contEl.value.trim();
+            if (!titulo || !contenido) return;
+
+            const checks = document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)');
+            const seleccionados = [];
+            checks.forEach(c => { if (c.checked) seleccionados.push(parseInt(c.value)); });
+            if (seleccionados.length === 0) { alert('Selecciona al menos un rol'); return; }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="bx bx-loader bx-spin"></i> Enviando...';
+
+            const endpoint = modo === 'mensaje'
+                ? '../../../backend/modules/mensajes/enviar_masivo.php'
+                : '../../../backend/modules/notificaciones/crear_masivo.php';
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ titulo, contenido, roles: seleccionados })
+                });
+                const json = await res.json();
+                if (res.ok) {
+                    alert('✅ ' + (json.message || 'Enviado correctamente'));
+                    cerrarModal();
+                } else {
+                    alert('❌ ' + (json.message || 'Error'));
+                }
+            } catch (err) {
+                alert('❌ Error de conexión');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bx bx-send"></i> Enviar';
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
