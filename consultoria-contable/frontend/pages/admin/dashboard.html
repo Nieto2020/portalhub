@@ -33,87 +33,181 @@
             </div>
         </div>
 
-        <!-- ── Stats ── -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-icon"><i class="bx bx-group"></i></div>
-                    <span class="stat-change" id="activeBadge">--</span>
-                </div>
-                <div class="stat-value"><span id="totalUsers">--</span></div>
-                <div class="stat-label">Usuarios Registrados</div>
-                <div class="stat-sub" id="newThisMonth"></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-icon"><i class="bx bx-user-check"></i></div>
-                    <span class="stat-change up" id="activePercentBadge">--</span>
-                </div>
-                <div class="stat-value"><span id="activeUsers">--</span></div>
-                <div class="stat-label">Usuarios Activos</div>
-                <div class="stat-sub" id="activeSub"></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-icon"><i class="bx bx-user-x"></i></div>
-                    <span class="stat-change down" id="inactivePercent">--</span>
-                </div>
-                <div class="stat-value"><span id="inactiveUsers">--</span></div>
-                <div class="stat-label">Usuarios Inactivos</div>
-                <div class="stat-sub" id="inactiveSub"></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-icon"><i class="bx bx-calendar-check"></i></div>
-                    <span class="stat-change" id="citasBadge">--</span>
-                </div>
-                <div class="stat-value"><span id="totalCitas">--</span></div>
-                <div class="stat-label">Citas Registradas</div>
-                <div class="stat-sub" id="citasSub"></div>
-            </div>
+        <!-- ── Acciones Rápidas ── -->
+        <div class="quick-actions-row">
+            <a href="gestion_usuarios.html" class="quick-action-card">
+                <i class="bx bx-user-plus"></i>
+                <strong>Conrol de Accesos</strong>
+                <span>Registrar/Eliminar usuarios</span>
+            </a>
+            <a href="asignaciones.html" class="quick-action-card">
+                <i class="bx bx-user-pin"></i>
+                <strong>Asignar Asesor</strong>
+                <span>Flujo de asesoramiento</span>
+            </a>
+            <a href="test_reset.html" class="quick-action-card">
+                <i class="bx bx-key"></i>
+                <strong>Reset Password</strong>
+                <span>Generar pase temporal</span>
+            </a>
+            <a href="reportes.html" class="quick-action-card">
+                <i class="bx bx-bar-chart-square"></i>
+                <strong>Ver Reportes</strong>
+                <span>Analítica del sistema</span>
+            </a>
+            <a href="inbox.html" class="quick-action-card">
+                <i class="bx bx-message-square-detail"></i>
+                <strong>Inbox</strong>
+                <span>Mensajes y soporte</span>
+            </a>
         </div>
 
-        <!-- ── Main Grid ── -->
-        <div class="main-grid">
+        <!-- ── Fila: Estado del Portal + Comunicación masiva ── -->
+        <div class="dashboard-row">
 
-            <!-- Actividad Reciente -->
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="bx bx-trending-up icon-indigo" aria-hidden="true"></i> Actividad Reciente</h2>
-                    <a href="gestion_usuarios.html">Ver todo</a>
+            <!-- Estado del Portal -->
+            <div class="stats-section">
+                <div class="section-label">
+                    <i class="bx bx-stats"></i> Estado del Portal
                 </div>
-                <div class="activity-list" id="activityList">
-                    <div class="status-message">
-                        <i class="bx bx-loader bx-spin" aria-hidden="true"></i>
-                        <p>Cargando actividad...</p>
+                <div class="stats-card">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrap blue">
+                            <i class="bx bx-user-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="clientesActivos">--</span>
+                            <span class="stat-label">Clientes Activos</span>
+                        </div>
+                        <div class="stat-trend" id="clientesTrend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrap purple">
+                            <i class="bx bx-user-voice"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="asesoresTotal">--</span>
+                            <span class="stat-label">Asesores</span>
+                        </div>
+                        <div class="stat-trend" id="asesoresTrend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrap amber">
+                            <i class="bx bx-loader"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="tramitesCurso">--</span>
+                            <span class="stat-label">Trámites en Curso</span>
+                        </div>
+                        <div class="stat-trend" id="tramitesCursoDetail">En proceso</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrap green">
+                            <i class="bx bx-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="tramitesCompletados">--</span>
+                            <span class="stat-label">Trámites Completados</span>
+                        </div>
+                        <div class="stat-trend" id="tramitesCompletadosDetail">Finalizados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrap red">
+                            <i class="bx bx-credit-card"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="pagosPendientes">--</span>
+                            <span class="stat-label">Pagos Pendientes</span>
+                        </div>
+                        <div class="stat-trend" id="pagosPendientesTotal"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon-wrap indigo">
+                            <i class="bx bx-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="citasProgramadas">--</span>
+                            <span class="stat-label">Citas Programadas</span>
+                        </div>
+                        <div class="stat-trend" id="citasTrend"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Comunicación Masiva -->
+            <div class="announcements-section">
+                <div class="section-label">
+                    <i class="bx bx-broadcast"></i> Comunicación Masiva
+                </div>
+                <div class="announcements-card">
+                    <p class="announcements-desc">Envía mensajes o notificaciones a <strong>todos los usuarios</strong> del sistema simultáneamente.</p>
+
+                    <div class="mass-actions">
+                        <button class="mass-action-btn" id="massMsgBtn">
+                            <i class="bx bx-message-square-detail"></i>
+                            <div>
+                                <strong>Enviar Mensaje Directo</strong>
+                                <span>Llega al inbox de cada usuario</span>
+                            </div>
+                        </button>
+
+                        <button class="mass-action-btn" id="massNotifBtn">
+                            <i class="bx bx-bell"></i>
+                            <div>
+                                <strong>Enviar Notificación</strong>
+                                <span>Llega a la campana de notificaciones</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Modal de envío masivo -->
+                    <div class="mass-modal-overlay" id="massModalOverlay">
+                        <div class="mass-modal">
+                            <div class="mass-modal-header">
+                                <h3 id="massModalTitle">Enviar Mensaje</h3>
+                                <button class="mass-modal-close" id="massModalClose">&times;</button>
+                            </div>
+                            <form id="massForm">
+                                <div class="form-group">
+                                    <label for="massTitulo">Asunto</label>
+                                    <input type="text" id="massTitulo" placeholder="Ej: Aviso importante" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="massContenido">Contenido</label>
+                                    <textarea id="massContenido" rows="4" placeholder="Escribe el contenido aquí..." required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Enviar a:</label>
+                                    <div class="mass-roles">
+                                        <label class="mass-check"><input type="checkbox" value="3" checked> Clientes</label>
+                                        <label class="mass-check"><input type="checkbox" value="2"> Asesores</label>
+                                        <label class="mass-check"><input type="checkbox" value="1"> Administradores</label>
+                                        <label class="mass-check mass-check-all"><input type="checkbox" id="massTodos" checked> Todos</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="mass-submit-btn" id="massSubmitBtn">
+                                    <i class="bx bx-send"></i> Enviar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Acciones Rápidas -->
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="bx bx-zap icon-amber" aria-hidden="true"></i> Acciones Rápidas</h2>
+            <!-- Top Asesores -->
+            <div class="announcements-section" style="margin-top:14px;">
+                <div class="section-label">
+                    <i class="bx bx-trophy"></i> Top Asesores
                 </div>
-                <div class="quick-actions">
-                    <a href="gestion_usuarios.html" class="quick-action">
-                        <i class="bx bx-user-plus"></i>
-                        <span>Nuevo Usuario</span>
-                    </a>
-                    <a href="gestion_usuarios.html" class="quick-action">
-                        <i class="bx bx-user-x"></i>
-                        <span>Dar de Baja</span>
-                    </a>
-                    <a href="test_reset.html" class="quick-action">
-                        <i class="bx bx-key"></i>
-                        <span>Reset Password</span>
-                    </a>
-                    <a href="reportes.html" class="quick-action">
-                        <i class="bx bx-bar-chart-square"></i>
-                        <span>Ver Reportes</span>
-                    </a>
+                <div class="announcements-card top-asesores-card">
+                    <div class="top-asesores-grid" id="topAsesoresGrid">
+                        <div class="top-loading"><i class="bx bx-loader bx-spin"></i> Cargando...</div>
+                    </div>
                 </div>
             </div>
+
         </div>
 
         <!-- ── Bottom Grid ── -->
@@ -170,37 +264,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- Resumen Rápido -->
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="bx bx-info-circle icon-blue" aria-hidden="true"></i> Resumen</h2>
-                </div>
-                <div class="mini-stat">
-                    <div class="ms-icon purple"><i class="bx bx-group"></i></div>
-                    <div class="ms-info">
-                        <h4>Total Usuarios</h4>
-                        <span>Registrados en el sistema</span>
-                    </div>
-                    <div class="ms-value" id="totalUsersMini">--</div>
-                </div>
-                <div class="mini-stat">
-                    <div class="ms-icon green"><i class="bx bx-user-check"></i></div>
-                    <div class="ms-info">
-                        <h4>Clientes Activos</h4>
-                        <span>Con acceso al portal</span>
-                    </div>
-                    <div class="ms-value" id="activeClientsMini">--</div>
-                </div>
-                <div class="mini-stat">
-                    <div class="ms-icon amber"><i class="bx bx-user-voice"></i></div>
-                    <div class="ms-info">
-                        <h4>Asesores</h4>
-                        <span>Dando soporte</span>
-                    </div>
-                    <div class="ms-value" id="asesoresCount">--</div>
-                </div>
-            </div>
         </div>
 
     </main>
@@ -228,78 +291,52 @@
                 const usersJson = await usersRes.json();
                 const reportJson = await reportRes.json();
 
-                // ── Datos de usuarios ──
                 const users = usersJson.data || [];
-                const total = users.length;
-                const activos = users.filter(u => u.estado === 'activo');
-                const inactivos = users.filter(u => u.estado === 'inactivo');
-                const clientesActivos = users.filter(u => u.nombre_rol?.toLowerCase() === 'cliente' && u.estado === 'activo');
-                const asesores = users.filter(u => u.nombre_rol?.toLowerCase() === 'asesor');
-
-                // ── Datos del reporte ──
                 const report = reportJson.data || {};
-                const citas      = report.citas      || {};
-                const pagos      = report.pagos      || {};
-                const servicios  = report.servicios  || {};
 
-                // ══════════════════════════════════════════════
-                //  TARJETAS DE ESTADÍSTICAS SUPERIORES
-                // ══════════════════════════════════════════════
+                const usuarios = report.usuarios || {};
+                const servicios = report.servicios || {};
+                const pagos = report.pagos || {};
+                const citas = report.citas || {};
 
+                // ── Stats principales ──
                 const setText = (id, val) => {
                     const el = document.getElementById(id);
                     if (el) el.textContent = val ?? '--';
                 };
-                const setBadge = (id, text, isUp) => {
-                    const el = document.getElementById(id);
-                    if (!el) return;
-                    el.textContent = text;
-                    el.className = 'stat-change ' + (isUp ? 'up' : 'down');
-                };
 
-                // ── Tarjeta 1: Usuarios Registrados ──
-                setText('totalUsers', total);
-                setBadge('activeBadge', total > 0 ? `${activos.length} activos` : 'Sin datos', activos.length >= inactivos.length);
-                setText('newThisMonth', `📅 ${users.filter(u => {
-                    if (!u.fecha_registro) return false;
-                    const d = new Date(u.fecha_registro);
-                    const now = new Date();
-                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-                }).length} nuevos este mes`);
+                // Clientes activos (de usuarios endpoint, no reporte)
+                const clientesActivos = users.filter(u =>
+                    u.nombre_rol?.toLowerCase() === 'cliente' && u.estado === 'activo'
+                ).length;
+                const asesores = users.filter(u =>
+                    u.nombre_rol?.toLowerCase() === 'asesor'
+                ).length;
 
-                // ── Tarjeta 2: Activos ──
-                const pctAct = total > 0 ? Math.round((activos.length / total) * 100) : 0;
-                setText('activeUsers', activos.length);
-                setBadge('activePercentBadge', `${pctAct}%`, true);
-                setText('activeSub', `${clientesActivos.length} clientes · ${asesores.length} asesores`);
+                setText('clientesActivos', clientesActivos);
+                setText('asesoresTotal', asesores);
+                setText('tramitesCurso', servicios.en_proceso ?? '--');
+                setText('tramitesCompletados', servicios.completados ?? '--');
+                setText('pagosPendientes', pagos.pendientes ?? '--');
+                setText('citasProgramadas', citas.programadas ?? '--');
 
-                // ── Tarjeta 3: Inactivos ──
-                const pctIna = total > 0 ? Math.round((inactivos.length / total) * 100) : 0;
-                setText('inactiveUsers', inactivos.length);
-                setBadge('inactivePercent', `${pctIna}%`, pctIna <= 20);
-                setText('inactiveSub', inactivos.length === 0 ? '✅ Todos activos' : `${inactivos.length} usuarios sin acceso`);
+                // Detalles secundarios
+                setText('pagosPendientesTotal',
+                    `$${Number(pagos.monto_total || 0).toLocaleString('es-MX')}`);
+                setText('citasTrend',
+                    citas.total > 0 ? `${citas.programadas ?? 0} de ${citas.total ?? 0}` : 'Sin citas');
+                setText('clientesTrend',
+                    `${clientesActivos} activos de ${usuarios.clientes ?? 0} totales`);
+                setText('asesoresTrend',
+                    `${asesores} en el equipo`);
 
-                // ── Tarjeta 4: Citas ──
-                const citasTotal = citas.total || 0;
-                const citasProg  = citas.programadas || 0;
-                setText('totalCitas', citasTotal);
-                setBadge('citasBadge', citasProg > 0 ? `${citasProg} programadas` : 'Sin citas', citasProg > 0);
-                setText('citasSub', `💰 $${Number(pagos.monto_total || 0).toLocaleString('es-MX')} en pagos`);
-
-                // ══════════════════════════════════════════════
-                //  RESUMEN RÁPIDO (columna derecha abajo)
-                // ══════════════════════════════════════════════
-                setText('totalUsersMini', total);
-                setText('activeClientsMini', clientesActivos.length);
-                setText('asesoresCount', asesores.length);
-
-                // ══════════════════════════════════════════════
-                //  GRÁFICO DONUT
-                // ══════════════════════════════════════════════
-                const pct = total > 0 ? Math.round((activos.length / total) * 100) : 0;
+                // ── Donut ──
+                const total = usuarios.total || 0;
+                const activos = usuarios.activos || 0;
+                const pct = total > 0 ? Math.round((activos / total) * 100) : 0;
                 setText('activePercentDonut', pct + '%');
-                setText('legendActive', activos.length);
-                setText('legendInactive', inactivos.length);
+                setText('legendActive', activos);
+                setText('legendInactive', usuarios.inactivos || 0);
                 const donut = document.querySelector('.donut');
                 if (donut) {
                     donut.style.background = total === 0
@@ -307,9 +344,7 @@
                         : `conic-gradient(#6366f1 0% ${pct}%, #e2e8f0 ${pct}% 100%)`;
                 }
 
-                // ══════════════════════════════════════════════
-                //  ÚLTIMOS 5 USUARIOS REGISTRADOS
-                // ══════════════════════════════════════════════
+                // ── Últimos 5 registros ──
                 const sorted = [...users].filter(u => u.fecha_registro)
                     .sort((a, b) => new Date(b.fecha_registro) - new Date(a.fecha_registro));
                 const recent = sorted.slice(0, 5);
@@ -322,58 +357,162 @@
                     recent.forEach(u => {
                         const cls = u.estado === 'activo' ? 'active' : 'inactive';
                         const tr = document.createElement('tr');
-                        const fecha = u.fecha_registro
-                            ? new Date(u.fecha_registro).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' })
-                            : '---';
                         tr.innerHTML = `
                             <td>#${u.id_usuario}</td>
                             <td>${u.correo}</td>
                             <td>${u.nombre_rol || '---'}</td>
                             <td><span class="badge ${cls}">${u.estado.toUpperCase()}</span></td>
                         `;
-                        tr.title = `Registrado el ${fecha}`;
                         tbody.appendChild(tr);
                     });
                 }
 
-                // ══════════════════════════════════════════════
-                //  ACTIVIDAD RECIENTE
-                // ══════════════════════════════════════════════
-                const activityList = document.getElementById('activityList');
-                activityList.innerHTML = '';
-
-                if (recent.length === 0) {
-                    activityList.innerHTML = '<div class="status-message">📭 No hay actividad reciente</div>';
-                } else {
-                    const dots = ['green', 'purple', 'blue', 'amber', 'red'];
-                    recent.forEach((u, i) => {
-                        const estadoIcon = u.estado === 'activo' ? '✅' : '🔴';
-                        const fecha = u.fecha_registro
-                            ? new Date(u.fecha_registro).toLocaleDateString('es-MX', {
-                                day: 'numeric', month: 'short', year: 'numeric'
-                              })
-                            : 'Fecha desconocida';
-
-                        const item = document.createElement('div');
-                        item.className = 'activity-item';
-                        item.innerHTML = `
-                            <span class="activity-dot ${dots[i % dots.length]}"></span>
-                            <div class="activity-info">
-                                <p>${estadoIcon} <strong>${u.correo}</strong> — ${u.nombre_rol || 'usuario'}</p>
-                                <span>Registrado el ${fecha} · ID #${u.id_usuario}</span>
-                            </div>
-                        `;
-                        activityList.appendChild(item);
-                    });
-                }
+                // ── Resumen rápido ──
+                setText('totalUsersMini', total);
+                setText('activeClientsMini', clientesActivos);
+                setText('asesoresCount', asesores);
+                setText('pagosPendientesMini', pagos.pendientes ?? '--');
 
             } catch (e) {
                 console.warn('Error al cargar datos del dashboard:', e);
-                document.querySelectorAll('.stat-value span, .stat-sub').forEach(el => el.textContent = '--');
-                document.getElementById('activityList').innerHTML =
-                    '<div class="status-message error">⚠️ Error al conectar con el servidor</div>';
+                document.querySelectorAll('.stat-value, .stat-trend').forEach(el => el.textContent = '--');
                 document.getElementById('recentUsersTable').innerHTML =
                     '<tr><td colspan="4" class="status-message error">⚠️ Error de conexión</td></tr>';
+            }
+        })();
+
+        // ── Comunicación Masiva ──
+        (function () {
+            const modal   = document.getElementById('massModalOverlay');
+            const modalTitle = document.getElementById('massModalTitle');
+            const form    = document.getElementById('massForm');
+            const tituloEl= document.getElementById('massTitulo');
+            const contEl  = document.getElementById('massContenido');
+            const submitBtn = document.getElementById('massSubmitBtn');
+            const closeBtn = document.getElementById('massModalClose');
+
+            let modo = ''; // 'mensaje' o 'notificacion'
+
+            function abrirModal(nuevoModo) {
+                modo = nuevoModo;
+                modalTitle.textContent = modo === 'mensaje' ? 'Enviar Mensaje Directo a Todos' : 'Enviar Notificación a Todos';
+                submitBtn.innerHTML = '<i class="bx bx-send"></i> Enviar a Todos';
+                form.reset();
+                modal.classList.add('active');
+            }
+
+            function cerrarModal() {
+                modal.classList.remove('active');
+            }
+
+            document.getElementById('massMsgBtn').addEventListener('click', () => abrirModal('mensaje'));
+            document.getElementById('massNotifBtn').addEventListener('click', () => abrirModal('notificacion'));
+            closeBtn.addEventListener('click', cerrarModal);
+            modal.addEventListener('click', e => { if (e.target === modal) cerrarModal(); });
+
+            // Si viene de acciones.html, abrir el modal automáticamente
+            const massAction = localStorage.getItem('massAction');
+            if (massAction === 'mensaje' || massAction === 'notificacion') {
+                localStorage.removeItem('massAction');
+                setTimeout(() => abrirModal(massAction), 400);
+            }
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const titulo = tituloEl.value.trim();
+                const contenido = contEl.value.trim();
+                if (!titulo || !contenido) return;
+
+                // Obtener roles seleccionados
+                const checks = document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)');
+                const seleccionados = [];
+                checks.forEach(c => { if (c.checked) seleccionados.push(parseInt(c.value)); });
+                if (seleccionados.length === 0) { alert('Selecciona al menos un rol'); return; }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="bx bx-loader bx-spin"></i> Enviando...';
+
+                const endpoint = modo === 'mensaje'
+                    ? '../../../backend/modules/mensajes/enviar_masivo.php'
+                    : '../../../backend/modules/notificaciones/crear_masivo.php';
+
+                try {
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ titulo, contenido, roles: seleccionados })
+                    });
+                    const json = await res.json();
+                    if (res.ok) {
+                        alert('✅ ' + (json.message || 'Enviado correctamente'));
+                        cerrarModal();
+                    } else {
+                        alert('❌ ' + (json.message || 'Error'));
+                    }
+                } catch (err) {
+                    alert('❌ Error de conexión');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bx bx-send"></i> Enviar';
+                }
+            });
+
+            // Toggle "Todos"
+            document.getElementById('massTodos').addEventListener('change', function() {
+                const checked = this.checked;
+                document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)')
+                    .forEach(c => c.checked = checked);
+            });
+            document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)')
+                .forEach(c => c.addEventListener('change', function() {
+                    const all = document.querySelectorAll('.mass-roles input[type="checkbox"]:not(#massTodos)');
+                    const every = Array.from(all).every(ch => ch.checked);
+                    document.getElementById('massTodos').checked = every;
+                }));
+        })();
+
+        // ── Top Asesores ──
+        (async function loadTopAsesores() {
+            const grid = document.getElementById('topAsesoresGrid');
+            try {
+                const res = await fetch('../../../backend/modules/calificaciones/estadisticas.php');
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.message);
+
+                const data = (json.data || []).slice(0, 3);
+                if (data.length === 0) {
+                    grid.innerHTML = '<div class="top-asesor-empty"><i class="bx bx-star"></i><p>Sin calificaciones aún</p></div>';
+                    return;
+                }
+
+                const rankClasses = ['gold', 'silver', 'bronze'];
+                const rankIcons = ['🥇', '🥈', '🥉'];
+                grid.innerHTML = '';
+
+                data.forEach((a, i) => {
+                    const initials = (a.nombre || a.correo || '??').substring(0, 2).toUpperCase();
+                    const stars = '<i class="bx bxs-star"></i>'.repeat(Math.round(a.promedio));
+                    const div = document.createElement('div');
+                    div.className = 'top-asesor-item';
+                    div.innerHTML = `
+                        <span class="top-asesor-rank ${rankClasses[i] || ''}">${rankIcons[i] || '#'}</span>
+                        <div class="top-asesor-avatar">${initials}</div>
+                        <div class="top-asesor-info">
+                            <div class="top-asesor-name">${escapeTop(a.nombre)}</div>
+                            <div class="top-asesor-rating">${stars} ${a.promedio}</div>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+            } catch (e) {
+                grid.innerHTML = '<div class="top-asesor-empty"><i class="bx bx-error-circle"></i><p>Error al cargar</p></div>';
+            }
+
+            function escapeTop(t) {
+                const d = document.createElement('div');
+                d.textContent = t;
+                return d.innerHTML;
             }
         })();
     </script>
