@@ -66,6 +66,10 @@
                     <button class="topbar-theme-btn" id="themeToggle" title="Cambiar tema">
                         <i class="bx bx-moon"></i>
                     </button>
+                    <a href="inbox.html" class="topbar-msg-btn" id="topbarMsgBtn" title="Mensajes">
+                        <i class="bx bx-message-square-detail"></i>
+                        <span class="notif-badge hidden" id="msgBadge">0</span>
+                    </a>
                     <div class="notif-bell" id="notifBell">
                         <i class="bx bx-bell"></i>
                         <span class="notif-badge hidden" id="notifBadge">0</span>
@@ -253,7 +257,11 @@
     function startPolling() {
         if (pollTimer) clearInterval(pollTimer);
         loadBadgeOnly();
-        pollTimer = setInterval(loadBadgeOnly, POLL_INTERVAL);
+        loadMsgBadge();
+        pollTimer = setInterval(function () {
+            loadBadgeOnly();
+            loadMsgBadge();
+        }, POLL_INTERVAL);
     }
 
     async function loadBadgeOnly() {
@@ -267,6 +275,28 @@
         } catch (e) { /* silencio */ }
     }
 
+    // ── Badge de mensajes no leídos ──
+    async function loadMsgBadge() {
+        try {
+            const res = await fetch('../../../backend/modules/mensajes/no_leidos.php', {
+                credentials: 'include'
+            });
+            const json = await res.json();
+            if (!res.ok) return;
+
+            const count = json.data ? json.data.no_leidos : 0;
+            const badge = document.getElementById('msgBadge');
+            if (!badge) return;
+
+            if (count === 0) {
+                badge.classList.add('hidden');
+                return;
+            }
+            badge.textContent = count > 99 ? '99+' : count;
+            badge.classList.remove('hidden');
+        } catch (e) { /* silencio */ }
+    }
+
     // ── Helper: escape HTML ──
     function escapeHtml(text) {
         const div = document.createElement('div');
@@ -274,28 +304,31 @@
         return div.innerHTML;
     }
 
-    // ── Theme toggle (lógica movida desde sidebar) ──
+    // ── Theme toggle: cicla entre light → dark → dark-blue → papersheet ──
     function initThemeToggle() {
         const btn = document.getElementById('themeToggle');
         const icon = btn ? btn.querySelector('i') : null;
+        const themes = ['light', 'dark', 'dark-blue', 'papersheet'];
 
-        function applyTheme(dark) {
-            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        function applyTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
             if (icon) {
-                icon.className = dark ? 'bx bx-sun' : 'bx bx-moon';
+                const icons = { light: 'bx-sun', dark: 'bx-moon', 'dark-blue': 'bx-cloud', papersheet: 'bx-paper-plane' };
+                icon.className = 'bx ' + (icons[themeName] || 'bx-sun');
             }
-            localStorage.setItem('theme', dark ? 'dark' : 'light');
+            localStorage.setItem('theme', themeName);
         }
 
         const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-        applyTheme(isDark);
+        const isValid = themes.includes(savedTheme);
+        applyTheme(isValid ? savedTheme : 'light');
 
         if (btn) {
             btn.addEventListener('click', function () {
-                const current = document.documentElement.getAttribute('data-theme') === 'dark';
-                applyTheme(!current);
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const idx = themes.indexOf(current);
+                const next = themes[(idx + 1) % themes.length];
+                applyTheme(next);
             });
         }
     }

@@ -158,8 +158,8 @@
 }
 
 .mini-stat .ms-icon.purple {
-    background: #f3e8ff;
-    color: #9333ea;
+    background: var(--accent-purple-bg);
+    color: var(--accent-purple);
 }
 
 .mini-stat .ms-icon.green {
@@ -168,8 +168,8 @@
 }
 
 .mini-stat .ms-icon.blue {
-    background: #dbeafe;
-    color: #2563eb;
+    background: var(--accent-blue-bg);
+    color: var(--accent-blue);
 }
 
 .mini-stat .ms-value { 
@@ -242,7 +242,7 @@
     gap: 8px;
     padding: 16px;
     border-radius: var(--radius-sm);
-    background: #f8fafc;
+    background: var(--card-bg);
     color: var(--text);
     text-decoration: none;
     transition: all 0.2s;

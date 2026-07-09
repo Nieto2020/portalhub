@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <!-- Tabla -->
+        <!-- Tabla de reportes -->
         <div class="card">
             <table>
                 <thead>
@@ -90,6 +90,30 @@
                                 <i class="bx bx-loader bx-spin"></i>
                                 <p>Cargando reportes...</p>
                             </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Calificaciones de Asesores -->
+        <h2 style="margin: 32px 0 16px;display:flex;align-items:center;gap:8px;">
+            <i class="bx bx-star" style="color:var(--warning);"></i> Calificaciones de Asesores
+        </h2>
+        <div class="card" style="overflow:hidden;padding:0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asesor</th>
+                        <th>Promedio</th>
+                        <th>Total Calificaciones</th>
+                        <th>Última</th>
+                    </tr>
+                </thead>
+                <tbody id="ratingsTableBody">
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state"><i class="bx bx-loader bx-spin"></i><p>Cargando...</p></div>
                         </td>
                     </tr>
                 </tbody>
@@ -224,6 +248,57 @@
         });
 
         loadReports();
+        loadRatings();
+
+        // ── Calificaciones ──
+        async function loadRatings() {
+            const tbody = document.getElementById('ratingsTableBody');
+            try {
+                const res = await fetch('../../../backend/modules/calificaciones/estadisticas.php');
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.message);
+
+                const data = json.data || [];
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-star"></i><p>Sin calificaciones aún</p></div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                data.forEach(r => {
+                    const stars = renderStars(r.promedio);
+                    const fecha = r.ultima_calificacion
+                        ? new Date(r.ultima_calificacion).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' })
+                        : '---';
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${escapeHtml(r.nombre)}</strong></td>
+                        <td>${stars} <span style="font-weight:600;">${r.promedio}</span></td>
+                        <td>${r.total_calificaciones}</td>
+                        <td>${fecha}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-error-circle"></i><p>Error al cargar</p></div></td></tr>';
+            }
+        }
+
+        function renderStars(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                const filled = rating >= i;
+                const half = !filled && rating >= i - 0.5;
+                html += `<i class="bx ${filled ? 'bxs-star' : half ? 'bxs-star-half' : 'bx-star'}" style="color:#f59e0b;font-size:1rem;"></i>`;
+            }
+            return html;
+        }
+
+        function escapeHtml(t) {
+            const d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
     </script>
 </body>
 </html>

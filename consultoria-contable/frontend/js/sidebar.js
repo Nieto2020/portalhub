@@ -14,6 +14,25 @@
 (function () {
     'use strict';
 
+    // ── Inyectar dependencias del popup de confirmación ──
+    (function injectConfirmDeps() {
+        if (!document.querySelector('link[href*="confirm-popup.css"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '../../css/shared/confirm-popup.css';
+            document.head.appendChild(link);
+        }
+        if (!document.querySelector('script[src*="confirm-popup.js"]') && !window.showConfirm) {
+            const basePath = document.querySelector('script[src*="sidebar.js"]')
+                ? document.querySelector('script[src*="sidebar.js"]').src.replace('sidebar.js', '')
+                : '../../js/';
+            const script = document.createElement('script');
+            script.src = basePath + 'confirm-popup.js';
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+    })();
+
     const config = window.SIDEBAR_CONFIG || { role: 'cliente', userName: 'Usuario', userRole: 'Usuario', currentPage: '' };
 
     // ===== Definición de menús por rol =====
@@ -24,6 +43,7 @@
                     title: 'Principal',
                     links: [
                         { label: 'Inicio', icon: 'bx bx-home', href: 'dashboard.html', id: 'dashboard' },
+                        { label: 'Inbox', icon: 'bx bx-conversation', href: 'inbox.html', id: 'inbox' },
                         { label: 'Acciones', icon: 'bx bxs-zap', href: 'acciones.html', id: 'acciones' },
                         { label: 'Reportes', icon: 'bx bx-bar-chart-alt-2', href: 'reportes.html', id: 'reportes' },
                     ]
@@ -42,6 +62,7 @@
                     title: 'Principal',
                     links: [
                         { label: 'Inicio', icon: 'bx bx-home', href: 'dashboard.html', id: 'dashboard' },
+                        { label: 'Inbox', icon: 'bx bx-conversation', href: 'inbox.html', id: 'inbox' },
                         { label: 'Clientes', icon: 'bx bx-group', href: 'clientes.html', id: 'clientes' },
                         { label: 'Citas', icon: 'bx bx-calendar', href: 'citas.html', id: 'citas' },
                         { label: 'Documentos', icon: 'bx bx-file', href: 'documentos.html', id: 'documentos' },
@@ -62,6 +83,7 @@
                     title: 'Panel',
                     links: [
                         { label: 'Inicio', icon: 'bx bx-home', href: 'dashboard.html', id: 'dashboard' },
+                        { label: 'Inbox', icon: 'bx bx-conversation', href: 'inbox.html', id: 'inbox' },
                         { label: 'Mis Declaraciones', icon: 'bx bx-notepad', href: 'mis_declaraciones.html', id: 'declaraciones' },
                         { label: 'Documentos', icon: 'bx bx-file', href: 'documentos.html', id: 'documentos' },
                         { label: 'Pagos', icon: 'bx bx-credit-card', href: 'pagos.html', id: 'pagos' },
@@ -124,11 +146,11 @@
                 </nav>
 
                 <div class="sidebar-footer">
-                    <a href="../../pages/auth/change_password.html" title="Cambiar contraseña">
+                    <a href="../../pages/auth/change_password.html" class="change-pass-link" title="Cambiar contraseña">
                         <i class="bx bx-lock-alt"></i>
                         <span class="nav-label">Cambiar Contraseña</span>
                     </a>
-                    <a href="#" class="logout-btn-sidebar" onclick="logout()" title="Cerrar sesión">
+                    <a href="#" class="logout-btn-sidebar" id="logoutSidebarBtn" title="Cerrar sesión">
                         <i class="bx bx-log-out"></i>
                         <span class="nav-label">Cerrar Sesión</span>
                     </a>
@@ -185,6 +207,52 @@
             overlay.addEventListener('click', function () {
                 sidebar.classList.remove('mobile-open');
                 overlay.classList.remove('active');
+            });
+        }
+
+        // ── Confirmación al cambiar contraseña ──
+        const changePassLink = document.querySelector('.change-pass-link');
+        if (changePassLink) {
+            changePassLink.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+
+                if (typeof showConfirm === 'function') {
+                    const confirmed = await showConfirm({
+                        title: 'Cambiar Contraseña',
+                        message: '¿Estás seguro de que quieres cambiar tu contraseña ahora?',
+                        confirmText: 'Sí, cambiar',
+                        cancelText: 'Cancelar',
+                        icon: 'bx bx-lock-alt',
+                        variant: 'warning'
+                    });
+                    if (confirmed && href) window.location.href = href;
+                } else {
+                    // Fallback si confirm-popup.js no está cargado
+                    if (href) window.location.href = href;
+                }
+            });
+        }
+
+        // ── Confirmación al cerrar sesión ──
+        const logoutBtn = document.getElementById('logoutSidebarBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+
+                if (typeof showConfirm === 'function') {
+                    const confirmed = await showConfirm({
+                        title: 'Cerrar Sesión',
+                        message: '¿Estás seguro de que deseas cerrar tu sesión actual?',
+                        confirmText: 'Sí, cerrar sesión',
+                        cancelText: 'Cancelar',
+                        icon: 'bx bx-log-out-circle',
+                        variant: 'danger'
+                    });
+                    if (confirmed) logout();
+                } else {
+                    logout();
+                }
             });
         }
 

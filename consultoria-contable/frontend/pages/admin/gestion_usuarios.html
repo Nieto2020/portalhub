@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../../css/sidebar.css">
     <link rel="stylesheet" href="../../css/admin/gestion_usuarios.css">
     <link rel="stylesheet" href="../../css/shared/notifications.css">
+    <link rel="stylesheet" href="../../css/shared/confirm-popup.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
 <body>
@@ -168,6 +169,7 @@
     </script>
     <script src="../../js/sidebar.js"></script>
     <script src="../../js/notifications.js"></script>
+    <script src="../../js/confirm-popup.js"></script>
     <script>
         const messageDiv = document.getElementById('message');
         let allUsers = [];
@@ -293,7 +295,15 @@
             const id_usuario = document.getElementById('manage_id').value;
             if (!id_usuario) return alert("Ingrese un ID");
 
-            if (!confirm("¿ESTÁS SEGURO? Esta acción borrará al usuario y todos sus datos permanentemente.")) return;
+            const confirmed = await showConfirm({
+                title: 'Eliminar Usuario',
+                message: '¿Estás seguro? Esta acción borrará al usuario y todos sus datos permanentemente.',
+                confirmText: 'Eliminar',
+                icon: 'bx bx-trash',
+                variant: 'danger'
+            });
+
+            if (!confirmed) return;
 
             try {
                 const response = await fetch(`../../../backend/modules/usuarios/eliminar.php?id=${id_usuario}`, {

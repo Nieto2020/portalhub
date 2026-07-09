@@ -79,6 +79,7 @@ CREATE TABLE `mensajes` (
   `tipo` enum('Chat interno','Ticket') DEFAULT 'Chat interno',
   `contenido_texto` text NOT NULL,
   `ruta_archivo_adjunto` varchar(255) DEFAULT NULL,
+  `leida` tinyint(1) DEFAULT 0,
   `fecha_envio` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_mensaje`),
   KEY `id_remitente` (`id_remitente`),
@@ -232,6 +233,38 @@ CREATE TABLE `reset_logs` (
   KEY `id_usuario_afectado` (`id_usuario_afectado`),
   CONSTRAINT `reset_logs_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   CONSTRAINT `reset_logs_ibfk_2` FOREIGN KEY (`id_usuario_afectado`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `anuncios`
+--
+CREATE TABLE `anuncios` (
+  `id_anuncio` int(11) NOT NULL AUTO_INCREMENT,
+  `id_autor` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `contenido` text NOT NULL,
+  `activo` tinyint(1) DEFAULT 1,
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_anuncio`),
+  KEY `id_autor` (`id_autor`),
+  CONSTRAINT `anuncios_ibfk_1` FOREIGN KEY (`id_autor`) REFERENCES `usuarios` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `calificaciones`
+-- Calificación anónima de clientes a asesores (1-5)
+--
+CREATE TABLE `calificaciones` (
+  `id_calificacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
+  `id_asesor` int(11) NOT NULL,
+  `puntuacion` tinyint(1) NOT NULL CHECK (`puntuacion` between 1 and 5),
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_calificacion`),
+  KEY `id_cliente` (`id_cliente`),
+  KEY `id_asesor` (`id_asesor`),
+  CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id_usuario`),
+  CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`id_asesor`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;

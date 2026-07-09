@@ -44,6 +44,9 @@ try {
     $_SESSION['require_password_change'] = $usuario['require_password_change'];
     $_SESSION['ultima_actividad'] = time();
 
+    # Generar CSRF token
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
     # Enviar respuesta exitosa con información del usuario
     sendResponse(200, "Inicio de sesión exitoso", [
         "id_usuario" => $usuario['id_usuario'],

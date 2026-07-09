@@ -72,6 +72,23 @@
         <div class="actions">
             <button class="btn-primary">Subir Documentos</button>
         </div>
+
+        <!-- Calificar a tu Asesor -->
+        <div class="rating-section" style="margin-top:24px;">
+            <h2 class="section-title"><i class="bx bx-star" style="color:#f59e0b;"></i> Califica a tu Asesor</h2>
+            <div class="rating-card">
+                <p class="rating-desc">Tu calificación es anónima. Ayuda a mejorar el servicio.</p>
+                <div class="rating-stars" id="ratingStars">
+                    <span data-val="1"><i class="bx bx-star"></i></span>
+                    <span data-val="2"><i class="bx bx-star"></i></span>
+                    <span data-val="3"><i class="bx bx-star"></i></span>
+                    <span data-val="4"><i class="bx bx-star"></i></span>
+                    <span data-val="5"><i class="bx bx-star"></i></span>
+                </div>
+                <button class="btn-primary" id="submitRating" disabled>Enviar Calificación</button>
+                <div class="rating-msg" id="ratingMsg"></div>
+            </div>
+        </div>
     </main>
 
     <!--Modal para subir documento-->
@@ -91,6 +108,19 @@
             <button class="btn-primary" id="btn-enviar-doc" style="margin-top: 20px;">Enviar</button>
         </div>
     </div>
+    <style>
+        .rating-card { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow); }
+        .rating-desc { font-size:.82rem; color:var(--text-secondary); margin-bottom:14px; }
+        .rating-stars { display:flex; gap:6px; margin-bottom:14px; }
+        .rating-stars span { cursor:pointer; transition:transform .15s; }
+        .rating-stars span:hover { transform:scale(1.2); }
+        .rating-stars span i { font-size:1.8rem; color:#d1d5db; transition:color .15s; }
+        .rating-stars span.active i,
+        .rating-stars span.hover i { color:#f59e0b; }
+        .rating-msg { margin-top:10px; font-size:.82rem; min-height:1.2em; }
+        .rating-msg.success { color:var(--success); }
+        .rating-msg.error { color:var(--danger); }
+    </style>
 </body>
 
 <script src="../../js/utils/sessionCheck.js"></script>
@@ -107,5 +137,69 @@
 </script>
 <script src="../../js/sidebar.js"></script>
 <script src="../../js/notifications.js"></script>
+<script>
+    // ── Sistema de calificación por estrellas ──
+    (function() {
+        const stars = document.querySelectorAll('#ratingStars span');
+        const btn = document.getElementById('submitRating');
+        const msg = document.getElementById('ratingMsg');
+        let selected = 0;
+
+        stars.forEach(s => {
+            s.addEventListener('mouseenter', function() {
+                const val = parseInt(this.dataset.val);
+                stars.forEach((st, i) => st.classList.toggle('hover', i < val));
+            });
+            s.addEventListener('mouseleave', function() {
+                stars.forEach(st => st.classList.remove('hover'));
+                highlightStars(selected);
+            });
+            s.addEventListener('click', function() {
+                selected = parseInt(this.dataset.val);
+                highlightStars(selected);
+                btn.disabled = false;
+                btn.textContent = 'Enviar Calificación (' + selected + ' ★)';
+            });
+        });
+
+        function highlightStars(val) {
+            stars.forEach((st, i) => st.classList.toggle('active', i < val));
+        }
+
+        btn.addEventListener('click', async function() {
+            if (!selected) return;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bx bx-loader bx-spin"></i> Enviando...';
+            msg.className = 'rating-msg';
+            msg.textContent = '';
+
+            try {
+                const res = await fetch('../../../backend/modules/calificaciones/crear.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ puntuacion: selected })
+                });
+                const json = await res.json();
+                if (res.ok) {
+                    msg.textContent = '✅ ¡Gracias por calificar!';
+                    msg.className = 'rating-msg success';
+                    btn.style.display = 'none';
+                    document.querySelectorAll('#ratingStars span').forEach(s => s.style.pointerEvents = 'none');
+                } else {
+                    msg.textContent = '⚠️ ' + (json.message || 'Error');
+                    msg.className = 'rating-msg error';
+                    btn.disabled = false;
+                    btn.textContent = 'Enviar Calificación (' + selected + ' ★)';
+                }
+            } catch (e) {
+                msg.textContent = '❌ Error de conexión';
+                msg.className = 'rating-msg error';
+                btn.disabled = false;
+                btn.textContent = 'Enviar Calificación (' + selected + ' ★)';
+            }
+        });
+    })();
+</script>
 </body>
 </html>

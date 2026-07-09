@@ -35,14 +35,48 @@ if ($contenido_texto === '') {
 
 try {
     $validarUsuario = $conexion->prepare("
-        SELECT id_usuario 
+        SELECT id_usuario, id_rol 
         FROM usuarios 
         WHERE id_usuario = ?
     ");
     $validarUsuario->execute([$id_destinatario]);
+    $destinatario = $validarUsuario->fetch(PDO::FETCH_ASSOC);
 
-    if (!$validarUsuario->fetch()) {
+    if (!$destinatario) {
         sendResponse(404, "Destinatario no encontrado");
+    }
+
+    // ── Validar permisos según rol ──
+    $id_rol_remitente = $_SESSION['id_rol'];
+    $id_rol_destino = $destinatario['id_rol'];
+
+    if ($id_rol_remitente != ROL_ADMIN) {
+        if ($id_rol_remitente == ROL_ASESOR) {
+            // Asesor → solo puede mensajear admin, otros asesores o sus clientes asignados
+            if ($id_rol_destino == ROL_CLIENTE) {
+                $checkAsign = $conexion->prepare("
+                    SELECT id_asignacion FROM cliente_asesor 
+                    WHERE id_cliente = ? AND id_asesor = ? AND estado = 'activo'
+                ");
+                $checkAsign->execute([$id_destinatario, $id_remitente]);
+                if (!$checkAsign->fetch()) {
+                    sendResponse(403, "No tienes permiso para enviar mensajes a este cliente (no está asignado a ti)");
+                }
+            }
+        } elseif ($id_rol_remitente == ROL_CLIENTE) {
+            // Cliente → solo puede mensajear a su asesor asignado
+            if ($id_rol_destino != ROL_ASESOR) {
+                sendResponse(403, "Solo puedes enviar mensajes a tu asesor asignado");
+            }
+            $checkAsign = $conexion->prepare("
+                SELECT id_asignacion FROM cliente_asesor 
+                WHERE id_cliente = ? AND id_asesor = ? AND estado = 'activo'
+            ");
+            $checkAsign->execute([$id_remitente, $id_destinatario]);
+            if (!$checkAsign->fetch()) {
+                sendResponse(403, "No tienes un asesor asignado activo");
+            }
+        }
     }
 
     $stmt = $conexion->prepare("

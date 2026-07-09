@@ -79,18 +79,31 @@
                 </span>
             </a>
 
-            <!-- ── Crear Notificaciones y Anuncios ── -->
-            <a href="notificaciones_admin.html" class="accion-card notificar">
+            <!-- ── Enviar Mensaje Masivo ── -->
+            <a href="dashboard.html#mass-msg" class="accion-card notificar" id="accionMsgMasivo">
+                <div class="accion-icon">
+                    <i class="bx bx-message-square-detail"></i>
+                </div>
+                <h3 class="accion-title">Mensaje Directo Masivo</h3>
+                <p class="accion-desc">
+                    Envía un mensaje directo al inbox de todos los usuarios del sistema simultáneamente.
+                </p>
+                <span class="accion-link">
+                    Enviar Mensaje <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <!-- ── Enviar Notificación Masiva ── -->
+            <a href="dashboard.html#mass-notif" class="accion-card notificar" id="accionNotifMasivo">
                 <div class="accion-icon">
                     <i class="bx bx-bell-plus"></i>
                 </div>
-                <h3 class="accion-title">Notificaciones y Anuncios</h3>
+                <h3 class="accion-title">Notificación Masiva</h3>
                 <p class="accion-desc">
-                    Envía notificaciones y anuncios a usuarios específicos o a todos los roles.
-                    Comunica avisos importantes, recordatorios y alertas del sistema.
+                    Envía una notificación a todos los usuarios del sistema. Llega a la campana de notificaciones.
                 </p>
                 <span class="accion-link">
-                    Ir a Notificaciones <i class="bx bx-chevron-right"></i>
+                    Enviar Notificación <i class="bx bx-chevron-right"></i>
                 </span>
             </a>
 
@@ -173,5 +186,19 @@
     </script>
     <script src="../../js/sidebar.js"></script>
     <script src="../../js/notifications.js"></script>
+    <script>
+        // Al hacer clic en los enlaces de comunicación masiva, redirigir al dashboard
+        // con flag para abrir el modal correspondiente
+        document.getElementById('accionMsgMasivo').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.setItem('massAction', 'mensaje');
+            window.location.href = 'dashboard.html';
+        });
+        document.getElementById('accionNotifMasivo').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.setItem('massAction', 'notificacion');
+            window.location.href = 'dashboard.html';
+        });
+    </script>
 </body>
 </html>

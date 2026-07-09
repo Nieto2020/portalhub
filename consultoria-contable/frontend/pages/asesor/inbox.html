@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox — CONSULTANCY</title>
+    <link rel="stylesheet" href="../../css/shared/variables.css">
+    <link rel="stylesheet" href="../../css/shared/base.css">
+    <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/shared/notifications.css">
+    <link rel="stylesheet" href="../../css/shared/inbox.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<main class="dashboard-content">
+
+    <div class="page-header">
+        <div>
+            <h1><i class="bx bx-message-square-detail"></i> Inbox</h1>
+            <p>Mensajes y comunicación con clientes y equipo.</p>
+        </div>
+    </div>
+
+    <div class="inbox-layout">
+        <div class="inbox-contacts mobile-visible" id="inboxContacts">
+            <div class="inbox-contacts-header">
+                <i class="bx bx-group"></i> Contactos
+            </div>
+            <div class="inbox-contacts-list" id="inboxContactList">
+                <div class="inbox-loading"><i class="bx bx-loader bx-spin"></i> Cargando...</div>
+            </div>
+        </div>
+
+        <div class="inbox-chat" id="inboxChat">
+            <div class="inbox-chat-empty" id="inboxChatEmpty">
+                <i class="bx bx-message-detail"></i>
+                <p>Selecciona un contacto para comenzar</p>
+            </div>
+            <div class="inbox-chat" id="inboxChatContent" style="display:none;">
+                <div class="inbox-chat-header">
+                    <button class="inbox-mobile-back" id="inboxMobileBack">
+                        <i class="bx bx-arrow-back"></i> Contactos
+                    </button>
+                    <span id="inboxChatName" style="font-weight:600;color:var(--text);"></span>
+                </div>
+                <div class="inbox-messages" id="inboxMessages"></div>
+                <div class="inbox-composer">
+                    <input type="text" id="inboxInput" placeholder="Escribe un mensaje...">
+                    <button id="inboxSendBtn" title="Enviar"><i class="bx bx-send"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="../../js/helpers/logoutHelper.js"></script>
+<script>
+    window.SIDEBAR_CONFIG = {
+        role: 'asesor',
+        userName: 'Asesor',
+        userRole: 'Asesor',
+        currentPage: 'inbox'
+    };
+</script>
+<script src="../../js/sidebar.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/inbox.js"></script>
+
+</body>
+</html>

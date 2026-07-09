@@ -1,43 +1,391 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sesión Expirada</title>
+    <title>Sesión Expirada — CONSULTANCY</title>
     <link rel="stylesheet" href="../../css/shared/variables.css">
     <link rel="stylesheet" href="../../css/shared/base.css">
     <link rel="stylesheet" href="../../css/auth/auth.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        /* ── Fondo de nodos más oscuro y degradado ── */
+        #nodes-bg-deep {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            display: block;
+            pointer-events: none;
+            background: radial-gradient(ellipse at 50% 30%, rgba(15, 23, 42, 0.4) 0%, #060b14 70%);
+        }
+
+        /* ── Contenedor principal centrado ── */
+        .session-expired-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        /* ── Sección principal (logo + texto + botón) ── */
+        .session-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 48px;
+            animation: sessionFadeUp 0.6s ease both;
+        }
+
+        @keyframes sessionFadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .session-hero .session-logo {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+        }
+
+        .session-hero .session-logo:hover {
+            opacity: 1;
+        }
+
+        .session-hero .session-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            letter-spacing: -0.2px;
+            max-width: 480px;
+            line-height: 1.4;
+        }
+
+        .session-hero .session-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 440px;
+            line-height: 1.5;
+        }
+
+        .session-login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 36px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+        }
+
+        .session-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
+        }
+
+        .session-login-btn:active {
+            transform: scale(0.97);
+        }
+
+        .session-login-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .session-login-btn:hover i {
+            transform: translateX(3px);
+        }
+
+        /* ── Footer con mini tarjetas ── */
+        .session-footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 800px;
+            animation: sessionFadeUp 0.6s ease 0.15s both;
+        }
+
+        @media (max-width: 700px) {
+            .session-footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .session-footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .session-hero .session-logo {
+                max-width: 220px;
+            }
+            .session-hero .session-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        .session-footer-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .session-footer-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(168, 139, 250, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .session-footer-card i {
+            font-size: 1.4rem;
+            color: #a78bfa;
+        }
+
+        .session-footer-card strong {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            line-height: 1.3;
+        }
+
+        .session-footer-card span {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.3;
+        }
+
+        /* ── Separador decorativo ── */
+        .session-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(168, 139, 250, 0.4), transparent);
+            border-radius: 2px;
+            margin: 36px 0;
+            animation: sessionFadeUp 0.6s ease 0.1s both;
+        }
+    </style>
 </head>
 <body>
 
-    <main class="session-expired-container">
+<div id="nodes-bg-deep"></div>
 
-        <section class="session-expired-card">
+<div class="session-expired-wrapper">
 
-            <h1 class="session-title">
-                Sesión Expirada
-            </h1>
+    <!-- ── Logo grande centrado ── -->
+    <div class="session-hero">
+        <img src="../../css/img/logo_completo_blanco.png" alt="CONSULTANCY" class="session-logo">
+        <h1 class="session-title">Tu sesión ha caducado por seguridad</h1>
+        <p class="session-subtitle">Por tu protección, las sesiones inactivas se cierran automáticamente. Inicia sesión nuevamente para continuar.</p>
+        <a href="login.html" class="session-login-btn">
+            <span>Volver al Inicio</span>
+            <i class="bx bx-log-in-circle"></i>
+        </a>
+    </div>
 
-            <p class="session-message">
-                Tu sesión ha finalizado por inactividad.
-            </p>
+    <!-- ── Separador ── -->
+    <div class="session-divider"></div>
 
-            <p class="session-description">
-                Por seguridad, debes iniciar sesión nuevamente.
-            </p>
+    <!-- ── Footer: mini tarjetas ── -->
+    <div class="session-footer-grid">
 
-            <a 
-                href="../auth/login.html"
-                class="session-login-button"
-            >
-                Volver al Inicio
-            </a>
+        <!-- Redes sociales y soporte -->
+        <a href="https://consultancy.com" target="_blank" rel="noopener" class="session-footer-card">
+            <i class="bx bx-globe"></i>
+            <strong>Portal Web</strong>
+            <span>consultancy.com</span>
+        </a>
 
-        </section>
+        <a href="mailto:soporte@consultancy.com" class="session-footer-card">
+            <i class="bx bx-envelope"></i>
+            <strong>Soporte</strong>
+            <span>soporte@consultancy.com</span>
+        </a>
 
-    </main>
+        <!-- Aviso de privacidad (endpoint vacío para después) -->
+        <a href="#" class="session-footer-card" id="privacyLink">
+            <i class="bx bx-file"></i>
+            <strong>Aviso de Privacidad</strong>
+            <span>Próximamente</span>
+        </a>
+
+        <!-- Servicios digitales -->
+        <a href="#" class="session-footer-card" id="servicesLink">
+            <i class="bx bx-briefcase-alt-2"></i>
+            <strong>Servicios Digitales</strong>
+            <span>Consultancy</span>
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+    // ── Privacidad y Servicios (endpoints vacíos, preparados para futuro) ──
+    document.getElementById('privacyLink').addEventListener('click', function (e) {
+        e.preventDefault();
+        // TODO: implementar endpoint de aviso de privacidad
+    });
+    document.getElementById('servicesLink').addEventListener('click', function (e) {
+        e.preventDefault();
+        // TODO: implementar endpoint de servicios digitales
+    });
+
+    // ── Fondo de nodos reactivos (más oscuro) ──
+    (function () {
+        const bgLayer = document.getElementById('nodes-bg-deep');
+        if (!bgLayer) return;
+
+        // El fondo ya tiene el gradiente radial vía CSS.
+        // Creamos un canvas encima para los nodos interactivos
+        const nodesCanvas = document.createElement('canvas');
+        nodesCanvas.style.cssText = 'position:fixed;inset:0;z-index:1;pointer-events:none;';
+        document.body.insertBefore(nodesCanvas, document.body.firstChild);
+
+        const ctx = nodesCanvas.getContext('2d');
+        let width, height;
+        let mouse = { x: -1000, y: -1000, r: 160 };
+        const nodeCount = 50;
+        const connectDist = 110;
+        const nodes = [];
+
+        function resize() {
+            width = nodesCanvas.width = window.innerWidth;
+            height = nodesCanvas.height = window.innerHeight;
+        }
+
+        function seed() {
+            nodes.length = 0;
+            for (let i = 0; i < nodeCount; i++) {
+                nodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    r: 1.4 + Math.random() * 1.6
+                });
+            }
+        }
+
+        function update() {
+            for (const n of nodes) {
+                n.x += n.vx;
+                n.y += n.vy;
+                if (n.x < -20) n.x = width + 20;
+                if (n.x > width + 20) n.x = -20;
+                if (n.y < -20) n.y = height + 20;
+                if (n.y > height + 20) n.y = -20;
+                const dx = n.x - mouse.x;
+                const dy = n.y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouse.r) {
+                    const force = (mouse.r - dist) / mouse.r;
+                    n.vx += (dx / dist) * force * 0.06;
+                    n.vy += (dy / dist) * force * 0.06;
+                }
+                n.vx *= 0.999;
+                n.vy *= 0.999;
+                const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                if (speed > 1.2) {
+                    n.vx = (n.vx / speed) * 1.2;
+                    n.vy = (n.vy / speed) * 1.2;
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < connectDist) {
+                        const alpha = 1 - dist / connectDist;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = 'rgba(99,102,241,' + (alpha * 0.10).toFixed(3) + ')';
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+            for (const n of nodes) {
+                const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2);
+                g.addColorStop(0, 'rgba(99,102,241,0.18)');
+                g.addColorStop(1, 'rgba(99,102,241,0)');
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r * 2, 0, Math.PI * 2);
+                ctx.fillStyle = g;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(148,163,184,0.25)';
+                ctx.fill();
+            }
+            if (mouse.x > 0 && mouse.y > 0) {
+                const h = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, mouse.r * 0.6);
+                h.addColorStop(0, 'rgba(99,102,241,0.05)');
+                h.addColorStop(1, 'rgba(99,102,241,0)');
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, mouse.r * 0.6, 0, Math.PI * 2);
+                ctx.fillStyle = h;
+                ctx.fill();
+            }
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('resize', () => { resize(); seed(); });
+        window.addEventListener('mousemove', function (e) {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('mouseleave', function () {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+        window.addEventListener('touchmove', function (e) {
+            mouse.x = e.touches[0].clientX;
+            mouse.y = e.touches[0].clientY;
+        }, { passive: true });
+        window.addEventListener('touchend', function () {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        resize();
+        seed();
+        loop();
+    })();
+</script>
 
 </body>
-
 </html>
