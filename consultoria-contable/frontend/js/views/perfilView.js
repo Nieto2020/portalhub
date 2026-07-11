@@ -56,23 +56,14 @@
         if (rol === 2) {
             setText('userEspecialidad', data.especialidad || '—');
             setText('userBiografia', data.biografia || '—');
-            var af = document.getElementById('asesorFields');
-            var cf = document.getElementById('clienteFields');
-            if (af) af.style.display = 'block';
-            if (cf) cf.style.display = 'none';
+            showHideFields('asesorFields', 'clienteFields');
         } else if (rol === 3) {
             setText('userRfc', data.rfc || '—');
             setText('userRazonSocial', data.razon_social || '—');
             setText('userDireccionFiscal', data.direccion_fiscal || '—');
-            var af = document.getElementById('asesorFields');
-            var cf = document.getElementById('clienteFields');
-            if (af) af.style.display = 'none';
-            if (cf) cf.style.display = 'block';
+            showHideFields('clienteFields', 'asesorFields');
         } else {
-            var af = document.getElementById('asesorFields');
-            var cf = document.getElementById('clienteFields');
-            if (af) af.style.display = 'none';
-            if (cf) cf.style.display = 'none';
+            showHideFields(null, 'asesorFields', 'clienteFields');
         }
 
         window._profileData = data;
@@ -81,6 +72,16 @@
     function setText(id, val) {
         var el = document.getElementById(id);
         if (el) el.textContent = val;
+    }
+
+    function showHideFields(showId) {
+        var hideIds = Array.prototype.slice.call(arguments, 1);
+        var showEl = showId ? document.getElementById(showId) : null;
+        if (showEl) showEl.style.display = 'block';
+        hideIds.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
     }
 
     // ── Entrar en modo edición ──
@@ -102,10 +103,14 @@
         if (rol === 2) {
             setInputValue('editEspecialidad', data.especialidad || '');
             setTextareaValue('editBiografia', data.biografia || '');
+            showHideFields('editAsesorFields', 'editClienteFields');
         } else if (rol === 3) {
             setInputValue('editRfc', data.rfc || '');
             setInputValue('editRazonSocial', data.razon_social || '');
             setInputValue('editDireccionFiscal', data.direccion_fiscal || '');
+            showHideFields('editClienteFields', 'editAsesorFields');
+        } else {
+            showHideFields(null, 'editAsesorFields', 'editClienteFields');
         }
     }
 
