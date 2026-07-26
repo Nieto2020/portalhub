@@ -26,28 +26,13 @@
         </div>
 
         <!-- ══════════════════════════════════════
-             SECCIÓN: ADMIN
+             USUARIOS Y ACCESOS
              ══════════════════════════════════════ -->
         <h2 class="acciones-section-title">
-            <i class="bx bx-shield-quarter"></i> Administración
+            <i class="bx bx-group"></i> Usuarios y Accesos
         </h2>
 
         <div class="acciones-grid">
-
-            <!-- ── Asignar Asesores ── -->
-            <a href="asignaciones.html" class="accion-card asignar">
-                <div class="accion-icon">
-                    <i class="bx bx-user-pin"></i>
-                </div>
-                <h3 class="accion-title">Asignar Asesores</h3>
-                <p class="accion-desc">
-                    Asigna asesores contables a los clientes registrados. Gestiona las relaciones
-                    cliente-asesor y mantén el control de asignaciones activas.
-                </p>
-                <span class="accion-link">
-                    Ir a Asignaciones <i class="bx bx-chevron-right"></i>
-                </span>
-            </a>
 
             <!-- ── Gestión de Usuarios ── -->
             <a href="gestion_usuarios.html" class="accion-card usuarios">
@@ -61,6 +46,21 @@
                 </p>
                 <span class="accion-link">
                     Ir a Gestión <i class="bx bx-chevron-right"></i>
+                </span>
+            </a>
+
+            <!-- ── Asignar Asesores ── -->
+            <a href="asignaciones.html" class="accion-card asignar">
+                <div class="accion-icon">
+                    <i class="bx bx-user-pin"></i>
+                </div>
+                <h3 class="accion-title">Asignar Asesores</h3>
+                <p class="accion-desc">
+                    Asigna asesores contables a los clientes registrados. Gestiona las relaciones
+                    cliente-asesor y mantén el control de asignaciones activas.
+                </p>
+                <span class="accion-link">
+                    Ir a Asignaciones <i class="bx bx-chevron-right"></i>
                 </span>
             </a>
 
@@ -78,6 +78,17 @@
                     Ir a Reset <i class="bx bx-chevron-right"></i>
                 </span>
             </a>
+
+        </div>
+
+        <!-- ══════════════════════════════════════
+             COMUNICACIÓN
+             ══════════════════════════════════════ -->
+        <h2 class="acciones-section-title">
+            <i class="bx bx-broadcast"></i> Comunicación
+        </h2>
+
+        <div class="acciones-grid">
 
             <!-- ── Enviar Mensaje Masivo ── -->
             <a href="dashboard.html#mass-msg" class="accion-card notificar" id="accionMsgMasivo">
@@ -110,10 +121,10 @@
         </div>
 
         <!-- ══════════════════════════════════════
-             SECCIÓN: RÁPIDOS (accesos directos)
+             CONSULTAS Y REPORTES
              ══════════════════════════════════════ -->
         <h2 class="acciones-section-title">
-            <i class="bx bx-link"></i> Accesos Rápidos
+            <i class="bx bx-bar-chart-alt-2"></i> Consultas y Reportes
         </h2>
 
         <div class="acciones-grid">
@@ -131,19 +142,6 @@
                 </span>
             </a>
 
-            <a href="perfil.html" class="accion-card" style="--accent-color: #06b6d4;">
-                <div class="accion-icon" style="background:rgba(6,182,212,0.12);color:#06b6d4;">
-                    <i class="bx bx-user-circle"></i>
-                </div>
-                <h3 class="accion-title">Mi Perfil</h3>
-                <p class="accion-desc">
-                    Visualiza y edita tu información personal de cuenta de administrador.
-                </p>
-                <span class="accion-link">
-                    Ir a Perfil <i class="bx bx-chevron-right"></i>
-                </span>
-            </a>
-
             <a href="asignaciones/historial.html" class="accion-card" style="--accent-color: #f97316;">
                 <div class="accion-icon" style="background:rgba(249,115,22,0.12);color:#f97316;">
                     <i class="bx bx-history"></i>
@@ -157,19 +155,29 @@
                 </span>
             </a>
 
-            <!-- Placeholder para futuras acciones de otros roles -->
-            <div class="accion-card" style="--accent-color:#94a3b8;opacity:0.5;pointer-events:none;cursor:default;">
-                <div class="accion-icon" style="background:rgba(148,163,184,0.12);color:#94a3b8;">
-                    <i class="bx bx-dots-horizontal-rounded"></i>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             MI CUENTA
+             ══════════════════════════════════════ -->
+        <h2 class="acciones-section-title">
+            <i class="bx bx-user-circle"></i> Mi Cuenta
+        </h2>
+
+        <div class="acciones-grid">
+
+            <a href="perfil.html" class="accion-card" style="--accent-color: #06b6d4;">
+                <div class="accion-icon" style="background:rgba(6,182,212,0.12);color:#06b6d4;">
+                    <i class="bx bx-user-circle"></i>
                 </div>
-                <h3 class="accion-title">Próximamente</h3>
+                <h3 class="accion-title">Mi Perfil</h3>
                 <p class="accion-desc">
-                    Más acciones disponibles próximamente para todos los roles del sistema.
+                    Visualiza y edita tu información personal de cuenta de administrador.
                 </p>
-                <span class="accion-link" style="color:#94a3b8;">
-                    Disponible pronto
+                <span class="accion-link">
+                    Ir a Perfil <i class="bx bx-chevron-right"></i>
                 </span>
-            </div>
+            </a>
 
         </div>
 

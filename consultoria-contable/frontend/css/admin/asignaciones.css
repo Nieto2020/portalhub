@@ -1,0 +1,318 @@
+/* =============================================
+   ESTILOS ESPECÍFICOS - ADMIN ASIGNACIONES
+   Ruta: pages/admin/asignaciones.html
+   ============================================= */
+
+/* ── Card y layout general ── */
+.card {
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #a78bfa);
+    border-radius: var(--radius) var(--radius) 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Formulario ── */
+.card .form-group {
+    margin-bottom: 16px;
+}
+
+.card .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card .form-group input,
+.card .form-group select,
+.card .form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: var(--card-bg);
+    color: var(--text);
+    transition: border-color var(--transition);
+    font-family: inherit;
+}
+
+.card .form-group input:focus,
+.card .form-group select:focus,
+.card .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.card .form-group textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* ── Botón de asignación ── */
+.btn-assign {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-assign:hover {
+    background: var(--primary-hover);
+}
+
+.btn-assign:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ── Información de asesor actual ── */
+.current-asesor {
+    font-size: 0.82rem;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.current-asesor.has {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid rgba(99,102,241,0.2);
+}
+
+.current-asesor.none {
+    background: var(--warning-light);
+    color: var(--warning);
+    border: 1px solid rgba(245,158,11,0.2);
+}
+
+.current-asesor i {
+    font-size: 1.1rem;
+}
+
+/* ── Info bar de stats ── */
+.stats-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-pill strong {
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.stat-pill .label {
+    color: var(--text-secondary);
+}
+
+/* ── Tabla de cartera ── */
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.table-header h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.asesor-group {
+    margin-bottom: 6px;
+}
+
+.asesor-group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--primary-light);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+.asesor-group-header .count-badge {
+    margin-left: auto;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.asesor-group-header i {
+    font-size: 1.1rem;
+}
+
+.asesor-group-header .empty-text {
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+
+.client-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    margin: 3px 4px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.82rem;
+    transition: all var(--transition);
+}
+
+.client-chip i {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.client-chip .client-status {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.client-chip .client-status.active {
+    background: var(--success);
+}
+
+.client-chip .client-status.inactive {
+    background: var(--text-muted);
+}
+
+/* ── Botones de acción en tabla ── */
+.btn-reasign {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-reasign:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+/* ── Empty state ── */
+.empty-assignments {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.empty-assignments i {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.empty-assignments p {
+    font-size: 0.9rem;
+}
+
+/* ── Feedback ── */
+.feedback-msg {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    display: none;
+}
+
+.feedback-msg.success {
+    display: block;
+    background: var(--success-light);
+    color: var(--success);
+    border: 1px solid rgba(16,185,129,0.3);
+}
+
+.feedback-msg.error {
+    display: block;
+    background: var(--danger-light);
+    color: var(--danger);
+    border: 1px solid rgba(239,68,68,0.3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .stats-row {
+        flex-direction: column;
+    }
+}

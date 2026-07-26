@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Asesor - Admin</title>
+    <link rel="stylesheet" href="../../css/shared/variables.css">
+    <link rel="stylesheet" href="../../css/shared/base.css">
+    <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/forms.css">
+    <link rel="stylesheet" href="../../css/shared/tables.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/admin/asignaciones.css">
+    <link rel="stylesheet" href="../../css/shared/notifications.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <main class="dashboard-content">
+
+        <!-- ── Header ── -->
+        <div class="page-header">
+            <div>
+                <h1><i class="bx bx-user-pin"></i> Asignar Asesor</h1>
+                <p>Administra la asignación de clientes a asesores contables.</p>
+            </div>
+            <div class="header-actions">
+                <button onclick="loadAllData()" class="btn-header outline">
+                    <i class="bx bx-refresh"></i> Actualizar
+                </button>
+            </div>
+        </div>
+
+        <!-- ── Stats row ── -->
+        <div class="stats-row" id="statsRow">
+            <div class="stat-pill">
+                <i class="bx bx-user-voice" style="color:var(--primary);"></i>
+                <span class="label">Asesores:</span>
+                <strong id="statAsesores">--</strong>
+            </div>
+            <div class="stat-pill">
+                <i class="bx bx-user" style="color:var(--success);"></i>
+                <span class="label">Clientes con asesor:</span>
+                <strong id="statConAsesor">--</strong>
+            </div>
+            <div class="stat-pill">
+                <i class="bx bx-user-x" style="color:var(--warning);"></i>
+                <span class="label">Clientes sin asesor:</span>
+                <strong id="statSinAsesor">--</strong>
+            </div>
+        </div>
+
+        <!-- ── Top Row: Formulario (izq) + Resumen cartera (der) ── -->
+        <div class="top-row">
+
+            <!-- ── Asignar / Reasignar ── -->
+            <div class="card">
+                <h2><i class="bx bx-link" style="color:var(--primary);"></i> Asignar Cliente a Asesor</h2>
+
+                <form id="assignForm">
+                    <div class="form-group">
+                        <label for="selAsesor">Asesor</label>
+                        <select id="selAsesor" required>
+                            <option value="">— Seleccionar asesor —</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selCliente">Cliente</label>
+                        <select id="selCliente" required>
+                            <option value="">— Seleccionar cliente —</option>
+                        </select>
+                    </div>
+
+                    <!-- Info del asesor actual del cliente seleccionado -->
+                    <div id="currentAsesorInfo" class="current-asesor none" style="display:none;">
+                        <i class="bx bx-info-circle"></i>
+                        <span id="currentAsesorText"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivoCambio">Motivo / Comentario (opcional)</label>
+                        <textarea id="motivoCambio" placeholder="Ej: Asignación inicial, Reasignación por carga de trabajo..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-assign" id="btnAssign">
+                        <i class="bx bx-check-circle"></i> Asignar
+                    </button>
+
+                    <div id="feedbackMsg" class="feedback-msg"></div>
+                </form>
+            </div>
+
+            <!-- ── Cartera actual ── -->
+            <div class="card">
+                <h2><i class="bx bx-briefcase" style="color:var(--success);"></i> Cartera Actual</h2>
+                <div id="carteraContainer">
+                    <div class="empty-assignments">
+                        <i class="bx bx-loader bx-spin"></i>
+                        <p>Cargando cartera...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../../js/helpers/logoutHelper.js"></script>
+    <script>
+        window.SIDEBAR_CONFIG = {
+            role: 'admin',
+            userName: 'Administrador',
+            userRole: 'Administrador',
+            currentPage: 'asignaciones'
+        };
+    </script>
+    <script src="../../js/sidebar.js"></script>
+    <script src="../../js/notifications.js"></script>
+    <script>
+        // ── Estado global ──
+        let allAsesores = [];
+        let allClientes = [];
+        let currentAssignments = [];
+
+        // ── Cargar todos los datos ──
+        async function loadAllData() {
+            try {
+                const [datosRes, carteraRes] = await Promise.all([
+                    fetch('../../../backend/modules/asignaciones/datos.php'),
+                    fetch('../../../backend/modules/asignaciones/listar.php')
+                ]);
+
+                const datosJson = await datosRes.json();
+                const carteraJson = await carteraRes.json();
+
+                if (datosRes.ok && datosJson.data) {
+                    allAsesores = datosJson.data.asesores || [];
+                    allClientes = datosJson.data.clientes || [];
+                    updateStats(datosJson.data);
+                    populateDropdowns();
+                }
+
+                if (carteraRes.ok && carteraJson.data) {
+                    currentAssignments = carteraJson.data;
+                    renderCartera();
+                }
+            } catch (e) {
+                console.warn('Error al cargar datos:', e);
+                document.querySelector('.assign-form') && showFeedback('Error de conexión al servidor', 'error');
+            }
+        }
+
+        // ── Stats ──
+        function updateStats(data) {
+            document.getElementById('statAsesores').textContent = data.total_asesores ?? allAsesores.length;
+            const conAsesor = allClientes.filter(c => c.asesor_actual_id !== null).length;
+            const sinAsesor = allClientes.filter(c => c.asesor_actual_id === null).length;
+            document.getElementById('statConAsesor').textContent = conAsesor;
+            document.getElementById('statSinAsesor').textContent = sinAsesor;
+        }
+
+        // ── Dropdowns ──
+        function populateDropdowns() {
+            const selAsesor = document.getElementById('selAsesor');
+            const selCliente = document.getElementById('selCliente');
+
+            // Guardar selección actual
+            const prevAsesor = selAsesor.value;
+            const prevCliente = selCliente.value;
+
+            // Asesores
+            selAsesor.innerHTML = '<option value="">— Seleccionar asesor —</option>';
+            allAsesores.forEach(a => {
+                const opt = document.createElement('option');
+                opt.value = a.id_usuario;
+                opt.textContent = `${a.nombre} (${a.correo})`;
+                if (a.estado !== 'activo') opt.textContent += ' [INACTIVO]';
+                selAsesor.appendChild(opt);
+            });
+            if (prevAsesor) selAsesor.value = prevAsesor;
+
+            // Clientes
+            selCliente.innerHTML = '<option value="">— Seleccionar cliente —</option>';
+            allClientes.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id_usuario;
+                let label = c.nombre;
+                if (c.numero_cliente) label += ` [${c.numero_cliente}]`;
+                if (c.asesor_actual_id) label += ` (Asignado)`;
+                opt.textContent = label;
+                selCliente.appendChild(opt);
+            });
+            if (prevCliente) selCliente.value = prevCliente;
+
+            // Mostrar info del asesor actual si el cliente ya estaba seleccionado
+            if (selCliente.value) onClienteChange();
+        }
+
+        // ── Al cambiar el cliente, mostrar su asesor actual ──
+        function onClienteChange() {
+            const idCliente = document.getElementById('selCliente').value;
+            const infoEl = document.getElementById('currentAsesorInfo');
+            const textEl = document.getElementById('currentAsesorText');
+
+            const cliente = allClientes.find(c => c.id_usuario == idCliente);
+
+            if (cliente && cliente.asesor_actual_id) {
+                // Buscar nombre del asesor
+                const asesor = allAsesores.find(a => a.id_usuario == cliente.asesor_actual_id);
+                const nombreAsesor = asesor ? asesor.nombre : cliente.asesor_actual_correo || 'Desconocido';
+                textEl.textContent = `Actualmente asignado a: ${nombreAsesor}. Se cambiará al nuevo asesor.`;
+                infoEl.className = 'current-asesor has';
+                infoEl.style.display = 'flex';
+                // Preseleccionar asesor actual en el dropdown
+                document.getElementById('selAsesor').value = cliente.asesor_actual_id;
+            } else if (cliente) {
+                textEl.textContent = 'Este cliente no tiene asesor asignado actualmente.';
+                infoEl.className = 'current-asesor none';
+                infoEl.style.display = 'flex';
+            } else {
+                infoEl.style.display = 'none';
+            }
+        }
+
+        // ── Renderizar cartera ──
+        function renderCartera() {
+            const container = document.getElementById('carteraContainer');
+
+            if (currentAssignments.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-assignments">
+                        <i class="bx bx-briefcase-alt-2"></i>
+                        <p>No hay asignaciones activas. Usa el formulario para asignar clientes a asesores.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Agrupar por asesor
+            const grupos = {};
+            currentAssignments.forEach(a => {
+                const key = a.id_asesor;
+                if (!grupos[key]) {
+                    grupos[key] = {
+                        id_asesor: a.id_asesor,
+                        nombre_asesor: a.nombre_asesor || a.correo_asesor || 'Asesor',
+                        clientes: []
+                    };
+                }
+                grupos[key].clientes.push(a);
+            });
+
+            let html = '';
+            Object.values(grupos).forEach(g => {
+                const count = g.clientes.length;
+                html += `
+                    <div class="asesor-group">
+                        <div class="asesor-group-header">
+                            <i class="bx bx-user-voice"></i>
+                            ${escapeHtml(g.nombre_asesor)}
+                            <span class="count-badge">${count} cliente${count !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div style="padding: 4px 8px 12px;">
+                `;
+                g.clientes.forEach(c => {
+                    const statusClass = c.estado_cliente || 'active';
+                    html += `
+                        <span class="client-chip">
+                            <span class="client-status ${statusClass}"></span>
+                            ${escapeHtml(c.nombre_cliente || c.correo_cliente || 'Cliente')}
+                            <button class="btn-reasign" onclick="selectClientForReassign(${c.id_cliente})" title="Reasignar">
+                                <i class="bx bx-transfer-alt"></i>
+                            </button>
+                        </span>
+                    `;
+                });
+                html += `</div></div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ── Reasignar desde la cartera ──
+        function selectClientForReassign(idCliente) {
+            document.getElementById('selCliente').value = idCliente;
+            onClienteChange();
+            // Scroll al formulario
+            document.querySelector('.card:first-child').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ── Enviar asignación ──
+        document.getElementById('assignForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const id_cliente = document.getElementById('selCliente').value;
+            const id_asesor = document.getElementById('selAsesor').value;
+            const motivo = document.getElementById('motivoCambio').value.trim() || 'Asignación desde panel';
+
+            if (!id_cliente || !id_asesor) {
+                showFeedback('Selecciona un asesor y un cliente.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btnAssign');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bx bx-loader bx-spin"></i> Asignando...';
+
+            try {
+                const res = await fetch('../../../backend/modules/asignaciones/asignar.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        id_cliente: parseInt(id_cliente),
+                        id_asesor: parseInt(id_asesor),
+                        motivo_cambio: motivo
+                    })
+                });
+
+                const json = await res.json();
+
+                if (res.ok) {
+                    showFeedback('✅ ' + (json.message || 'Asignación exitosa'), 'success');
+                    // Recargar datos
+                    await loadAllData();
+                    // Resetear formulario (mantener asesor seleccionado)
+                    document.getElementById('motivoCambio').value = '';
+                    document.getElementById('selCliente').value = '';
+                    document.getElementById('currentAsesorInfo').style.display = 'none';
+                } else {
+                    showFeedback('❌ ' + (json.message || 'Error al asignar'), 'error');
+                }
+            } catch (e) {
+                showFeedback('❌ Error de conexión con el servidor', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bx bx-check-circle"></i> Asignar';
+            }
+        });
+
+        // ── Feedback ──
+        function showFeedback(msg, type) {
+            const el = document.getElementById('feedbackMsg');
+            el.textContent = msg;
+            el.className = 'feedback-msg ' + (type || '');
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 5000);
+        }
+
+        // ── Helpers ──
+        function escapeHtml(t) {
+            if (!t) return '';
+            const d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+
+        // ── Bind events ──
+        document.getElementById('selCliente').addEventListener('change', onClienteChange);
+
+        // ── Init ──
+        loadAllData();
+    </script>
+</body>
+</html>
