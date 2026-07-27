@@ -15,14 +15,24 @@
         hideError();
 
         try {
-            const res = await fetch(API_METRICAS, { credentials: 'include' });
-            const json = await res.json();
+            let data;
+            // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+            if (window.MOCK && window.MOCK_DATA) {
+                data = window.MOCK_DATA;
+            } else {
+            // ▲ END MOCKUP BRANCH
+                const res = await fetch(API_METRICAS, { credentials: 'include' });
+                const json = await res.json();
 
-            if (!res.ok || !json.data) {
-                throw new Error(json.message || 'Error al cargar métricas');
+                if (!res.ok || !json.data) {
+                    throw new Error(json.message || 'Error al cargar métricas');
+                }
+                data = json.data;
+            // ▼ MOCKUP CLOSING BRACE — eliminar en producción
             }
+            // ▲ END MOCKUP CLOSING
 
-            renderAll(json.data);
+            renderAll(data);
         } catch (e) {
             showError(e.message);
         } finally {

@@ -141,16 +141,43 @@
     <script src="../../js/sidebar.js"></script>
     <script src="../../js/notifications.js"></script>
     <script>
+        // ═══════════════════════════════════════════════════════
+        // ▼▼▼ MOCKUP — Eliminar todo este bloque en producción ▼▼▼
+        // ═══════════════════════════════════════════════════════
+        const MOCK = true;
+        const MOCK_REPORTS = [
+            { id_reporte:1, titulo:'Declaración Mensual Mayo', id_asesor:6, nombre_asesor:'Laura García', tipo:'Mensual', estado:'Publicado', fecha_creacion:'2026-06-05 14:00:00', contenido:'Análisis detallado del IVA y retenciones correspondientes al mes de mayo 2026.\n\nEl cliente presenta un saldo a favor de $3,200 MXN.\n\nRecomendaciones:\n- Ajustar facturación electrónica\n- Revisar deducciones personales' },
+            { id_reporte:2, titulo:'Revisión Trimestral Q2', id_asesor:6, nombre_asesor:'Laura García', tipo:'Trimestral', estado:'Publicado', fecha_creacion:'2026-06-15 10:00:00', contenido:'Balance trimestral Q2 2026. Ingresos acumulados: $450,000. Egresos: $320,000. Utilidad: $130,000.' },
+            { id_reporte:3, titulo:'Auditoría Interna Cliente A', id_asesor:7, nombre_asesor:'David López', tipo:'Especial', estado:'Borrador', fecha_creacion:'2026-06-20 16:30:00', contenido:'Borrador de auditoría interna. Pendiente revisión de documentos soporte.' },
+            { id_reporte:4, titulo:'Declaración Anual 2025', id_asesor:7, nombre_asesor:'David López', tipo:'Anual', estado:'Publicado', fecha_creacion:'2026-04-10 09:00:00', contenido:'Declaración anual ejercicio fiscal 2025.\n\nTotal ingresos: $1,200,000\nDeducciones autorizadas: $380,000\nISR a pagar: $95,400' },
+            { id_reporte:5, titulo:'Declaración Mensual Junio', id_asesor:6, nombre_asesor:'Laura García', tipo:'Mensual', estado:'Borrador', fecha_creacion:'2026-07-01 11:00:00', contenido:'Pendiente de cierre contable del mes de junio.' },
+            { id_reporte:6, titulo:'Nóminas Junio', id_asesor:7, nombre_asesor:'David López', tipo:'Mensual', estado:'Publicado', fecha_creacion:'2026-07-02 08:30:00', contenido:'Cálculo de nóminas junio 2026. 15 empleados registrados.' },
+        ];
+        const MOCK_RATINGS_REPORTES = [
+            { nombre:'Laura García', correo:'laura@asesor.com', promedio:4.8, total_calificaciones:15, ultima_calificacion:'2026-06-20' },
+            { nombre:'David López', correo:'david@asesor.com', promedio:4.2, total_calificaciones:8, ultima_calificacion:'2026-06-15' },
+        ];
+        // ▲▲▲ END MOCKUP
+        // ═══════════════════════════════════════════════════════
+
         let allReports = [];
 
         const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val ?? '--'; };
 
         async function loadReports() {
             try {
-                const res = await fetch('../../../backend/modules/reportes/listar.php');
-                const json = await res.json();
-                if (!res.ok) throw new Error(json.message);
-                allReports = json.data || [];
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    allReports = MOCK_REPORTS;
+                } else {
+                // ▲ END MOCKUP BRANCH
+                    const res = await fetch('../../../backend/modules/reportes/listar.php');
+                    const json = await res.json();
+                    if (!res.ok) throw new Error(json.message);
+                    allReports = json.data || [];
+                // ▼ MOCKUP CLOSING BRACE — eliminar en producción
+                }
+                // ▲ END MOCKUP CLOSING
                 applyFilters();
                 updateStats();
             } catch (e) {
@@ -216,6 +243,22 @@
 
         async function viewReport(id) {
             try {
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    const r = MOCK_REPORTS.find(rep => rep.id_reporte === id);
+                    if (!r) { alert('Reporte no encontrado'); return; }
+                    document.getElementById('modalTitle').textContent = r.titulo;
+                    document.getElementById('modalMeta').innerHTML = `
+                        <span><strong>Asesor:</strong> ${r.nombre_asesor || r.correo_asesor}</span>
+                        <span><strong>Tipo:</strong> ${r.tipo}</span>
+                        <span><strong>Estado:</strong> ${r.estado}</span>
+                        <span><strong>Fecha:</strong> ${new Date(r.fecha_creacion).toLocaleString('es-MX')}</span>
+                    `;
+                    document.getElementById('modalBody').textContent = r.contenido || 'Sin contenido adicional.';
+                    document.getElementById('modalOverlay').classList.add('active');
+                    return;
+                }
+                // ▲ END MOCKUP BRANCH
                 const res = await fetch(`../../../backend/modules/reportes/detalle.php?id=${id}`);
                 const json = await res.json();
                 if (!res.ok) throw new Error(json.message);
@@ -254,11 +297,19 @@
         async function loadRatings() {
             const tbody = document.getElementById('ratingsTableBody');
             try {
-                const res = await fetch('../../../backend/modules/calificaciones/estadisticas.php');
-                const json = await res.json();
-                if (!res.ok) throw new Error(json.message);
-
-                const data = json.data || [];
+                let data;
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    data = MOCK_RATINGS_REPORTES;
+                } else {
+                // ▲ END MOCKUP BRANCH
+                    const res = await fetch('../../../backend/modules/calificaciones/estadisticas.php');
+                    const json = await res.json();
+                    if (!res.ok) throw new Error(json.message);
+                    data = json.data || [];
+                // ▼ MOCKUP CLOSING BRACE — eliminar en producción
+                }
+                // ▲ END MOCKUP CLOSING
                 if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="bx bx-star"></i><p>Sin calificaciones aún</p></div></td></tr>';
                     return;
