@@ -46,6 +46,10 @@
                         <p id="userCorreo">—</p>
                         <h5>Rol:</h5>
                         <p id="userRol">—</p>
+                        <h5>N.º Cliente:</h5>
+                        <p id="userNumeroCliente">—</p>
+                        <h5>Estatus:</h5>
+                        <p id="userEstatusSuscripcion">—</p>
                     </div>
                 </div>
 
@@ -61,12 +65,25 @@
 
                         <!-- Campos específicos de Cliente -->
                         <div id="clienteFields" style="display:none;">
+                            <div class="section-label-view">📋 Datos Fiscales</div>
                             <h5>RFC:</h5>
                             <p id="userRfc">—</p>
                             <h5>Razón Social:</h5>
                             <p id="userRazonSocial">—</p>
                             <h5>Dirección Fiscal:</h5>
                             <p id="userDireccionFiscal">—</p>
+                            <h5>Régimen Fiscal:</h5>
+                            <p id="userRegimenFiscal">—</p>
+
+                            <div class="section-label-view">📞 Información de Contacto y Servicio</div>
+                            <h5>Representante Legal:</h5>
+                            <p id="userRepresentanteLegal">—</p>
+                            <h5>Dirección Comercial:</h5>
+                            <p id="userDireccionComercial">—</p>
+                            <h5>Paquete Contratado:</h5>
+                            <p id="userPaquete">—</p>
+                            <h5>Constancia Fiscal:</h5>
+                            <p id="userConstanciaFiscal">—</p>
                         </div>
                     </div>
 
@@ -85,18 +102,33 @@
                         </div>
 
                         <!-- Campos específicos de Cliente -->
-                        <div id="clienteFields">
+                        <div id="editClienteFields" style="display:none;">
+                            <div class="section-label-edit">📋 Datos Fiscales (solo administrador)</div>
                             <div class="form-group">
-                                <label for="editRfc">RFC</label>
-                                <input type="text" id="editRfc" placeholder="Ej: XXXX000000XXX">
+                                <label for="editRfc">RFC 🔒</label>
+                                <input type="text" id="editRfc" placeholder="Ej: XXXX000000XXX" maxlength="13">
                             </div>
                             <div class="form-group">
-                                <label for="editRazonSocial">Razón Social</label>
+                                <label for="editRazonSocial">Razón Social 🔒</label>
                                 <input type="text" id="editRazonSocial" placeholder="Nombre o razón social">
                             </div>
                             <div class="form-group">
-                                <label for="editDireccionFiscal">Dirección Fiscal</label>
+                                <label for="editDireccionFiscal">Dirección Fiscal 🔒</label>
                                 <input type="text" id="editDireccionFiscal" placeholder="Calle, número, colonia, CP">
+                            </div>
+                            <div class="form-group">
+                                <label for="editRegimenFiscal">Régimen Fiscal 🔒</label>
+                                <input type="text" id="editRegimenFiscal" placeholder="Ej: Persona Moral del Régimen General">
+                            </div>
+
+                            <div class="section-label-edit">📞 Información de Contacto</div>
+                            <div class="form-group">
+                                <label for="editRepresentanteLegal">Representante Legal</label>
+                                <input type="text" id="editRepresentanteLegal" placeholder="Nombre del representante legal">
+                            </div>
+                            <div class="form-group">
+                                <label for="editDireccionComercial">Dirección Comercial</label>
+                                <input type="text" id="editDireccionComercial" placeholder="Dirección de oficinas o negocio">
                             </div>
                         </div>
 

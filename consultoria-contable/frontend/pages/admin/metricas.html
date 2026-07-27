@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas — Panel de Control</title>
+    <link rel="stylesheet" href="../../css/shared/variables.css">
+    <link rel="stylesheet" href="../../css/shared/base.css">
+    <link rel="stylesheet" href="../../css/shared/buttons.css">
+    <link rel="stylesheet" href="../../css/shared/cards.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/admin/metricas.css">
+    <link rel="stylesheet" href="../../css/shared/notifications.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<main class="dashboard-content">
+
+    <!-- ── Header ── -->
+    <div class="page-header">
+        <div>
+            <h1><i class="bx bx-line-chart"></i> Métricas del Portal</h1>
+            <p>Panel de control estratégico: finanzas, adopción y operaciones.</p>
+        </div>
+    </div>
+
+    <div class="metrics-container">
+
+        <!-- Loading -->
+        <div class="metrics-loading" id="metricsLoading">
+            <i class="bx bx-loader bx-spin"></i>
+            <span>Cargando métricas...</span>
+        </div>
+
+        <!-- Error -->
+        <div class="metrics-error" id="metricsError" style="display:none;"></div>
+
+        <!-- Contenido -->
+        <div id="metricsContent" style="display:none;">
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- 1. FINANCIERAS Y DE SERVICIO -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <div class="metrics-section">
+                <div class="section-header">
+                    <div class="section-icon financieras">
+                        <i class="bx bx-dollar-circle"></i>
+                    </div>
+                    <h2>Financieras y de Servicio</h2>
+                    <span class="section-subtitle">Rentabilidad, satisfacción y crecimiento</span>
+                </div>
+
+                <div class="metrics-grid">
+                    <!-- Facturas emitidas -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon green"><i class="bx bx-receipt"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiFacturasEmitidas">—</div>
+                        <div class="kpi-label">Facturas Emitidas</div>
+                    </div>
+
+                    <!-- Facturas pendientes -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon amber"><i class="bx bx-file-blank"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiFacturasPendientes">—</div>
+                        <div class="kpi-label">Facturas Pendientes</div>
+                        <div class="kpi-bar"><div class="kpi-bar-fill" id="barFacturacion" style="width:0%"></div></div>
+                    </div>
+
+                    <!-- Pagos recibidos -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon green"><i class="bx bx-check-double"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiPagosRecibidos">—</div>
+                        <div class="kpi-label">Pagos Recibidos</div>
+                    </div>
+
+                    <!-- Pagos vencidos -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon red"><i class="bx bx-alarm-exclamation"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiPagosVencidos">—</div>
+                        <div class="kpi-label">Pagos Vencidos</div>
+                    </div>
+
+                    <!-- Monto aprobado -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon green"><i class="bx bx-money"></i></div>
+                            <span class="kpi-badge neutral" id="kpiMontoBadge">—</span>
+                        </div>
+                        <div class="kpi-value" id="kpiMontoAprobado">—</div>
+                        <div class="kpi-label">Monto Cobrado (Aprobado)</div>
+                    </div>
+
+                    <!-- Monto pendiente -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon red"><i class="bx bx-money-withdraw"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiMontoPendiente">—</div>
+                        <div class="kpi-label">Monto Pendiente por Cobrar</div>
+                    </div>
+                </div>
+
+                <!-- Fila de detalles: CSAT + Servicios adicionales -->
+                <div class="metrics-detail-row">
+
+                    <!-- CSAT -->
+                    <div class="detail-card">
+                        <h3><i class="bx bx-star"></i> Índice de Satisfacción (CSAT)</h3>
+                        <div class="csat-display">
+                            <div class="csat-circle no-data" id="csatCircle">
+                                <span id="kpiCSAT">—</span>
+                            </div>
+                            <div class="csat-label" id="kpiCSATLabel">Sin datos</div>
+                            <div class="csat-detail" id="kpiCSATDetail">—</div>
+                        </div>
+                    </div>
+
+                    <!-- Servicios adicionales -->
+                    <div class="detail-card">
+                        <h3><i class="bx bx-package"></i> Servicios Solicitados</h3>
+                        <div style="margin-bottom:14px;">
+                            <span style="font-size:0.82rem;color:var(--text-secondary);">Nuevos en los últimos 30 días:</span>
+                            <strong style="font-size:1.4rem;margin-left:8px;color:var(--primary);" id="kpiServiciosNuevos">—</strong>
+                        </div>
+                        <div class="service-type-list" id="serviceTypeList">
+                            <div style="color:var(--text-muted);text-align:center;padding:16px;">
+                                <i class="bx bx-loader bx-spin"></i> Cargando...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- 2. ADOPCIÓN Y USO DEL PORTAL -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <div class="metrics-section">
+                <div class="section-header">
+                    <div class="section-icon adopcion">
+                        <i class="bx bx-group"></i>
+                    </div>
+                    <h2>Adopción y Uso del Portal</h2>
+                    <span class="section-subtitle">Actividad y digitalización del cliente</span>
+                </div>
+
+                <div class="metrics-grid">
+                    <!-- Total clientes -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon blue"><i class="bx bx-buildings"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiTotalClientes">—</div>
+                        <div class="kpi-label">Total de Clientes</div>
+                    </div>
+
+                    <!-- Clientes activos -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon green"><i class="bx bx-user-check"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiClientesActivos">—</div>
+                        <div class="kpi-label">Clientes Activos</div>
+                    </div>
+
+                    <!-- Tasa de activación -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon purple"><i class="bx bx-user-plus"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiTasaActivacion">—</div>
+                        <div class="kpi-label">Tasa de Activación de Cuentas</div>
+                        <div class="kpi-bar"><div class="kpi-bar-fill" id="barActivacion" style="width:0%"></div></div>
+                        <div class="kpi-detail" id="kpiDetalleActivacion">—</div>
+                    </div>
+
+                    <!-- DAU -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon indigo"><i class="bx bx-calendar"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiDAU">—</div>
+                        <div class="kpi-label">Usuarios Activos Hoy (DAU)</div>
+                    </div>
+
+                    <!-- MAU -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon teal"><i class="bx bx-calendar-check"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiMAU">—</div>
+                        <div class="kpi-label">Usuarios Activos del Mes (MAU)</div>
+                        <div class="kpi-detail" id="kpiDetalleDAU">—</div>
+                    </div>
+
+                    <!-- Tasa de interacción -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon amber"><i class="bx bx-message-square-detail"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiInteraccion">—</div>
+                        <div class="kpi-label">Tasa de Interacción</div>
+                        <div class="kpi-bar"><div class="kpi-bar-fill" id="barInteraccion" style="width:0%"></div></div>
+                        <div class="kpi-detail" id="kpiDetalleInteraccion">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- 3. OPERACIONES Y FLUJO DE TRABAJO -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <div class="metrics-section">
+                <div class="section-header">
+                    <div class="section-icon operaciones">
+                        <i class="bx bx-cog"></i>
+                    </div>
+                    <h2>Operaciones y Flujo de Trabajo</h2>
+                    <span class="section-subtitle">Eficiencia operativa y control de cuellos de botella</span>
+                </div>
+
+                <div class="metrics-grid">
+                    <!-- Servicios pendientes de documentos -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon amber"><i class="bx bx-file"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiServiciosPendientes">—</div>
+                        <div class="kpi-label">Documentos Pendientes de Entrega</div>
+                    </div>
+
+                    <!-- Documentos recientes -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon blue"><i class="bx bx-upload"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpiDocumentosRecientes">—</div>
+                        <div class="kpi-label">Documentos Subidos (30 días)</div>
+                    </div>
+
+                    <!-- TTR -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon purple"><i class="bx bx-time-five"></i></div>
+                            <span class="kpi-badge neutral" id="kpiTTRBadge">—</span>
+                        </div>
+                        <div class="kpi-value" id="kpiTTR">—</div>
+                        <div class="kpi-label">Tiempo Medio de Respuesta (TTR)</div>
+                    </div>
+
+                    <!-- Tickets abiertos -->
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon red"><i class="bx bx-message-square-error"></i></div>
+                            <span class="kpi-badge neutral" id="kpiTicketsBadge">—</span>
+                        </div>
+                        <div class="kpi-value" id="kpiTicketsAbiertos">—</div>
+                        <div class="kpi-label">Tickets Sin Responder</div>
+                    </div>
+                </div>
+
+                <!-- Fila de detalles: Compliance + Carga de trabajo -->
+                <div class="metrics-detail-row">
+
+                    <!-- Cumplimiento Fiscal -->
+                    <div class="detail-card">
+                        <h3><i class="bx bx-check-shield"></i> Estado de Cumplimiento Fiscal</h3>
+                        <div class="compliance-status" id="complianceStatus">
+                            <div class="compliance-row">
+                                <span class="comp-label">Completado</span>
+                                <div class="comp-bar-wrap">
+                                    <div class="comp-bar-fill completed" id="barCompCompletado" style="width:0%"></div>
+                                </div>
+                                <span class="comp-count" id="compCompletado">0</span>
+                            </div>
+                            <div class="compliance-row">
+                                <span class="comp-label">En proceso</span>
+                                <div class="comp-bar-wrap">
+                                    <div class="comp-bar-fill in-progress" id="barCompEnProceso" style="width:0%"></div>
+                                </div>
+                                <span class="comp-count" id="compEnProceso">0</span>
+                            </div>
+                            <div class="compliance-row">
+                                <span class="comp-label">Pendiente</span>
+                                <div class="comp-bar-wrap">
+                                    <div class="comp-bar-fill pending" id="barCompPendiente" style="width:0%"></div>
+                                </div>
+                                <span class="comp-count" id="compPendiente">0</span>
+                            </div>
+                        </div>
+                        <div style="text-align:center;margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
+                            Total: <strong id="compTotal">0</strong> servicios
+                        </div>
+                    </div>
+
+                    <!-- Carga de trabajo -->
+                    <div class="detail-card">
+                        <h3><i class="bx bx-briefcase"></i> Carga de Trabajo por Contador</h3>
+                        <div style="overflow-x:auto;">
+                            <table class="workload-table">
+                                <thead>
+                                    <tr>
+                                        <th>Contador</th>
+                                        <th>Clientes</th>
+                                        <th>Tareas activas</th>
+                                        <th>Carga relativa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="workloadBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">
+                                            <i class="bx bx-loader bx-spin"></i> Cargando...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /metricsContent -->
+    </div><!-- /metrics-container -->
+
+</main>
+
+<script src="../../js/helpers/logoutHelper.js"></script>
+<script>
+    window.SIDEBAR_CONFIG = {
+        role: 'admin',
+        userName: 'Administrador',
+        userRole: 'Administrador',
+        currentPage: 'metricas'
+    };
+</script>
+<script src="../../js/sidebar.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/views/metricasView.js"></script>
+</body>
+</html>

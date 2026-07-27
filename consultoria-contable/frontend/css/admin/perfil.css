@@ -318,4 +318,60 @@
     .main-profile-container .titulo-cuenta {
         font-size: 22px;
     }
+
+/* ── Section labels (field group headers) ── */
+.section-label-view {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary, #6366f1);
+    padding: 16px 0 8px 0;
+    margin-top: 10px;
+    border-top: 1px solid var(--border, #e2e8f0);
+}
+
+.section-label-view:first-child {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.section-label-edit {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary, #6366f1);
+    padding: 14px 0 8px 0;
+    border-top: 1px solid var(--border, #e2e8f0);
+}
+
+.section-label-edit:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* ── Readonly fields ── */
+.readonly-field {
+    position: relative;
+}
+
+.readonly-badge {
+    font-size: 0.75rem;
+    color: var(--text-muted, #94a3b8);
+    margin-left: 4px;
+}
+
+/* ── Disabled inputs ── */
+.edit-form input:disabled,
+.edit-form textarea:disabled {
+    background: var(--bg, #f1f5f9);
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+.edit-form input:disabled:hover {
+    border-color: var(--border, #e2e8f0);
+}
 }

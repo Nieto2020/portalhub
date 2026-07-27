@@ -52,6 +52,8 @@
                         <p id="userCorreo">—</p>
                         <h5>Rol:</h5>
                         <p id="userRol">—</p>
+                        <h5>Disponibilidad:</h5>
+                        <p id="userDisponibilidad">—</p>
                     </div>
                 </div>
 
@@ -71,6 +73,14 @@
                             <p id="userEspecialidad">—</p>
                             <h5>Biografía:</h5>
                             <p id="userBiografia">—</p>
+                            <h5>Cédula Profesional:</h5>
+                            <p id="userCedula">—</p>
+                            <h5>Correo Corporativo:</h5>
+                            <p id="userCorreoCorp">—</p>
+                            <h5>Extensión:</h5>
+                            <p id="userExtension">—</p>
+                            <h5>Cartera de Clientes:</h5>
+                            <p id="userCarteraClientes">—</p>
                         </div>
                     </div>
 
@@ -89,14 +99,26 @@
                         </div>
 
                         <!-- Campos específicos de Asesor -->
-                        <div id="asesorFields">
+                        <div id="editAsesorFields" style="display:none;">
                             <div class="form-group">
-                                <label for="editEspecialidad">Especialidad</label>
+                                <label for="editEspecialidad">Especialidad / Área</label>
                                 <input type="text" id="editEspecialidad" placeholder="Ej: Contabilidad fiscal">
                             </div>
                             <div class="form-group">
                                 <label for="editBiografia">Biografía</label>
-                                <textarea id="editBiografia" placeholder="Breve descripción profesional..."></textarea>
+                                <textarea id="editBiografia" placeholder="Breve descripción profesional..." rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="editCedula">Cédula Profesional</label>
+                                <input type="text" id="editCedula" placeholder="Número de cédula o colegiación">
+                            </div>
+                            <div class="form-group">
+                                <label for="editCorreoCorp">Correo Corporativo</label>
+                                <input type="email" id="editCorreoCorp" placeholder="correo@consultoria.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="editExtension">Extensión Telefónica</label>
+                                <input type="text" id="editExtension" placeholder="Ej: Ext. 101">
                             </div>
                         </div>
 

@@ -43,13 +43,15 @@
                     <div class="usuario-image">
                         <i class="bx bx-user-circle"></i>
                     </div>
-                    <div class="info-user" id="profileView">
+                    <div class="info-user">
                         <h5>Nombre:</h5>
                         <p id="userNombre">—</p>
                         <h5>Correo:</h5>
                         <p id="userCorreo">—</p>
                         <h5>Rol:</h5>
                         <p id="userRol">—</p>
+                        <h5>N.º Cliente:</h5>
+                        <p id="userNumeroCliente">—</p>
                     </div>
                 </div>
 
@@ -69,6 +71,16 @@
                             <p id="userEspecialidad">—</p>
                             <h5>Biografía:</h5>
                             <p id="userBiografia">—</p>
+                            <h5>Cédula Profesional:</h5>
+                            <p id="userCedula">—</p>
+                            <h5>Correo Corporativo:</h5>
+                            <p id="userCorreoCorp">—</p>
+                            <h5>Extensión:</h5>
+                            <p id="userExtension">—</p>
+                            <h5>Disponibilidad:</h5>
+                            <p id="userDisponibilidad">—</p>
+                            <h5>Cartera de Clientes:</h5>
+                            <p id="userCarteraClientes">—</p>
                         </div>
 
                         <!-- Campos específicos de Cliente -->
@@ -79,6 +91,30 @@
                             <p id="userRazonSocial">—</p>
                             <h5>Dirección Fiscal:</h5>
                             <p id="userDireccionFiscal">—</p>
+                            <h5>Régimen Fiscal:</h5>
+                            <p id="userRegimenFiscal">—</p>
+                            <h5>Representante Legal:</h5>
+                            <p id="userRepresentanteLegal">—</p>
+                            <h5>Dirección Comercial:</h5>
+                            <p id="userDireccionComercial">—</p>
+                            <h5>Paquete Contratado:</h5>
+                            <p id="userPaquete">—</p>
+                            <h5>Estatus Suscripción:</h5>
+                            <p id="userEstatusSuscripcion">—</p>
+                            <h5>Constancia Fiscal:</h5>
+                            <p id="userConstanciaFiscal">—</p>
+                        </div>
+
+                        <!-- Campos de Consultoría (Admin) -->
+                        <div id="adminConsultoriaFields" style="display:none;">
+                            <h5>Nombre de la Consultoría:</h5>
+                            <p id="userConsultoriaNombre">—</p>
+                            <h5>Dirección:</h5>
+                            <p id="userConsultoriaDireccion">—</p>
+                            <h5>Teléfono:</h5>
+                            <p id="userConsultoriaTelefono">—</p>
+                            <h5>Correo:</h5>
+                            <p id="userConsultoriaCorreo">—</p>
                         </div>
                     </div>
 
@@ -99,12 +135,24 @@
                         <!-- Campos específicos de Asesor -->
                         <div id="editAsesorFields" style="display:none;">
                             <div class="form-group">
-                                <label for="editEspecialidad">Especialidad</label>
+                                <label for="editEspecialidad">Especialidad / Área</label>
                                 <input type="text" id="editEspecialidad" placeholder="Ej: Contabilidad fiscal">
                             </div>
                             <div class="form-group">
                                 <label for="editBiografia">Biografía</label>
-                                <textarea id="editBiografia" placeholder="Breve descripción profesional" rows="4"></textarea>
+                                <textarea id="editBiografia" placeholder="Breve descripción profesional" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="editCedula">Cédula Profesional</label>
+                                <input type="text" id="editCedula" placeholder="Número de cédula o colegiación">
+                            </div>
+                            <div class="form-group">
+                                <label for="editCorreoCorp">Correo Corporativo</label>
+                                <input type="email" id="editCorreoCorp" placeholder="correo@consultoria.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="editExtension">Extensión Telefónica</label>
+                                <input type="text" id="editExtension" placeholder="Ej: Ext. 101">
                             </div>
                         </div>
 
@@ -112,7 +160,7 @@
                         <div id="editClienteFields" style="display:none;">
                             <div class="form-group">
                                 <label for="editRfc">RFC</label>
-                                <input type="text" id="editRfc" placeholder="Ej: XXXX000000XXX">
+                                <input type="text" id="editRfc" placeholder="Ej: XXXX000000XXX" maxlength="13">
                             </div>
                             <div class="form-group">
                                 <label for="editRazonSocial">Razón Social</label>
@@ -121,6 +169,38 @@
                             <div class="form-group">
                                 <label for="editDireccionFiscal">Dirección Fiscal</label>
                                 <input type="text" id="editDireccionFiscal" placeholder="Calle, número, colonia, CP, ciudad">
+                            </div>
+                            <div class="form-group">
+                                <label for="editRegimenFiscal">Régimen Fiscal</label>
+                                <input type="text" id="editRegimenFiscal" placeholder="Ej: Persona Moral del Régimen General">
+                            </div>
+                            <div class="form-group">
+                                <label for="editRepresentanteLegal">Representante Legal</label>
+                                <input type="text" id="editRepresentanteLegal" placeholder="Nombre del representante legal">
+                            </div>
+                            <div class="form-group">
+                                <label for="editDireccionComercial">Dirección Comercial</label>
+                                <input type="text" id="editDireccionComercial" placeholder="Dirección de oficinas o negocio">
+                            </div>
+                        </div>
+
+                        <!-- Campos de Consultoría (Admin) -->
+                        <div id="editAdminConsultoriaFields" style="display:none;">
+                            <div class="form-group">
+                                <label for="editConsultoriaNombre">Nombre de la Consultoría</label>
+                                <input type="text" id="editConsultoriaNombre" placeholder="Nombre del despacho o firma">
+                            </div>
+                            <div class="form-group">
+                                <label for="editConsultoriaDireccion">Dirección</label>
+                                <input type="text" id="editConsultoriaDireccion" placeholder="Dirección de la consultoría">
+                            </div>
+                            <div class="form-group">
+                                <label for="editConsultoriaTelefono">Teléfono</label>
+                                <input type="text" id="editConsultoriaTelefono" placeholder="Teléfono corporativo">
+                            </div>
+                            <div class="form-group">
+                                <label for="editConsultoriaCorreo">Correo</label>
+                                <input type="email" id="editConsultoriaCorreo" placeholder="contacto@consultoria.com">
                             </div>
                         </div>
 
