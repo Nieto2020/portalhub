@@ -44,8 +44,8 @@
                     links: [
                         { label: 'Inicio', icon: 'bx bx-home', href: 'dashboard.html', id: 'dashboard' },
                         { label: 'Acciones', icon: 'bx bxs-zap', href: 'acciones.html', id: 'acciones' },
-                        { label: 'Asignar Asesor', icon: 'bx bx-user-pin', href: 'asignaciones.html', id: 'asignaciones' },
-                        { label: 'Reportes', icon: 'bx bx-bar-chart-alt-2', href: 'reportes.html', id: 'reportes' },
+                        { label: 'Metricas', icon: 'bx bx-bar-chart-alt-2', href: 'metricas.html', id: 'metricas' },
+                        { label: 'Reportes', icon: 'bx bx-file', href: 'reportes.html', id: 'reportes' },
                     ]
                 },
                 {
