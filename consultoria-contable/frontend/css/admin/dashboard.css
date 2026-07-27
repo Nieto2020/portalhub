@@ -256,6 +256,10 @@
     gap: 24px;
 }
 
+.bottom-grid .span-2 {
+    grid-column: span 2;
+}
+
 @media (max-width: 1100px) {
     .bottom-grid { grid-template-columns: 1fr 1fr; }
 }
