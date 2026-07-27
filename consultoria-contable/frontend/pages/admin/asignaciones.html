@@ -118,6 +118,28 @@
     <script src="../../js/sidebar.js"></script>
     <script src="../../js/notifications.js"></script>
     <script>
+        // ═══════════════════════════════════════════════════════
+        // ▼▼▼ MOCKUP — Eliminar todo este bloque en producción ▼▼▼
+        // ═══════════════════════════════════════════════════════
+        const MOCK = true;
+        const MOCK_ASESORES = [
+            { id_usuario:6, correo:'laura@asesor.com', estado:'activo', nombre:'Laura García' },
+            { id_usuario:7, correo:'david@asesor.com', estado:'activo', nombre:'David López' },
+        ];
+        const MOCK_CLIENTES = [
+            { id_usuario:1, correo:'juan@cliente.com', numero_cliente:'CLI-001', estado:'activo', nombre:'Juan Pérez', asesor_actual_id:6, asesor_actual_correo:'laura@asesor.com' },
+            { id_usuario:2, correo:'maria@cliente.com', numero_cliente:'CLI-002', estado:'activo', nombre:'María López', asesor_actual_id:6, asesor_actual_correo:'laura@asesor.com' },
+            { id_usuario:3, correo:'pedro@cliente.com', numero_cliente:'CLI-003', estado:'inactivo', nombre:'Pedro Ramírez', asesor_actual_id:null, asesor_actual_correo:null },
+            { id_usuario:4, correo:'ana@cliente.com', numero_cliente:'CLI-004', estado:'activo', nombre:'Ana Torres', asesor_actual_id:7, asesor_actual_correo:'david@asesor.com' },
+            { id_usuario:5, correo:'carlos@cliente.com', numero_cliente:'CLI-005', estado:'activo', nombre:'Carlos Mendoza', asesor_actual_id:null, asesor_actual_correo:null },
+        ];
+        const MOCK_CARTERA = [
+            { id_asignacion:1, id_cliente:1, correo_cliente:'juan@cliente.com', numero_cliente:'CLI-001', nombre_cliente:'Juan Pérez', id_asesor:6, nombre_asesor:'Laura García', fecha_asignacion:'2026-01-15', estado_cliente:'active' },
+            { id_asignacion:2, id_cliente:2, correo_cliente:'maria@cliente.com', numero_cliente:'CLI-002', nombre_cliente:'María López', id_asesor:6, nombre_asesor:'Laura García', fecha_asignacion:'2026-02-10', estado_cliente:'active' },
+            { id_asignacion:3, id_cliente:4, correo_cliente:'ana@cliente.com', numero_cliente:'CLI-004', nombre_cliente:'Ana Torres', id_asesor:7, nombre_asesor:'David López', fecha_asignacion:'2026-03-01', estado_cliente:'active' },
+        ];
+        // ▲▲▲ END MOCKUP
+        // ═══════════════════════════════════════════════════════
         // ── Estado global ──
         let allAsesores = [];
         let allClientes = [];
@@ -126,6 +148,23 @@
         // ── Cargar todos los datos ──
         async function loadAllData() {
             try {
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    const datosData = {
+                        asesores: MOCK_ASESORES,
+                        clientes: MOCK_CLIENTES,
+                        total_asesores: MOCK_ASESORES.length,
+                        clientes_sin_asesor: MOCK_CLIENTES.filter(c => c.asesor_actual_id === null).length
+                    };
+                    allAsesores = MOCK_ASESORES;
+                    allClientes = MOCK_CLIENTES;
+                    updateStats(datosData);
+                    populateDropdowns();
+                    currentAssignments = MOCK_CARTERA;
+                    renderCartera();
+                    return;
+                }
+                // ▲ END MOCKUP BRANCH
                 const [datosRes, carteraRes] = await Promise.all([
                     fetch('../../../backend/modules/asignaciones/datos.php'),
                     fetch('../../../backend/modules/asignaciones/listar.php')

@@ -281,16 +281,54 @@
     <script src="../../js/sidebar.js"></script>
     <script src="../../js/notifications.js"></script>
     <script>
+        // ═══════════════════════════════════════════════════════
+        // ▼▼▼ MOCKUP — Eliminar todo este bloque en producción ▼▼▼
+        // ═══════════════════════════════════════════════════════
+        const MOCK = true;
+        const MOCK_USERS = [
+            { id_usuario:1, correo:'juan@cliente.com', numero_cliente:'CLI-001', estado:'activo', nombre_rol:'cliente', fecha_registro:'2025-11-15 10:30:00' },
+            { id_usuario:2, correo:'maria@cliente.com', numero_cliente:'CLI-002', estado:'activo', nombre_rol:'cliente', fecha_registro:'2025-12-01 14:20:00' },
+            { id_usuario:3, correo:'pedro@cliente.com', numero_cliente:'CLI-003', estado:'inactivo', nombre_rol:'cliente', fecha_registro:'2026-01-10 09:15:00' },
+            { id_usuario:4, correo:'ana@cliente.com', numero_cliente:'CLI-004', estado:'activo', nombre_rol:'cliente', fecha_registro:'2026-02-20 16:45:00' },
+            { id_usuario:5, correo:'carlos@cliente.com', numero_cliente:'CLI-005', estado:'activo', nombre_rol:'cliente', fecha_registro:'2026-03-05 11:00:00' },
+            { id_usuario:6, correo:'laura@asesor.com', numero_cliente:null, estado:'activo', nombre_rol:'asesor', fecha_registro:'2025-10-01 08:00:00' },
+            { id_usuario:7, correo:'david@asesor.com', numero_cliente:null, estado:'activo', nombre_rol:'asesor', fecha_registro:'2025-10-15 09:30:00' },
+            { id_usuario:8, correo:'admin@sistema.com', numero_cliente:null, estado:'activo', nombre_rol:'administrador', fecha_registro:'2025-09-01 07:00:00' },
+        ];
+        const MOCK_REPORT = {
+            usuarios: { total:8, activos:7, inactivos:1, clientes:5 },
+            servicios: { en_proceso:3, completados:8 },
+            pagos: { pendientes:2, monto_total:12500 },
+            citas: { total:6, programadas:4 }
+        };
+        const MOCK_RATINGS = [
+            { nombre:'Laura García', correo:'laura@asesor.com', promedio:4.8, total_calificaciones:15, ultima_calificacion:'2026-06-20' },
+            { nombre:'David López', correo:'david@asesor.com', promedio:4.2, total_calificaciones:8, ultima_calificacion:'2026-06-15' },
+            { nombre:'Ana Martínez', correo:'ana@asesor.com', promedio:3.5, total_calificaciones:3, ultima_calificacion:'2026-05-30' },
+        ];
+        // ▲▲▲ END MOCKUP
+        // ═══════════════════════════════════════════════════════
+
         // ── Cargar datos desde APIs ──
         (async function loadDashboardData() {
             try {
-                const [usersRes, reportRes] = await Promise.all([
-                    fetch('../../../backend/modules/usuarios/listar.php'),
-                    fetch('../../../backend/modules/reportes/dashboard.php')
-                ]);
+                let usersJson, reportJson;
 
-                const usersJson = await usersRes.json();
-                const reportJson = await reportRes.json();
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    usersJson = { data: MOCK_USERS };
+                    reportJson = { data: MOCK_REPORT };
+                } else {
+                // ▲ END MOCKUP BRANCH
+                    const [usersRes, reportRes] = await Promise.all([
+                        fetch('../../../backend/modules/usuarios/listar.php'),
+                        fetch('../../../backend/modules/reportes/dashboard.php')
+                    ]);
+                    usersJson = await usersRes.json();
+                    reportJson = await reportRes.json();
+                // ▼ MOCKUP CLOSING BRACE — eliminar en producción
+                }
+                // ▲ END MOCKUP CLOSING
 
                 const users = usersJson.data || [];
                 const report = reportJson.data || {};
@@ -477,11 +515,19 @@
         (async function loadTopAsesores() {
             const grid = document.getElementById('topAsesoresGrid');
             try {
-                const res = await fetch('../../../backend/modules/calificaciones/estadisticas.php');
-                const json = await res.json();
-                if (!res.ok) throw new Error(json.message);
-
-                const data = (json.data || []).slice(0, 3);
+                let data;
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    data = MOCK_RATINGS.slice(0, 3);
+                } else {
+                // ▲ END MOCKUP BRANCH
+                    const res = await fetch('../../../backend/modules/calificaciones/estadisticas.php');
+                    const json = await res.json();
+                    if (!res.ok) throw new Error(json.message);
+                    data = (json.data || []).slice(0, 3);
+                // ▼ MOCKUP CLOSING BRACE — eliminar en producción
+                }
+                // ▲ END MOCKUP CLOSING
                 if (data.length === 0) {
                     grid.innerHTML = '<div class="top-asesor-empty"><i class="bx bx-star"></i><p>Sin calificaciones aún</p></div>';
                     return;

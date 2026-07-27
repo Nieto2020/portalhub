@@ -39,16 +39,46 @@
         <!-- Contenido -->
         <div id="metricsContent" style="display:none;">
 
+            <!-- ── Tab Navigation ── -->
+            <div class="metrics-tabs">
+                <button class="metrics-tab active" data-tab="financieras">
+                    <i class="bx bx-dollar-circle"></i> Financieras
+                </button>
+                <button class="metrics-tab" data-tab="adopcion">
+                    <i class="bx bx-group"></i> Adopción
+                </button>
+                <button class="metrics-tab" data-tab="operaciones">
+                    <i class="bx bx-cog"></i> Operaciones
+                </button>
+            </div>
+
             <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- 1. FINANCIERAS Y DE SERVICIO -->
+            <!-- 1. FINANCIERAS Y DE SERVICIO (tab-panel) -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <div class="metrics-section">
+            <div class="metrics-section tab-panel active" id="tab-financieras">
                 <div class="section-header">
-                    <div class="section-icon financieras">
-                        <i class="bx bx-dollar-circle"></i>
-                    </div>
                     <h2>Financieras y de Servicio</h2>
                     <span class="section-subtitle">Rentabilidad, satisfacción y crecimiento</span>
+                </div>
+
+                <!-- ── Hero Financiero ── -->
+                <div class="metrics-hero">
+                    <div class="hero-card cobrado">
+                        <div class="hero-icon"><i class="bx bx-check-shield"></i></div>
+                        <div class="hero-body">
+                            <div class="hero-label">Monto Cobrado</div>
+                            <div class="hero-value" id="kpiMontoAprobado">—</div>
+                            <div class="hero-detail">Total de pagos aprobados</div>
+                        </div>
+                    </div>
+                    <div class="hero-card pendiente">
+                        <div class="hero-icon"><i class="bx bx-time-five"></i></div>
+                        <div class="hero-body">
+                            <div class="hero-label">Monto Pendiente por Cobrar</div>
+                            <div class="hero-value" id="kpiMontoPendiente">—</div>
+                            <div class="hero-detail">Pagos por recibir</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="metrics-grid">
@@ -88,25 +118,6 @@
                         <div class="kpi-value" id="kpiPagosVencidos">—</div>
                         <div class="kpi-label">Pagos Vencidos</div>
                     </div>
-
-                    <!-- Monto aprobado -->
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-icon green"><i class="bx bx-money"></i></div>
-                            <span class="kpi-badge neutral" id="kpiMontoBadge">—</span>
-                        </div>
-                        <div class="kpi-value" id="kpiMontoAprobado">—</div>
-                        <div class="kpi-label">Monto Cobrado (Aprobado)</div>
-                    </div>
-
-                    <!-- Monto pendiente -->
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-icon red"><i class="bx bx-money-withdraw"></i></div>
-                        </div>
-                        <div class="kpi-value" id="kpiMontoPendiente">—</div>
-                        <div class="kpi-label">Monto Pendiente por Cobrar</div>
-                    </div>
                 </div>
 
                 <!-- Fila de detalles: CSAT + Servicios adicionales -->
@@ -141,13 +152,10 @@
             </div>
 
             <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- 2. ADOPCIÓN Y USO DEL PORTAL -->
+            <!-- 2. ADOPCIÓN Y USO DEL PORTAL (tab-panel) -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <div class="metrics-section">
+            <div class="metrics-section tab-panel" id="tab-adopcion" style="display:none;">
                 <div class="section-header">
-                    <div class="section-icon adopcion">
-                        <i class="bx bx-group"></i>
-                    </div>
                     <h2>Adopción y Uso del Portal</h2>
                     <span class="section-subtitle">Actividad y digitalización del cliente</span>
                 </div>
@@ -215,13 +223,10 @@
             </div>
 
             <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- 3. OPERACIONES Y FLUJO DE TRABAJO -->
+            <!-- 3. OPERACIONES Y FLUJO DE TRABAJO (tab-panel) -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <div class="metrics-section">
+            <div class="metrics-section tab-panel" id="tab-operaciones" style="display:none;">
                 <div class="section-header">
-                    <div class="section-icon operaciones">
-                        <i class="bx bx-cog"></i>
-                    </div>
                     <h2>Operaciones y Flujo de Trabajo</h2>
                     <span class="section-subtitle">Eficiencia operativa y control de cuellos de botella</span>
                 </div>
@@ -342,6 +347,100 @@
 </script>
 <script src="../../js/sidebar.js"></script>
 <script src="../../js/notifications.js"></script>
+<script>
+    // ═══════════════════════════════════════════════════════
+    // Tab switching logic
+    // ═══════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.metrics-tab');
+        const panels = document.querySelectorAll('.tab-panel');
+
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                const target = this.getAttribute('data-tab');
+
+                tabs.forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+
+                panels.forEach(function(p) {
+                    if (p.id === 'tab-' + target) {
+                        p.style.display = 'block';
+                    } else {
+                        p.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script>
+    // ═══════════════════════════════════════════════════════
+    // ▼▼▼ MOCKUP — Eliminar todo este bloque en producción ▼▼▼
+    // ═══════════════════════════════════════════════════════
+    window.MOCK = true;
+    window.MOCK_DATA = {
+        adopcion: {
+            total_clientes: 48,
+            clientes_activos: 42,
+            tasa_activacion: 87.5,
+            clientes_con_perfil: 38,
+            dau: 28,
+            mau: 45,
+            tasa_interaccion: 65,
+            clientes_interactuaron: 27
+        },
+        operaciones: {
+            servicios_pendientes_doc: 7,
+            documentos_recientes: 23,
+            ttr_formateado: '3.2 hrs',
+            ttr_horas: 3.2,
+            tickets_abiertos: 4,
+            compliance: {
+                pendiente: 5,
+                en_proceso: 8,
+                completado: 35,
+                total: 48
+            },
+            carga_asesores: [
+                { nombre_completo: 'Laura García', correo: 'laura@asesor.com', clientes_asignados: 18, servicios_activos: 12 },
+                { nombre_completo: 'David López', correo: 'david@asesor.com', clientes_asignados: 12, servicios_activos: 8 },
+                { nombre_completo: 'Ana Martínez', correo: 'ana@asesor.com', clientes_asignados: 8, servicios_activos: 5 },
+                { nombre_completo: 'Carlos Ruiz', correo: 'carlos@asesor.com', clientes_asignados: 4, servicios_activos: 2 }
+            ]
+        },
+        financieras: {
+            facturacion: {
+                emitidas: 120,
+                pendientes: 15,
+                total: 135
+            },
+            cobranza: {
+                recibidos: 95,
+                vencidos: 8,
+                monto_aprobado: 385000.00,
+                monto_pendiente: 42000.00
+            },
+            csat: {
+                promedio: 4.3,
+                total_calificaciones: 42,
+                tasa_satisfaccion: 88,
+                positivas: 37
+            },
+            servicios_adicionales: {
+                nuevos_30_dias: 6,
+                por_tipo: [
+                    { nombre_servicio: 'Contabilidad Mensual', total: 18 },
+                    { nombre_servicio: 'Declaración Anual', total: 10 },
+                    { nombre_servicio: 'Nóminas', total: 8 },
+                    { nombre_servicio: 'Asesoría Fiscal', total: 7 },
+                    { nombre_servicio: 'Auditoría', total: 5 }
+                ]
+            }
+        }
+    };
+    // ▲▲▲ END MOCKUP
+    // ═══════════════════════════════════════════════════════
+</script>
 <script src="../../js/views/metricasView.js"></script>
 </body>
 </html>
