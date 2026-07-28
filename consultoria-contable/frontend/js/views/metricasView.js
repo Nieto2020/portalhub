@@ -69,6 +69,10 @@
             (d.mau > 0 ? Math.round((d.dau / d.mau) * 100) : 0) + '% ratio DAU/MAU');
         setText('kpiDetalleInteraccion',
             d.clientes_interactuaron + ' de ' + d.total_clientes + ' clientes');
+
+        // Gráficas
+        renderDonutClientes(d.total_clientes, d.clientes_activos);
+        renderBarrasSemanales(d.actividad_semanal || []);
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -200,6 +204,125 @@
                 '<span class="st-count">' + (parseInt(t.total) || 0) + '</span>' +
             '</div>';
         }).join('');
+    }
+
+    // ── Donut: Proporción clientes totales vs activos ──
+    function renderDonutClientes(total, activos) {
+        var canvas = document.getElementById('donutClientes');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var w = canvas.width, h = canvas.height;
+        var cx = w / 2, cy = h / 2, r = 85, ancho = 22;
+        var inactivos = Math.max(0, total - activos);
+
+        ctx.clearRect(0, 0, w, h);
+
+        if (total === 0) {
+            ctx.beginPath();
+            ctx.arc(cx, cy, r - ancho / 2, 0, Math.PI * 2);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = ancho;
+            ctx.stroke();
+            setText('donutLegend',
+                'Sin datos');
+            return;
+        }
+
+        var pctActivos = activos / total;
+        var startAngle = -Math.PI / 2;
+
+        // Arco activos
+        ctx.beginPath();
+        ctx.arc(cx, cy, r - ancho / 2, startAngle, startAngle + pctActivos * Math.PI * 2);
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = ancho;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        // Arco inactivos
+        ctx.beginPath();
+        ctx.arc(cx, cy, r - ancho / 2, startAngle + pctActivos * Math.PI * 2, startAngle + Math.PI * 2);
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = ancho;
+        ctx.lineCap = 'butt';
+        ctx.stroke();
+
+        // Texto centro
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#0f172a';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(Math.round(pctActivos * 100) + '%', cx, cy - 6);
+        ctx.font = '11px sans-serif';
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() || '#64748b';
+        ctx.fillText('activos', cx, cy + 16);
+
+        // Leyenda
+        var leg = document.getElementById('donutLegend');
+        if (leg) {
+            leg.innerHTML =
+                '<div class="leg-item"><span class="leg-dot" style="background:#10b981"></span> Activos <strong>' + activos + '</strong></div>' +
+                '<div class="leg-item"><span class="leg-dot" style="background:#e2e8f0"></span> Inactivos <strong>' + inactivos + '</strong></div>';
+        }
+    }
+
+    // ── Barras: Actividad por día de la semana ──
+    function renderBarrasSemanales(datos) {
+        var canvas = document.getElementById('barSemanal');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var w = canvas.width, h = canvas.height;
+        var dias = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+        var padding = { top: 12, bottom: 28, left: 10, right: 10 };
+        var chartW = w - padding.left - padding.right;
+        var chartH = h - padding.top - padding.bottom;
+        var maxVal = Math.max.apply(null, datos) || 1;
+        var barW = Math.max(8, (chartW / datos.length) - 8);
+        var gap = (chartW / datos.length);
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Color de barras
+        var barColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#6366f1';
+        var barHover = getComputedStyle(document.documentElement).getPropertyValue('--primary-light').trim() || '#eef2ff';
+        var textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#94a3b8';
+
+        datos.forEach(function (val, i) {
+            var barH = (val / maxVal) * chartH;
+            var x = padding.left + i * gap + (gap - barW) / 2;
+            var y = padding.top + chartH - barH;
+
+            // Barra degradada
+            var grad = ctx.createLinearGradient(x, y, x, padding.top + chartH);
+            grad.addColorStop(0, barColor);
+            grad.addColorStop(1, barColor + '55');
+            ctx.fillStyle = grad;
+
+            // Esquinas redondeadas
+            var radius = Math.min(4, barW / 2);
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + barW - radius, y);
+            ctx.quadraticCurveTo(x + barW, y, x + barW, y + radius);
+            ctx.lineTo(x + barW, padding.top + chartH);
+            ctx.lineTo(x, padding.top + chartH);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+
+            // Valor encima
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#0f172a';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(val, x + barW / 2, y - 4);
+
+            // Etiqueta abajo
+            ctx.fillStyle = textColor;
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(dias[i], x + barW / 2, padding.top + chartH + 16);
+        });
     }
 
     // ── Helpers ──

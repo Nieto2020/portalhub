@@ -61,6 +61,24 @@ try {
          WHERE u.id_rol = 3 AND p.fecha_actualizacion >= DATE_SUB(NOW(), INTERVAL 30 DAY)"
     )->fetchColumn();
 
+    // Actividad por día de la semana (mensajes + documentos, últimos 30 días)
+    $actividadSemanalStmt = $conexion->query(
+        "SELECT WEEKDAY(fecha) AS dia_semana, COUNT(*) AS total
+         FROM (
+             SELECT DATE(fecha_envio) AS fecha FROM mensajes
+             WHERE fecha_envio >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+             UNION ALL
+             SELECT DATE(fecha_subida) AS fecha FROM documentos
+             WHERE fecha_subida >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+         ) AS eventos
+         GROUP BY WEEKDAY(fecha)
+         ORDER BY dia_semana"
+    );
+    $actividadSemanal = array_fill(0, 7, 0);
+    while ($row = $actividadSemanalStmt->fetch(PDO::FETCH_ASSOC)) {
+        $actividadSemanal[(int) $row['dia_semana']] = (int) $row['total'];
+    }
+
     // ═══════════════════════════════════════════════════════════════
     // 2. MÉTRICAS DE OPERACIONES Y FLUJO DE TRABAJO
     // ═══════════════════════════════════════════════════════════════
@@ -205,6 +223,7 @@ try {
                 : 0,
             "dau"                  => $dau,
             "mau"                  => $mau,
+            "actividad_semanal"    => $actividadSemanal,
         ],
         "operaciones" => [
             "servicios_pendientes_doc" => $serviciosPendientesDoc,

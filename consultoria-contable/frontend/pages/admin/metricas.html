@@ -162,15 +162,6 @@
                         <div class="kpi-label">Total de Clientes</div>
                     </div>
 
-                    <!-- Clientes activos -->
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <div class="kpi-icon green"><i class="bx bx-user-check"></i></div>
-                        </div>
-                        <div class="kpi-value" id="kpiClientesActivos">—</div>
-                        <div class="kpi-label">Clientes Activos</div>
-                    </div>
-
                     <!-- Tasa de activación -->
                     <div class="kpi-card">
                         <div class="kpi-header">
@@ -210,6 +201,24 @@
                         <div class="kpi-label">Tasa de Interacción</div>
                         <div class="kpi-bar"><div class="kpi-bar-fill" id="barInteraccion" style="width:0%"></div></div>
                         <div class="kpi-detail" id="kpiDetalleInteraccion">—</div>
+                    </div>
+                </div>
+
+                <!-- ── Donut: Proporción de Clientes ── -->
+                <div class="metrics-detail-row">
+                    <div class="detail-card chart-card">
+                        <h3><i class="bx bx-pie-chart-alt"></i> Proporción de Clientes</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="donutClientes" width="200" height="200"></canvas>
+                            <div class="chart-legend" id="donutLegend"></div>
+                        </div>
+                    </div>
+                    <div class="detail-card chart-card">
+                        <h3><i class="bx bx-calendar-week"></i> Actividad por Día de la Semana</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="barSemanal" width="300" height="160"></canvas>
+                            <div class="chart-legend" id="barLegend"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -380,7 +389,8 @@
             dau: 28,
             mau: 45,
             tasa_interaccion: 65,
-            clientes_interactuaron: 27
+            clientes_interactuaron: 27,
+            actividad_semanal: [12, 8, 15, 10, 20, 5, 2]
         },
         operaciones: {
             servicios_pendientes_doc: 7,
