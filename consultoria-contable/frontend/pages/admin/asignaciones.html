@@ -19,17 +19,10 @@
 
     <main class="dashboard-content">
 
-        <!-- ── Header ── -->
-        <div class="page-header">
-            <div>
-                <h1><i class="bx bx-user-pin"></i> Asignar Asesor</h1>
-                <p>Administra la asignación de clientes a asesores contables.</p>
-            </div>
-            <div class="header-actions">
-                <button onclick="loadAllData()" class="btn-header outline">
-                    <i class="bx bx-refresh"></i> Actualizar
-                </button>
-            </div>
+        <div class="header-actions" style="margin-bottom:18px;">
+            <button onclick="loadAllData()" class="btn-header outline">
+                <i class="bx bx-refresh"></i> Actualizar
+            </button>
         </div>
 
         <!-- ── Stats row ── -->
@@ -112,7 +105,8 @@
             role: 'admin',
             userName: 'Administrador',
             userRole: 'Administrador',
-            currentPage: 'asignaciones'
+            currentPage: 'asignaciones',
+            pageTitle: 'Asignar Asesor'
         };
     </script>
     <script src="../../js/sidebar.js"></script>

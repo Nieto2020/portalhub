@@ -21,14 +21,8 @@
     <!-- ===== Contenido principal ===== -->
     <main class="dashboard-content">
 
-        <div class="page-header">
-            <div>
-                <h1><i class="bx bx-group"></i> Gestión de Usuarios</h1>
-                <p>Panel para el control de accesos y perfiles del sistema.</p>
-            </div>
-            <div class="header-actions">
-                <button onclick="loadUsers()" class="btn-header outline" id="refreshBtn"><i class="bx bx-refresh"></i> Actualizar</button>
-            </div>
+        <div class="header-actions" style="margin-bottom:18px;">
+            <button onclick="loadUsers()" class="btn-header outline" id="refreshBtn"><i class="bx bx-refresh"></i> Actualizar</button>
         </div>
 
         <!-- Fila superior: Registro y Gestión de Estado -->
@@ -164,7 +158,8 @@
             role: 'admin',
             userName: 'Administrador',
             userRole: 'Administrador',
-            currentPage: 'usuarios'
+            currentPage: 'usuarios',
+            pageTitle: 'Gestión de Usuarios'
         };
     </script>
     <script src="../../js/sidebar.js"></script>

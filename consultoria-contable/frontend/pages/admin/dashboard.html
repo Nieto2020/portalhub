@@ -17,20 +17,14 @@
 
     <main class="dashboard-content">
 
-        <!-- ── Header ── -->
-        <div class="page-header">
-            <div>
-                <h1><i class="bx bx-layout"></i> Panel Administrativo</h1>
-                <p>Bienvenido al centro de control del portal.</p>
-            </div>
-            <div class="header-actions">
-                <a href="acciones.html" class="btn-header outline">
-                    <i class="bx bxs-zap"></i> Acciones
-                </a>
-                <a href="metricas.html" class="btn-header primary">
-                    <i class="bx bx-bar-chart-alt-2"></i> Ver Metricas
-                </a>
-            </div>
+        <!-- ── Header Actions ── -->
+        <div class="header-actions" style="margin-bottom:28px;">
+            <a href="acciones.html" class="btn-header outline">
+                <i class="bx bxs-zap"></i> Acciones
+            </a>
+            <a href="metricas.html" class="btn-header primary">
+                <i class="bx bx-bar-chart-alt-2"></i> Ver Metricas
+            </a>
         </div>
 
         <!-- ── Acciones Rápidas ── -->
@@ -275,7 +269,8 @@
             role: 'admin',
             userName: 'Administrador',
             userRole: 'Administrador',
-            currentPage: 'dashboard'
+            currentPage: 'dashboard',
+            pageTitle: 'Panel Administrativo'
         };
     </script>
     <script src="../../js/sidebar.js"></script>

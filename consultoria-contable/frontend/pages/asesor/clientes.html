@@ -17,12 +17,36 @@
 </head>
 <body>
     <main class="dashboard-content">
-        <div class="page-header">
-            <div>
-                <h1><i class="bx bx-group"></i> Mis Clientes</h1>
-                <p>Gestión de clientes asignados.</p>
+        <div class="header-actions" style="margin-bottom:18px;">
+            <button onclick="loadData()" class="btn-header outline">
+                <i class="bx bx-refresh"></i> Actualizar
+            </button>
+        </div>
+
+        <!-- ── Stats ── -->
+        <div class="client-stats" id="clientStats">
+            <div class="stat-pill">
+                <i class="bx bx-user" style="color:var(--primary);"></i>
+                <span class="stat-label">Clientes:</span>
+                <strong id="totalClientes">--</strong>
             </div>
-            <div class="header-actions">
+            <div class="stat-pill">
+                <i class="bx bx-loader" style="color:var(--warning);"></i>
+                <span class="stat-label">Con tareas pendientes:</span>
+                <strong id="conPendientes">--</strong>
+            </div>
+            <div class="stat-pill">
+                <i class="bx bx-check-circle" style="color:var(--success);"></i>
+                <span class="stat-label">Al día:</span>
+                <strong id="alDia">--</strong>
+            </div>
+        </div>
+
+        <!-- ── Grid de clientes ── -->
+        <div class="clientes-grid" id="clientesGrid">
+            <div class="loading-clients">
+                <i class="bx bx-loader bx-spin"></i>
+                <p>Cargando cartera de clientes...</p>
             </div>
         </div>
     </main>
@@ -33,10 +57,208 @@
             role: 'asesor',
             userName: 'Asesor',
             userRole: 'Asesor',
-            currentPage: 'clientes'
+            currentPage: 'clientes',
+            pageTitle: 'Mis Clientes'
         };
     </script>
     <script src="../../js/sidebar.js"></script>
     <script src="../../js/notifications.js"></script>
+    <script>
+        // ═══════════════════════════════════════════════════════
+        // ▼▼▼ MOCKUP — Eliminar todo este bloque en producción ▼▼▼
+        // ═══════════════════════════════════════════════════════
+        const MOCK = true;
+        const MOCK_CARTERA_ASESOR = [
+            { id_asignacion:1, id_cliente:1, correo_cliente:'juan@cliente.com', numero_cliente:'CLI-001', nombre_cliente:'Juan Pérez', telefono_cliente:'555-1001', id_asesor:6, nombre_asesor:'Laura García', fecha_asignacion:'2026-01-15 10:00:00' },
+            { id_asignacion:2, id_cliente:2, correo_cliente:'maria@cliente.com', numero_cliente:'CLI-002', nombre_cliente:'María López', telefono_cliente:'555-1002', id_asesor:6, nombre_asesor:'Laura García', fecha_asignacion:'2026-02-10 14:00:00' },
+            { id_asignacion:4, id_cliente:4, correo_cliente:'ana@cliente.com', numero_cliente:'CLI-004', nombre_cliente:'Ana Torres', telefono_cliente:'555-1004', id_asesor:6, nombre_asesor:'Laura García', fecha_asignacion:'2026-03-01 09:00:00' },
+        ];
+        const MOCK_SERVICIOS = [
+            { id_servicio:1, id_cliente:1, id_tipo_servicio:1, estado:'Completado', nombre_servicio:'Contabilidad Mensual', fecha_actualizacion:'2026-06-01' },
+            { id_servicio:2, id_cliente:1, id_tipo_servicio:2, estado:'En proceso', nombre_servicio:'Declaración Anual', fecha_actualizacion:'2026-06-15' },
+            { id_servicio:3, id_cliente:1, id_tipo_servicio:4, estado:'Pendiente', nombre_servicio:'Asesoría Fiscal', fecha_actualizacion:'2026-07-01' },
+            { id_servicio:4, id_cliente:2, id_tipo_servicio:1, estado:'Completado', nombre_servicio:'Contabilidad Mensual', fecha_actualizacion:'2026-06-01' },
+            { id_servicio:5, id_cliente:2, id_tipo_servicio:3, estado:'Pendiente', nombre_servicio:'Nóminas', fecha_actualizacion:'2026-07-05' },
+            { id_servicio:6, id_cliente:2, id_tipo_servicio:5, estado:'Pendiente', nombre_servicio:'Auditoría', fecha_actualizacion:'2026-07-10' },
+            { id_servicio:7, id_cliente:4, id_tipo_servicio:1, estado:'Completado', nombre_servicio:'Contabilidad Mensual', fecha_actualizacion:'2026-05-01' },
+            { id_servicio:8, id_cliente:4, id_tipo_servicio:4, estado:'Completado', nombre_servicio:'Asesoría Fiscal', fecha_actualizacion:'2026-05-15' },
+        ];
+        // ▲▲▲ END MOCKUP
+        // ═══════════════════════════════════════════════════════
+        // ── Cargar datos ──
+        async function loadData() {
+            const grid = document.getElementById('clientesGrid');
+            grid.innerHTML = '<div class="loading-clients"><i class="bx bx-loader bx-spin"></i><p>Cargando cartera de clientes...</p></div>';
+
+            try {
+                let clientes, todosServicios;
+
+                // ▼ MOCKUP BRANCH — eliminar en producción, conservar solo el else
+                if (MOCK) {
+                    clientes = MOCK_CARTERA_ASESOR;
+                    todosServicios = MOCK_SERVICIOS;
+                } else {
+                // ▲ END MOCKUP BRANCH
+                    const [carteraRes, serviciosRes] = await Promise.all([
+                        fetch('../../../backend/modules/asignaciones/listar.php'),
+                        fetch('../../../backend/modules/servicios/listar.php')
+                    ]);
+
+                    const carteraJson = await carteraRes.json();
+                    const serviciosJson = await serviciosRes.json();
+
+                    if (!carteraRes.ok) throw new Error(carteraJson.message || 'Error al cargar cartera');
+                    if (!serviciosRes.ok) throw new Error(serviciosJson.message || 'Error al cargar servicios');
+
+                    clientes = carteraJson.data || [];
+                    todosServicios = serviciosJson.data || [];
+                // ▼ MOCKUP CLOSING BRACE — eliminar en producción
+                }
+                // ▲ END MOCKUP CLOSING
+
+                // Índice de servicios por id_cliente
+                const serviciosPorCliente = {};
+                todosServicios.forEach(s => {
+                    const id = s.id_cliente;
+                    if (!serviciosPorCliente[id]) serviciosPorCliente[id] = [];
+                    serviciosPorCliente[id].push(s);
+                });
+
+                render(clientes, serviciosPorCliente);
+
+            } catch (e) {
+                console.warn(e);
+                grid.innerHTML = `
+                    <div class="empty-clients">
+                        <i class="bx bx-error-circle"></i>
+                        <p>Error al conectar con el servidor. Intenta de nuevo.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ── Render ──
+        function render(clientes, serviciosPorCliente) {
+            const grid = document.getElementById('clientesGrid');
+
+            if (clientes.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-clients">
+                        <i class="bx bx-briefcase-alt-2"></i>
+                        <p>No tienes clientes asignados aún. Contacta al administrador.</p>
+                    </div>
+                `;
+                updateStats(clientes, serviciosPorCliente);
+                return;
+            }
+
+            let html = '';
+            let conPendientes = 0;
+
+            clientes.forEach(c => {
+                const servicios = serviciosPorCliente[c.id_cliente] || [];
+                const pendientes = servicios.filter(s => s.estado === 'Pendiente').length;
+                const enProceso = servicios.filter(s => s.estado === 'En proceso').length;
+                const completados = servicios.filter(s => s.estado === 'Completado').length;
+
+                if (pendientes > 0 || enProceso > 0) conPendientes++;
+
+                const nombre = c.nombre_cliente || c.correo_cliente || 'Cliente';
+                const phone = c.telefono_cliente || '---';
+
+                // Avatar initials
+                const initials = nombre.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+
+                // Service chips (show first 3, rest count)
+                const pendingChips = servicios
+                    .filter(s => s.estado !== 'Completado')
+                    .slice(0, 3);
+                const extraCount = Math.max(0, servicios.filter(s => s.estado !== 'Completado').length - 3);
+
+                html += `
+                    <div class="client-card">
+                        <div class="client-card-header">
+                            <div class="client-avatar">${escapeHtml(initials)}</div>
+                            <div class="client-info">
+                                <div class="client-name">${escapeHtml(nombre)}</div>
+                                <div class="client-email">${escapeHtml(c.correo_cliente)}</div>
+                                ${c.numero_cliente ? `<span class="client-number">${escapeHtml(c.numero_cliente)}</span>` : ''}
+                            </div>
+                        </div>
+
+                        <div class="client-contact">
+                            <span><i class="bx bx-phone"></i> ${escapeHtml(phone)}</span>
+                            <span><i class="bx bx-calendar"></i> ${c.fecha_asignacion ? new Date(c.fecha_asignacion).toLocaleDateString('es-MX') : '---'}</span>
+                        </div>
+
+                        <div class="client-services">
+                            <div class="services-header">
+                                <i class="bx bx-clipboard"></i> Servicios Contables
+                            </div>
+                            <div class="services-chips">
+                                ${pendingChips.length === 0 ? '<span style="font-size:0.8rem;color:var(--success);"><i class="bx bx-check-circle"></i> Todos los servicios al día</span>' : ''}
+                                ${pendingChips.map(s => {
+                                    const cls = s.estado === 'Pendiente' ? 'pendiente' : s.estado === 'En proceso' ? 'en-proceso' : 'completado';
+                                    const estadoDisplay = s.estado === 'En proceso' ? 'En proceso' : s.estado;
+                                    return `<span class="service-chip ${cls}">${escapeHtml(s.nombre_servicio || 'Servicio')} — ${estadoDisplay}</span>`;
+                                }).join('')}
+                                ${extraCount > 0 ? `<span class="service-chip" style="background:var(--bg);color:var(--text-muted);">+${extraCount} más</span>` : ''}
+                            </div>
+                            <div class="service-counts">
+                                <span class="service-count-item">
+                                    <span class="count-dot pending"></span>
+                                    Pendientes: <strong>${pendientes}</strong>
+                                </span>
+                                <span class="service-count-item">
+                                    <span class="count-dot in-progress"></span>
+                                    En curso: <strong>${enProceso}</strong>
+                                </span>
+                                <span class="service-count-item">
+                                    <span class="count-dot done"></span>
+                                    Completados: <strong>${completados}</strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="client-card-actions">
+                            <a href="inbox.html?cliente=${c.id_cliente}"><i class="bx bx-message-detail"></i> Mensaje</a>
+                            <a href="citas.html?cliente=${c.id_cliente}"><i class="bx bx-calendar"></i> Cita</a>
+                            <a href="documentos.html?cliente=${c.id_cliente}"><i class="bx bx-file"></i> Docs</a>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+            updateStats(clientes, serviciosPorCliente);
+        }
+
+        // ── Stats ──
+        function updateStats(clientes, serviciosPorCliente) {
+            const total = clientes.length;
+            let conPend = 0;
+
+            clientes.forEach(c => {
+                const servicios = serviciosPorCliente[c.id_cliente] || [];
+                const pendientes = servicios.filter(s => s.estado === 'Pendiente' || s.estado === 'En proceso').length;
+                if (pendientes > 0) conPend++;
+            });
+
+            document.getElementById('totalClientes').textContent = total;
+            document.getElementById('conPendientes').textContent = conPend;
+            document.getElementById('alDia').textContent = total - conPend;
+        }
+
+        // ── Helpers ──
+        function escapeHtml(t) {
+            if (!t) return '';
+            const d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+
+        // ── Init ──
+        loadData();
+    </script>
 </body>
 </html>

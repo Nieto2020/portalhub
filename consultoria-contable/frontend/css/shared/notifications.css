@@ -52,6 +52,30 @@
     background-clip: text;
 }
 
+#globalTopBar .topbar-title {
+    display: none;
+    flex: 1;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+#globalTopBar .topbar-title span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+}
+
+@media (max-width: 600px) {
+    #globalTopBar .topbar-title {
+        display: none !important;
+    }
+}
+
 #globalTopBar .topbar-right {
     display: flex;
     align-items: center;

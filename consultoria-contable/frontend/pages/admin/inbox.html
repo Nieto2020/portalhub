@@ -17,13 +17,6 @@
 
 <main class="dashboard-content">
 
-    <div class="page-header">
-        <div>
-            <h1><i class="bx bx-message-square-detail"></i> Inbox</h1>
-            <p>Mensajes y comunicación con el equipo.</p>
-        </div>
-    </div>
-
     <div class="inbox-layout">
 
         <!-- ── Lista de contactos ── -->
@@ -126,7 +119,8 @@
         role: 'admin',
         userName: 'Administrador',
         userRole: 'Administrador',
-        currentPage: 'inbox'
+        currentPage: 'inbox',
+        pageTitle: 'Inbox'
     };
     // ID del usuario actual (lo obtiene el sidebar de la sesión)
     // Se setea desde el backend o se deja como placeholder que inbox.js usará
