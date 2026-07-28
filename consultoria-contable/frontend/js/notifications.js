@@ -62,6 +62,9 @@
                     <img src="../../css/img/icon.png" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
                     <span>CONSULTANCY</span>
                 </div>
+                <div class="topbar-title" id="topbarPageTitle">
+                    <span></span>
+                </div>
                 <div class="topbar-right" id="notifBellContainer">
                     <button class="topbar-theme-btn" id="themeToggle" title="Cambiar tema">
                         <i class="bx bx-moon"></i>
@@ -88,6 +91,14 @@
         `;
 
         document.body.insertAdjacentHTML('afterbegin', topBarHTML);
+
+        // Set page title from config
+        const config = window.SIDEBAR_CONFIG || {};
+        const titleEl = document.getElementById('topbarPageTitle');
+        if (titleEl && config.pageTitle) {
+            titleEl.querySelector('span').textContent = config.pageTitle;
+            titleEl.style.display = 'flex';
+        }
     }
 
     // ── Bindear eventos del dropdown ──
@@ -308,12 +319,12 @@
     function initThemeToggle() {
         const btn = document.getElementById('themeToggle');
         const icon = btn ? btn.querySelector('i') : null;
-        const themes = ['light', 'dark', 'dark-blue', 'papersheet'];
+        const themes = ['light', 'dark', 'dark-blue'];
 
         function applyTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             if (icon) {
-                const icons = { light: 'bx-sun', dark: 'bx-moon', 'dark-blue': 'bx-cloud', papersheet: 'bx-paper-plane' };
+                const icons = { light: 'bx-sun', dark: 'bx-moon', 'dark-blue': 'bx-cloud' };
                 icon.className = 'bx ' + (icons[themeName] || 'bx-sun');
             }
             localStorage.setItem('theme', themeName);
